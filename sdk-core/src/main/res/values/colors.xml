@@ -478,7 +478,7 @@
 
     <!--项目数据-->
     <!--普通文字颜色-->
-    <color name="text_color">#575656</color>
+    <color name="text_color">#ededed</color>
     <!-- 灰色字体颜色 -->
     <color name="text_color_gray">#b9bdc5</color>
     <!--所有布局白色背景-->

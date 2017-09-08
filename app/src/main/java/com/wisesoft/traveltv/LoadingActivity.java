@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.wisesoft.traveltv.ui.HomeActivity;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -49,13 +51,13 @@ public class LoadingActivity extends NActivity {
 
             @Override
             public void run() {
-                //updateInitData();
+                updateInitData();
             }
         }, 1500);
     }
 
     private void updateInitData() {
-        //pushActivity(HomeActivity.class, true);
+        pushActivity(HomeActivity.class, true);
     }
 
     @Override

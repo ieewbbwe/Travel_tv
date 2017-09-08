@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/content_padding"
     tools:context="com.wisesoft.traveltv.ui.HomeActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <!--head-->
+    <include layout="@layout/layout_head"/>
+    <!--content-->
+    <!--navigation-->
+
+</LinearLayout>

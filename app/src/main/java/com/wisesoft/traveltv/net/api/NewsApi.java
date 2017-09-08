@@ -1,6 +1,6 @@
 package com.wisesoft.traveltv.net.api;
 
-import com.videoworks.tvnews.net.UrlMgr;
+import com.wisesoft.traveltv.net.UrlMgr;
 
 import retrofit2.Response;
 import retrofit2.http.GET;

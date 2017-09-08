@@ -1,6 +1,6 @@
 package com.wisesoft.traveltv.utils;
 
-import com.videoworks.tvnews.BuildConfig;
+import com.wisesoft.traveltv.BuildConfig;
 
 /**
  * Created by mxh on 2017/8/10.

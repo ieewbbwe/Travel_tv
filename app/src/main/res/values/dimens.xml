@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--极小-->
+    <dimen name="text_smallest_size">14sp</dimen>
+    <!--小-->
+    <dimen name="text_small_size">16sp</dimen>
+    <!--一般-->
+    <dimen name="text_normal_size">24sp</dimen>
+    <!--大-->
+    <dimen name="text_big_size">28sp</dimen>
+    <!--巨大-->
+    <dimen name="text_biggest_size">32sp</dimen>
+
+    <!--头部信息栏高度-->
+    <dimen name="head_height">72dp</dimen>
+    <dimen name="content_padding">24dp</dimen>
+</resources>
