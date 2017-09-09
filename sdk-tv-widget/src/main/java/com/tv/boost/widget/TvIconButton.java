@@ -48,7 +48,7 @@ public class TvIconButton extends FrameLayout {
 
         LayoutParams params1 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         LayoutParams params2 = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        params1.gravity = Gravity.CENTER_VERTICAL| Gravity.RIGHT;
+        params1.gravity = Gravity.CENTER_HORIZONTAL| Gravity.TOP;
         params2.gravity = Gravity.CENTER_VERTICAL| Gravity.LEFT;
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IconButton, defStyleAttr, 0);

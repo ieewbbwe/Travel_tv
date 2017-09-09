@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TimeTextViewStyle">
-        <attr name="gFormat" format="string"/>
+        <attr name="gFormat" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="IconView">
+        <attr name="gIcon" format="reference" />
+        <attr name="gText" format="string|reference" />
+        <attr name="gTextSize" format="dimension" />
+        <attr name="gTextColor" format="color|reference" />
+        <attr name="gTextPadding" format="dimension" />
+        <attr name="gIconWidth" format="dimension"/>
+        <attr name="gIconHeight" format="dimension"/>
     </declare-styleable>
 </resources>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">玩转宜昌</string>
+    <string name="label_home_search">搜索</string>
+    <string name="label_home_play">玩在宜昌</string>
+    <string name="label_home_eat">吃在宜昌</string>
+    <string name="label_home_stay">住在宜昌</string>
+    <string name="label_home_traffic">交通信息</string>
+    <string name="label_home_setting">设置</string>
+    <string name="label_home_return">返回</string>
 </resources>

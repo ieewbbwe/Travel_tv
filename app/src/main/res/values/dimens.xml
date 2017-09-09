@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--极小-->
-    <dimen name="text_smallest_size">14sp</dimen>
+    <dimen name="text_smallest_size">16sp</dimen>
     <!--小-->
-    <dimen name="text_small_size">16sp</dimen>
+    <dimen name="text_small_size">20sp</dimen>
     <!--一般-->
     <dimen name="text_normal_size">24sp</dimen>
     <!--大-->
@@ -12,6 +12,13 @@
     <dimen name="text_biggest_size">32sp</dimen>
 
     <!--头部信息栏高度-->
-    <dimen name="head_height">72dp</dimen>
+    <dimen name="head_height">86dp</dimen>
     <dimen name="content_padding">24dp</dimen>
+    <dimen name="navigation_height">86dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!--画廊高度-->
+    <dimen name="home_gallery_height">280dp</dimen>
+    <dimen name="home_gallery_weight">540dp</dimen>
 </resources>

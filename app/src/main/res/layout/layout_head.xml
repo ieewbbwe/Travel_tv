@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mxh="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/head_height"
-    android:background="#0094ff"
+    android:id="@+id/m_head_rl"
     android:orientation="vertical">
     <!--Logo-->
     <ImageView
         android:id="@+id/m_broadcast_logo_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
         android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@mipmap/ic_broadcast_logo" />
     <!--Time-->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/text_color_gray"
             android:textSize="@dimen/text_normal_size"
-            mxh:gFormat="MM_dd"/>
+            mxh:gFormat="MM_dd" />
 
         <com.wisesoft.traveltv.ui.view.TimeTextView
             android:layout_width="wrap_content"
@@ -38,23 +38,40 @@
             android:text="12:00"
             android:textColor="@color/text_color"
             android:textSize="@dimen/text_big_size"
-            mxh:gFormat="HH:mm"/>
+            mxh:gFormat="HH:mm" />
 
-        <ImageView
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/m_cloud_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_cloud" />
+
+            <TextView
+                android:id="@+id/m_temperature_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/m_cloud_iv"
+                android:layout_toRightOf="@id/m_cloud_iv"
+                android:text="24 ℃"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_small_size" />
+        </RelativeLayout>
+
     </LinearLayout>
     <!--Logo-->
     <ImageView
         android:id="@+id/m_logo_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher"/>
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_app_logo" />
 </RelativeLayout>

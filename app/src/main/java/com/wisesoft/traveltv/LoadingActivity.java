@@ -53,7 +53,7 @@ public class LoadingActivity extends NActivity {
             public void run() {
                 updateInitData();
             }
-        }, 1500);
+        }, 200);
     }
 
     private void updateInitData() {

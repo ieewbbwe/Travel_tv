@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -28,7 +29,7 @@ import rx.subjects.BehaviorSubject;
 
 public class TimeTextView extends TextView {
 
-    private final BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
+    private BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 
     /*9月8日 星期五*/
     private String MM_dd_Week = "MM_dd";
@@ -37,6 +38,7 @@ public class TimeTextView extends TextView {
 
     private String mFormat = HH_mm;
     private Calendar mCalendar;
+    private Subscription mSubscription;
 
     public TimeTextView(Context context) {
         this(context, null);
@@ -56,14 +58,15 @@ public class TimeTextView extends TextView {
     }
 
     private void init() {
-        Observable.interval(1000, TimeUnit.MILLISECONDS)
+        // Lg.print("TimeTextView", (long) o);
+        mSubscription = Observable.interval(1000, TimeUnit.MILLISECONDS)
                 .compose(RxLifecycle.bindView(lifecycleSubject))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
-                        Lg.print("webber", (long) o);
+                       // Lg.print("TimeTextView", (long) o);
                         if (MM_dd_Week.equals(mFormat)) {
                             setText(mCalendar.get(Calendar.MONTH) + 1 + "月"
                                     + mCalendar.get(Calendar.DAY_OF_MONTH) + "日 " + getWeekDay(mCalendar));
