@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="TimeTextViewStyle">
-        <attr name="gFormat" format="string" />
+        <attr name="gFormat" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="IconView">
-        <attr name="gIcon" format="reference" />
-        <attr name="gText" format="string|reference" />
-        <attr name="gTextSize" format="dimension" />
-        <attr name="gTextColor" format="color|reference" />
-        <attr name="gTextPadding" format="dimension" />
+        <attr name="gIcon" format="reference"/>
+        <attr name="gText" format="string|reference"/>
+        <attr name="gTextSize" format="dimension"/>
+        <attr name="gTextColor" format="color|reference"/>
+        <attr name="gTextPadding" format="dimension"/>
         <attr name="gIconWidth" format="dimension"/>
         <attr name="gIconHeight" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="ControlView">
+        <attr name="cIcon" format="reference"/>
+        <attr name="cTextSize" format="reference|dimension"/>
+        <attr name="cTextColor" format="color|reference"/>
+        <attr name="cText" format="string|reference"/>
+        <attr name="cTextPadding" format="dimension"/>
     </declare-styleable>
 </resources>

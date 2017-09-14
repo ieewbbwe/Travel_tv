@@ -33,10 +33,10 @@ import java.util.List;
  * Created by owen on 2017/7/20.
  */
 
-public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTreeObserver.OnGlobalFocusChangeListener{
+public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTreeObserver.OnGlobalFocusChangeListener {
     private static final long DEFAULT_ANIM_DURATION_TIME = 300;
     private static final long DEFAULT_SHIMMER_DURATION_TIME = 1000;
-    
+
     protected long mAnimDuration = DEFAULT_ANIM_DURATION_TIME;
     protected long mShimmerDuration = DEFAULT_SHIMMER_DURATION_TIME;
     protected RectF mFrameRectF = new RectF();
@@ -65,23 +65,23 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     private WeakReference<View> mOldFocusView;
     private OnFocusCallback mOnFocusCallback;
     private boolean mIsVisible = false;
-    
+
     protected AbsFocusBorder(Context context, int shimmerColor, long shimmerDuration, boolean isShimmerAnim, long animDuration, RectF paddingOfsetRectF) {
         super(context);
-        
+
         this.mShimmerColor = shimmerColor;
         this.mShimmerDuration = shimmerDuration;
         this.mIsShimmerAnim = isShimmerAnim;
         this.mAnimDuration = animDuration;
-        if(null != paddingOfsetRectF)
+        if (null != paddingOfsetRectF)
             this.mPaddingOfsetRectF.set(paddingOfsetRectF);
         setLayerType(View.LAYER_TYPE_SOFTWARE, null); //关闭硬件加速
         setVisibility(INVISIBLE);
-        
+
         mShimmerPaint = new Paint();
         mShimmerGradientMatrix = new Matrix();
     }
-    
+
     @Override
     public boolean isInEditMode() {
         return true;
@@ -89,6 +89,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
 
     /**
      * 绘制闪光
+     *
      * @param canvas
      */
     protected void onDrawShimmer(Canvas canvas) {
@@ -108,7 +109,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        if(w != oldw || h != oldh) {
+        if (w != oldw || h != oldh) {
             mFrameRectF.set(mPaddingRectF.left, mPaddingRectF.top, w - mPaddingRectF.right, h - mPaddingRectF.bottom);
         }
     }
@@ -118,7 +119,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         super.onDraw(canvas);
         onDrawShimmer(canvas);
     }
-    
+
     @Override
     protected void onDetachedFromWindow() {
         unBoundGlobalFocusListener();
@@ -127,7 +128,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
 
     private void setShimmerAnimating(boolean shimmerAnimating) {
         mShimmerAnimating = shimmerAnimating;
-        if(mShimmerAnimating) {
+        if (mShimmerAnimating) {
             mShimmerLinearGradient = new LinearGradient(
                     0, 0, mFrameRectF.width(), mFrameRectF.height(),
                     new int[]{0x00FFFFFF, 0x1AFFFFFF, mShimmerColor, 0x1AFFFFFF, 0x00FFFFFF},
@@ -137,7 +138,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     }
 
     protected void setShimmerTranslate(float shimmerTranslate) {
-        if(mIsShimmerAnim && mShimmerTranslate != shimmerTranslate) {
+        if (mIsShimmerAnim && mShimmerTranslate != shimmerTranslate) {
             mShimmerTranslate = shimmerTranslate;
             ViewCompat.postInvalidateOnAnimation(this);
         }
@@ -148,14 +149,14 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     }
 
     protected void setWidth(int width) {
-        if(getLayoutParams().width != width) {
+        if (getLayoutParams().width != width) {
             getLayoutParams().width = width;
             requestLayout();
         }
     }
 
     protected void setHeight(int height) {
-        if(getLayoutParams().height != height) {
+        if (getLayoutParams().height != height) {
             getLayoutParams().height = height;
             requestLayout();
         }
@@ -163,11 +164,11 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
 
     @Override
     public void setVisible(boolean visible) {
-        if(mIsVisible != visible) {
+        if (mIsVisible != visible) {
             mIsVisible = visible;
             setVisibility(visible ? VISIBLE : INVISIBLE);
-            
-            if(!visible && null != mOldFocusView && null != mOldFocusView.get()) {
+
+            if (!visible && null != mOldFocusView && null != mOldFocusView.get()) {
                 runFocusScaleAnimation(mOldFocusView.get(), 1f, 1f);
                 mOldFocusView.clear();
                 mOldFocusView = null;
@@ -181,22 +182,22 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     }
 
     private void registerScrollListener(RecyclerView recyclerView) {
-        if(null != mWeakRecyclerView && mWeakRecyclerView.get() == recyclerView) {
+        if (null != mWeakRecyclerView && mWeakRecyclerView.get() == recyclerView) {
             return;
         }
 
-        if(null == mRecyclerViewScrollListener) {
+        if (null == mRecyclerViewScrollListener) {
             mRecyclerViewScrollListener = new RecyclerViewScrollListener(this);
         }
-        
-        if(null != mWeakRecyclerView && null != mWeakRecyclerView.get()) {
+
+        if (null != mWeakRecyclerView && null != mWeakRecyclerView.get()) {
             mWeakRecyclerView.get().removeOnScrollListener(mRecyclerViewScrollListener);
             mWeakRecyclerView.clear();
         }
-        
+
         recyclerView.removeOnScrollListener(mRecyclerViewScrollListener);
         recyclerView.addOnScrollListener(mRecyclerViewScrollListener);
-        mWeakRecyclerView = new WeakReference<>(recyclerView);   
+        mWeakRecyclerView = new WeakReference<>(recyclerView);
     }
 
     protected Rect findLocationWithView(View view) {
@@ -205,7 +206,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         root.offsetDescendantRectToMyCoords(view, rect);*/
         return findOffsetDescendantRectToMyCoords(view);
     }
-    
+
     protected Rect findOffsetDescendantRectToMyCoords(View descendant) {
         final ViewGroup root = (ViewGroup) getParent();
         final Rect rect = new Rect();
@@ -228,14 +229,14 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
 
             //兼容TvRecyclerView
             if (theParent instanceof RecyclerView) {
-                final RecyclerView rv = (RecyclerView)theParent;
-                registerScrollListener((RecyclerView)theParent);
+                final RecyclerView rv = (RecyclerView) theParent;
+                registerScrollListener((RecyclerView) theParent);
                 tag = ((View) theParent).getTag();
                 if (null != tag && tag instanceof Point) {
                     point = (Point) tag;
                     rect.offset(-point.x, -point.y);
                 }
-                if(null == tag && rv.getScrollState() != RecyclerView.SCROLL_STATE_IDLE
+                if (null == tag && rv.getScrollState() != RecyclerView.SCROLL_STATE_IDLE
                         && (mRecyclerViewScrollListener.mScrolledX != 0 || mRecyclerViewScrollListener.mScrolledY != 0)) {
                     mReAnim = true;
                 }
@@ -250,19 +251,19 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         if (theParent == root) {
             rect.offset(descendant.getLeft() - descendant.getScrollX(),
                     descendant.getTop() - descendant.getScrollY());
-        } 
-        
+        }
+
         return rect;
     }
 
     @Override
     public void onFocus(@NonNull View focusView, FocusBorder.Options options) {
-        if(null != mOldFocusView && null != mOldFocusView.get()) {
+        if (null != mOldFocusView && null != mOldFocusView.get()) {
             runFocusScaleAnimation(mOldFocusView.get(), 1f, 1f);
             mOldFocusView.clear();
         }
-        
-        if(options instanceof Options) {
+
+        if (options instanceof Options) {
             final Options baseOptions = (Options) options;
             if (baseOptions.isScale()) {
                 mOldFocusView = new WeakReference<>(focusView);
@@ -270,16 +271,16 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
             runFocusAnimation(focusView, baseOptions);
         }
     }
-    
+
     @Override
     public void boundGlobalFocusListener(@NonNull OnFocusCallback callback) {
         mOnFocusCallback = callback;
         getViewTreeObserver().addOnGlobalFocusChangeListener(this);
     }
-    
+
     @Override
     public void unBoundGlobalFocusListener() {
-        if(null != mOnFocusCallback) {
+        if (null != mOnFocusCallback) {
             mOnFocusCallback = null;
             getViewTreeObserver().removeOnGlobalFocusChangeListener(this);
         }
@@ -288,9 +289,9 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     @Override
     public void onGlobalFocusChanged(View oldFocus, View newFocus) {
         runFocusScaleAnimation(oldFocus, 1f, 1f);
-        
+
         final Options options = null != mOnFocusCallback ? (Options) mOnFocusCallback.onFocus(oldFocus, newFocus) : null;
-        if(null != options) {
+        if (null != options) {
             runFocusAnimation(newFocus, options);
         }
     }
@@ -300,15 +301,15 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         runFocusScaleAnimation(focusView, options.scaleX, options.scaleY); // 焦点缩放动画
         runBorderAnimation(focusView, options); // 移动边框的动画。
     }
-    
+
     protected void runBorderAnimation(View focusView, Options options) {
-        if(null == focusView)
+        if (null == focusView)
             return;
 
-        if(null != mAnimatorSet) {
+        if (null != mAnimatorSet) {
             mAnimatorSet.cancel();
         }
-        
+
         createBorderAnimation(focusView, options);
 
         mAnimatorSet.start();
@@ -316,13 +317,14 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
 
     /**
      * 焦点VIEW缩放动画
+     *
      * @param oldOrNewFocusView
-     * @param 
+     * @param
      */
     protected void runFocusScaleAnimation(@Nullable View oldOrNewFocusView, float scaleX, float scaleY) {
-        if(null == oldOrNewFocusView)
+        if (null == oldOrNewFocusView)
             return;
-        if(scaleX != oldOrNewFocusView.getScaleX() || scaleY != oldOrNewFocusView.getScaleY()) {
+        if (scaleX != oldOrNewFocusView.getScaleX() || scaleY != oldOrNewFocusView.getScaleY()) {
             oldOrNewFocusView.animate().scaleX(scaleX).scaleY(scaleY).setDuration(mAnimDuration).start();
         }
     }
@@ -346,16 +348,16 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         together.add(getTranslationYAnimator(newY));
         together.add(getWidthAnimator(newWidth));
         together.add(getHeightAnimator(newHeight));
-        if(null != appendTogether && !appendTogether.isEmpty()) {
+        if (null != appendTogether && !appendTogether.isEmpty()) {
             together.addAll(appendTogether);
         }
 
         final List<Animator> sequentially = new ArrayList<>();
         final List<Animator> appendSequentially = getSequentiallyAnimators(newX, newY, newWidth, newHeight, options);
-        if(mIsShimmerAnim) { 
+        if (mIsShimmerAnim) {
             sequentially.add(getShimmerAnimator());
-        } 
-        if(null != appendSequentially && !appendSequentially.isEmpty()) {
+        }
+        if (null != appendSequentially && !appendSequentially.isEmpty()) {
             sequentially.addAll(appendSequentially);
         }
 
@@ -364,9 +366,9 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         mAnimatorSet.playTogether(together);
         mAnimatorSet.playSequentially(sequentially);
     }
-    
+
     private ObjectAnimator getTranslationXAnimator(float x) {
-        if(null == mTranslationXAnimator) {
+        if (null == mTranslationXAnimator) {
             mTranslationXAnimator = ObjectAnimator.ofFloat(this, "translationX", x)
                     .setDuration(mAnimDuration);
         } else {
@@ -376,7 +378,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     }
 
     private ObjectAnimator getTranslationYAnimator(float y) {
-        if(null == mTranslationYAnimator) {
+        if (null == mTranslationYAnimator) {
             mTranslationYAnimator = ObjectAnimator.ofFloat(this, "translationY", y)
                     .setDuration(mAnimDuration);
         } else {
@@ -386,7 +388,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
     }
 
     private ObjectAnimator getHeightAnimator(int height) {
-        if(null == mHeightAnimator) {
+        if (null == mHeightAnimator) {
             mHeightAnimator = ObjectAnimator.ofInt(this, "height", getMeasuredHeight(), height)
                     .setDuration(mAnimDuration);
         } else {
@@ -394,9 +396,9 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         }
         return mHeightAnimator;
     }
-    
+
     private ObjectAnimator getWidthAnimator(int width) {
-        if(null == mWidthAnimator) {
+        if (null == mWidthAnimator) {
             mWidthAnimator = ObjectAnimator.ofInt(this, "width", getMeasuredWidth(), width)
                     .setDuration(mAnimDuration);
         } else {
@@ -404,9 +406,9 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         }
         return mWidthAnimator;
     }
-    
+
     private ObjectAnimator getShimmerAnimator() {
-        if(null == mShimmerAnimator) {
+        if (null == mShimmerAnimator) {
             mShimmerAnimator = ObjectAnimator.ofFloat(this, "shimmerTranslate", -1f, 1f);
             mShimmerAnimator.setInterpolator(new LinearInterpolator());
             mShimmerAnimator.setDuration(mShimmerDuration);
@@ -436,7 +438,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         private WeakReference<AbsFocusBorder> mFocusBorder;
         private int mScrolledX = 0, mScrolledY = 0;
 
-        public RecyclerViewScrollListener(AbsFocusBorder border){
+        public RecyclerViewScrollListener(AbsFocusBorder border) {
             mFocusBorder = new WeakReference<>(border);
         }
 
@@ -449,12 +451,12 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-            if(newState == RecyclerView.SCROLL_STATE_IDLE) {
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
 //                Log.i("@!@!", "onScrollStateChanged...IDLE");
                 final AbsFocusBorder border = mFocusBorder.get();
                 final View focused = recyclerView.getFocusedChild();
 //                Log.i("@!@!", "onScrollStateChanged...border is null = " + (null == border));
-                if(null != border && null != focused) {
+                if (null != border && null != focused) {
                     if (border.mReAnim || mScrolledX != 0 || mScrolledY != 0) {
                         border.runBorderAnimation(focused, Options.OptionsHolder.INSTANCE);
                     }
@@ -463,8 +465,8 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
             }
         }
     }
-    
-    public static class Options extends FocusBorder.Options{
+
+    public static class Options extends FocusBorder.Options {
         protected float scaleX = 1f, scaleY = 1f;
 
         Options() {
@@ -473,18 +475,18 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         private static class OptionsHolder {
             private static final Options INSTANCE = new Options();
         }
-        
+
         public static Options get(float scaleX, float scaleY) {
             OptionsHolder.INSTANCE.scaleX = scaleX;
             OptionsHolder.INSTANCE.scaleY = scaleY;
             return OptionsHolder.INSTANCE;
         }
-        
+
         public boolean isScale() {
             return scaleX != 1f || scaleY != 1f;
         }
     }
-    
+
     public static abstract class Builder {
         protected int mShimmerColor = 0x66FFFFFF;
         protected boolean mIsShimmerAnim = true;
@@ -496,7 +498,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
             this.mShimmerColor = color;
             return this;
         }
-        
+
         public Builder shimmerDuration(long duration) {
             this.mShimmerDuration = duration;
             return this;
@@ -506,16 +508,16 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
             this.mIsShimmerAnim = false;
             return this;
         }
-        
+
         public Builder animDuration(long duration) {
             this.mAnimDuration = duration;
             return this;
         }
-        
+
         public Builder padding(float padding) {
             return padding(padding, padding, padding, padding);
         }
-        
+
         public Builder padding(float left, float top, float right, float bottom) {
             this.mPaddingOfsetRectF.left = left;
             this.mPaddingOfsetRectF.top = top;
@@ -525,7 +527,7 @@ public abstract class AbsFocusBorder extends View implements FocusBorder, ViewTr
         }
 
         public abstract FocusBorder build(Activity activity);
-        
+
         public abstract FocusBorder build(ViewGroup viewGroup);
     }
 }

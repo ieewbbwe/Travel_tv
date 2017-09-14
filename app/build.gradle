@@ -60,16 +60,15 @@ dependencies {
     compile project(':sdk-net')
     compile project(':sdk-core')
     compile project(':sdk-tv-widget')
-    compile project(':sdk-coverflow')
     compile "com.jakewharton:butterknife:$rootProject.ext.butterknifeVersion"
     //底部菜单栏，焦点事件暂未处理，因此注释
     //compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.2'
     //画廊控件,作者写死了Item宽高
-    //compile 'com.github.moondroid.coverflow:library:1.0'
     //TVRecycleView
-    compile 'com.tv.boost:tv-recyclerview:1.1.0'
 
     // apt command comes from the android-apt plugin
+    compile 'com.github.moondroid.coverflow:library:1.0'
+    compile 'com.tv.boost:tv-recyclerview:1.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.dagger:dagger:2.2'
     apt 'com.google.dagger:dagger-compiler:2.2'

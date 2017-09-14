@@ -1,1 +1,1 @@
-include ':app', ':sdk-net', ':sdk-core', ':sdk-tv-widget',':sdk-coverflow'
+include ':app', ':sdk-net', ':sdk-core', ':sdk-tv-widget'
