@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/ic_home_bg"
-    tools:context="com.wisesoft.traveltv.ui.HomeActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/ic_home_bg"
+                tools:context="com.wisesoft.traveltv.ui.HomeActivity">
 
     <!--head-->
     <include
-        android:layout_margin="24dp"
         layout="@layout/layout_head"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/head_height" />
+        android:layout_height="@dimen/head_height"
+        android:layout_margin="24dp"/>
 
     <!--navigation-->
     <LinearLayout
@@ -27,41 +27,41 @@
             android:id="@+id/m_search_rb"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_search"
-            app:gText="@string/label_home_search" />
+            app:gText="@string/label_home_search"/>
 
         <com.wisesoft.traveltv.ui.view.TVIconView
             android:id="@+id/m_play_rb"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_play"
-            app:gText="@string/label_home_play" />
+            app:gText="@string/label_home_play"/>
 
         <com.wisesoft.traveltv.ui.view.TVIconView
             android:id="@+id/m_eat_rb"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_eat"
-            app:gText="@string/label_home_eat" />
+            app:gText="@string/label_home_eat"/>
 
         <com.wisesoft.traveltv.ui.view.TVIconView
             android:id="@+id/m_stay_rb"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_stay"
-            app:gText="@string/label_home_stay" />
+            app:gText="@string/label_home_stay"/>
 
         <com.wisesoft.traveltv.ui.view.TVIconView
             android:id="@+id/m_traffic_rb"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_traffic"
-            app:gText="@string/label_home_traffic" />
+            app:gText="@string/label_home_traffic"/>
 
         <com.wisesoft.traveltv.ui.view.TVIconView
             android:id="@+id/m_settings_rb"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_setting"
-            app:gText="@string/label_home_setting" />
+            app:gText="@string/label_home_setting"/>
     </LinearLayout>
 
     <!--content-->
-    <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
+    <!--<it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
         android:id="@+id/m_gallery_cf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -73,5 +73,5 @@
         app:reflectionGap="2dp"
         app:rotationThreshold="0.5"
         app:scalingThreshold="0.5"
-        app:spacing="0.6" />
+        app:spacing="0.6"/>-->
 </RelativeLayout>

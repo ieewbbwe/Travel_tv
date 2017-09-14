@@ -1,15 +1,10 @@
 package com.wisesoft.traveltv.ui;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.ImageView;
 
-import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.GalleryAdapter;
@@ -22,7 +17,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
 /**
  * Created by mxh on 2017.09.05
@@ -44,10 +38,9 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     TVIconView mTrafficRb;
     @Bind(R.id.m_settings_rb)
     TVIconView mSettingsRb;
-    @Bind(R.id.m_gallery_cf)
-    FeatureCoverFlow mGalleryCf;
+    /*@Bind(R.id.m_gallery_cf)
+    FeatureCoverFlow mGalleryCf;*/
 
-    private FocusBorder focusBorder;
     private List<ItemInfoBean> beanList = new ArrayList<>();
     private GalleryAdapter mGalleryAdapter;
 
@@ -60,7 +53,6 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     @Override
     protected void initComp() {
         ButterKnife.bind(this);
-        initBorder();
     }
 
     @Override
@@ -82,7 +74,7 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         beanList.add(new ItemInfoBean(""));
         /*-----测试数据完------*/
         mGalleryAdapter = new GalleryAdapter(beanList, this);
-        mGalleryCf.setAdapter(mGalleryAdapter);
+        //mGalleryCf.setAdapter(mGalleryAdapter);
 
     }
 
@@ -90,16 +82,18 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                if (isFocused(mGalleryCf)) {
-                    if (mSearchRb != null) mSearchRb.requestFocus();
+              /*  if (isFocused(mGalleryCf)) {
+                    if (mSearchRb != null)
+                        mSearchRb.requestFocus();
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
                 if (isFocused(mSearchRb) || isFocused(mPlayRb) || isFocused(mEatRb)
                         || isFocused(mStayRb) || isFocused(mTrafficRb) || isFocused(mSettingsRb)) {
-                    if (mGalleryCf != null) mGalleryCf.requestFocus();
+                    if (mGalleryCf != null)
+                        mGalleryCf.requestFocus();
                 }
-                break;
+                break;*/
             default:
                 break;
         }

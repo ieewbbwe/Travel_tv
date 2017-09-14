@@ -21,4 +21,5 @@
     <!--画廊高度-->
     <dimen name="home_gallery_height">280dp</dimen>
     <dimen name="home_gallery_weight">540dp</dimen>
+    <dimen name="recommend_height">180dp</dimen>
 </resources>

@@ -3,7 +3,6 @@ package com.wisesoft.traveltv;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
 
@@ -24,7 +23,7 @@ public abstract class NActivity extends BaseActivity {
         super.onCreate(savedInstanceState, persistentState);
     }
 
-    public void initBorder(){
+    public void initBorder() {
         mFocusBorder = new FocusBorder.Builder().asColor()
                 .shadowWidth(TypedValue.COMPLEX_UNIT_DIP, 18f) //阴影宽度(方式二)
                 .shadowColor(getResources().getColor(R.color.colorPrimaryDark)) //阴影颜色

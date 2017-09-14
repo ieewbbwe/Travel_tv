@@ -2,18 +2,19 @@ package com.wisesoft.traveltv.ui.play;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+<<<<<<< HEAD
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+=======
+>>>>>>> 757ea29ff3e42ff88925b220fe4bc9f2cb8b6c39
 import android.view.View;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
-import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ItemListAdapter;
 import com.wisesoft.traveltv.model.ItemInfoBean;
-import com.wisesoft.traveltv.ui.view.DisplayAdaptive;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
 import java.util.ArrayList;
@@ -50,12 +51,18 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
     protected void initComp() {
         ButterKnife.bind(this);
         initBorder();
+        mAdapter = new ItemListAdapter(this);
     }
 
     @Override
     protected void initListener() {
         mReturnTiv.setOnClickListener(this);
-
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                pushActivity(AmusementDetailActivity.class);
+            }
+        });
     }
 
     @Override

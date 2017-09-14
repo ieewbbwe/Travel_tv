@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wisesoft.traveltv">
+<manifest package="com.wisesoft.traveltv"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <uses-feature
         android:name="android.hardware.touchscreen"
-        android:required="false" />
+        android:required="false"/>
     <uses-feature
         android:name="android.software.leanback"
-        android:required="true" />
+        android:required="true"/>
 
     <application
         android:name=".NApplication"
@@ -25,28 +25,33 @@
             android:logo="@mipmap/ic_launcher"
             android:screenOrientation="landscape">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.eat.DeliciousActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ui.play.AmusementActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ui.stay.StayActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ui.traffic.TrafficActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".ui.HomeActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name=".ui.view.Gallery3DActivity" />
-        <activity android:name=".ui.play.ItemDetailActivity"></activity>
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ui.view.Gallery3DActivity"
+            android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ui.play.AmusementDetailActivity"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>

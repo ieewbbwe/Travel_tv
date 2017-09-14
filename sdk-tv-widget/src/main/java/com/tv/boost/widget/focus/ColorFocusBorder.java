@@ -32,7 +32,7 @@ public class ColorFocusBorder extends AbsFocusBorder {
     private float mRoundRadius = 0;
 
     private ObjectAnimator mRoundRadiusAnimator;
-    
+
     private ColorFocusBorder(Context context, int shimmerColor, long shimmerDuration, boolean isShimmerAnim, long animDuration, RectF paddingOfsetRectF,
                              int shadowColor, float shadowWidth, int borderColor, float borderWidth) {
         super(context, shimmerColor, shimmerDuration, isShimmerAnim, animDuration, paddingOfsetRectF);
@@ -45,7 +45,7 @@ public class ColorFocusBorder extends AbsFocusBorder {
         mPaddingRectF.set(padding, padding, padding, padding);
         initPaint();
     }
-    
+
     private void initPaint() {
         mShadowPaint = new Paint();
         mShadowPaint.setColor(mShadowColor);
@@ -63,7 +63,7 @@ public class ColorFocusBorder extends AbsFocusBorder {
     }
 
     protected void setRoundRadius(float roundRadius) {
-        if(mRoundRadius != roundRadius) {
+        if (mRoundRadius != roundRadius) {
             mRoundRadius = roundRadius;
             ViewCompat.postInvalidateOnAnimation(this);
         }
@@ -76,7 +76,7 @@ public class ColorFocusBorder extends AbsFocusBorder {
 
     @Override
     List<Animator> getTogetherAnimators(float newX, float newY, int newWidth, int newHeight, AbsFocusBorder.Options options) {
-        if(options instanceof Options) {
+        if (options instanceof Options) {
             final Options rawOptions = (Options) options;
             List<Animator> animators = new ArrayList<>();
             animators.add(getRoundRadiusAnimator(rawOptions.roundRadius));
@@ -91,7 +91,7 @@ public class ColorFocusBorder extends AbsFocusBorder {
     }
 
     private ObjectAnimator getRoundRadiusAnimator(float roundRadius) {
-        if(null == mRoundRadiusAnimator) {
+        if (null == mRoundRadiusAnimator) {
             mRoundRadiusAnimator = ObjectAnimator.ofFloat(this, "roundRadius", getRoundRadius(), roundRadius);
         } else {
             mRoundRadiusAnimator.setFloatValues(getRoundRadius(), roundRadius);
@@ -101,10 +101,11 @@ public class ColorFocusBorder extends AbsFocusBorder {
 
     /**
      * 绘制外发光阴影
+     *
      * @param canvas
      */
     private void onDrawShadow(Canvas canvas) {
-        if(mShadowWidth > 0) {
+        if (mShadowWidth > 0) {
             canvas.save();
             //裁剪处理(使阴影矩形框内变为透明)
             if (mRoundRadius > 0) {
@@ -121,10 +122,11 @@ public class ColorFocusBorder extends AbsFocusBorder {
 
     /**
      * 绘制边框
+     *
      * @param canvas
      */
     private void onDrawBorder(Canvas canvas) {
-        if(mBorderWidth > 0) {
+        if (mBorderWidth > 0) {
             canvas.save();
             mTempRectF.set(mFrameRectF);
             canvas.drawRoundRect(mTempRectF, mRoundRadius, mRoundRadius, mBorderPaint);
@@ -145,21 +147,21 @@ public class ColorFocusBorder extends AbsFocusBorder {
         Options() {
             super();
         }
-        
+
         private static class OptionsHolder {
             private static final Options INSTANCE = new Options();
         }
-        
+
         public static Options get(float scaleX, float scaleY, float roundRadius) {
             OptionsHolder.INSTANCE.scaleX = scaleX;
             OptionsHolder.INSTANCE.scaleY = scaleY;
             OptionsHolder.INSTANCE.roundRadius = roundRadius;
             return OptionsHolder.INSTANCE;
         }
-        
+
     }
 
-    public final static class Builder extends AbsFocusBorder.Builder{
+    public final static class Builder extends AbsFocusBorder.Builder {
         private int mShadowColor = 0;
         private float mShadowWidth = 0f;
         private int mBorderColor = 0;
@@ -199,7 +201,7 @@ public class ColorFocusBorder extends AbsFocusBorder {
 
         @Override
         public FocusBorder build(Activity activity) {
-            if(null == activity) {
+            if (null == activity) {
                 throw new NullPointerException("The activity cannot be null");
             }
             ViewGroup parent = (ViewGroup) activity.findViewById(android.R.id.content);
@@ -208,13 +210,13 @@ public class ColorFocusBorder extends AbsFocusBorder {
 
         @Override
         public FocusBorder build(ViewGroup parent) {
-            if(null == parent) {
+            if (null == parent) {
                 throw new NullPointerException("The FocusBorder parent cannot be null");
             }
             final ColorFocusBorder boriderView = new ColorFocusBorder(parent.getContext(),
                     mShimmerColor, mShimmerDuration, mIsShimmerAnim, mAnimDuration, mPaddingOfsetRectF,
                     mShadowColor, mShadowWidth, mBorderColor, mBorderWidth);
-            final ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(1,1);
+            final ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(1, 1);
             parent.addView(boriderView, lp);
             return boriderView;
         }
