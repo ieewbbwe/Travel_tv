@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.android_mobile.core.base.BaseActivity;
 import com.tv.boost.widget.focus.FocusBorder;
@@ -30,6 +31,10 @@ public abstract class NActivity extends BaseActivity {
                 .borderWidth(TypedValue.COMPLEX_UNIT_DIP, 2f) //边框宽度
                 .borderColor(getResources().getColor(R.color.white)) //边框颜色
                 .build(this);
+    }
+
+    public boolean isFocused(View v) {
+        return null != v || v.isFocused();
     }
 
 }

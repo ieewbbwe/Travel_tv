@@ -37,7 +37,7 @@
             android:layout_marginRight="20dp"
             android:text="12:00"
             android:textColor="@color/text_color"
-            android:textSize="@dimen/text_big_size"
+            android:textSize="@dimen/text_biggest_size"
             mxh:gFormat="HH:mm" />
 
         <RelativeLayout

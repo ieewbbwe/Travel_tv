@@ -52,14 +52,16 @@ public class TimeTextView extends TextView {
         super(context, attrs, defStyleAttr);
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.TimeTextViewStyle);
         mFormat = ta.getString(R.styleable.TimeTextViewStyle_gFormat);
-        mCalendar = Calendar.getInstance();
         ta.recycle();
         init();
+        mCalendar = Calendar.getInstance();
+        setTime(MM_dd_Week,mCalendar);
+
     }
 
     private void init() {
         // Lg.print("TimeTextView", (long) o);
-        mSubscription = Observable.interval(1000, TimeUnit.MILLISECONDS)
+        mSubscription = Observable.interval(10, TimeUnit.SECONDS)
                 .compose(RxLifecycle.bindView(lifecycleSubject))
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,14 +69,19 @@ public class TimeTextView extends TextView {
                     @Override
                     public void call(Object o) {
                        // Lg.print("TimeTextView", (long) o);
-                        if (MM_dd_Week.equals(mFormat)) {
-                            setText(mCalendar.get(Calendar.MONTH) + 1 + "月"
-                                    + mCalendar.get(Calendar.DAY_OF_MONTH) + "日 " + getWeekDay(mCalendar));
-                        } else if (HH_mm.equals(mFormat)) {
-                            setText(mCalendar.get(Calendar.HOUR_OF_DAY) + ":" + mCalendar.get(Calendar.MINUTE));
-                        }
+                        mCalendar = Calendar.getInstance();
+                       setTime(MM_dd_Week,mCalendar);
                     }
                 });
+    }
+
+    private void setTime(String mm_dd_week, Calendar mCalendar) {
+        if (mm_dd_week.equals(mFormat)) {
+            setText(mCalendar.get(Calendar.MONTH) + 1 + "月"
+                    + mCalendar.get(Calendar.DAY_OF_MONTH) + "日 " + getWeekDay(mCalendar));
+        }else{
+            setText(mCalendar.get(Calendar.HOUR_OF_DAY) + ":" + mCalendar.get(Calendar.MINUTE));
+        }
     }
 
     private String getWeekDay(Calendar c) {

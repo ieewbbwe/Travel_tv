@@ -32,20 +32,21 @@
         </activity>
         <activity
             android:name=".ui.eat.DeliciousActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.play.AmusementActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.stay.StayActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.traffic.TrafficActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.HomeActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".ui.view.Gallery3DActivity"></activity>
+            android:screenOrientation="landscape" />
+        <activity android:name=".ui.view.Gallery3DActivity" />
+        <activity android:name=".ui.play.ItemDetailActivity"></activity>
     </application>
 
 </manifest>

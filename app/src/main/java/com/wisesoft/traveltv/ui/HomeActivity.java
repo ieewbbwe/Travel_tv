@@ -106,10 +106,6 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         return super.onKeyDown(keyCode, event);
     }
 
-    private boolean isFocused(View v) {
-        return null != v || v.isFocused();
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();

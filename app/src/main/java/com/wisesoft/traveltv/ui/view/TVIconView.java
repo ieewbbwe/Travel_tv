@@ -87,9 +87,9 @@ public class TVIconView extends LinearLayout {
     protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
         if (gainFocus) {
-            runScaleAnim(this, 1.2f, 1.2f);
+            runScaleAnim(this, 1.1f, 1.1f);
         } else {
-            runScaleAnim(this, 1 / 1.2f, 1 / 1.2f);
+            runScaleAnim(this, 1 / 1.1f, 1 / 1.1f);
         }
         tintImage(gainFocus);
 

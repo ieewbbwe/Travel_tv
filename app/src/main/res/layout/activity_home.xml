@@ -59,6 +59,7 @@
             app:gIcon="@mipmap/ic_home_setting"
             app:gText="@string/label_home_setting" />
     </LinearLayout>
+
     <!--content-->
     <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
         android:id="@+id/m_gallery_cf"
