@@ -5,19 +5,21 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.android_mobile.core.utiles.Lg;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
+import com.tv.boost.widget.TvVerticalScrollView;
 import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.RecommendAdapter;
+import com.wisesoft.traveltv.model.ItemDatas;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.view.TVControlView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -42,7 +44,7 @@ public class AmusementDetailActivity extends NActivity {
     @Bind(R.id.m_recommend_rlv)
     TvRecyclerView mRecommendRlv;
     @Bind(R.id.m_content_sv)
-    ScrollView mContentSv;
+    TvVerticalScrollView mContentSv;
 
     private RecommendAdapter mAdapter;
 
@@ -59,6 +61,7 @@ public class AmusementDetailActivity extends NActivity {
         ButterKnife.bind(this);
         initBorder();
         mAdapter = new RecommendAdapter(this);
+        mAdapter.setDataList(ItemDatas.getVideos(10));
         mRecommendRlv.setAdapter(mAdapter);
         mRecommendRlv.setSelectedItemAtCentered(true);
         //设置横向间距
@@ -97,22 +100,17 @@ public class AmusementDetailActivity extends NActivity {
                 onMoveFocusBorder(itemView, 1f, 0);
             }
         });
-        mRecommendRlv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-
+            public void onItemClick(View view, int position) {
+                toast("点击了:" + position);
             }
         });
     }
 
     @Override
     protected void initData() {
-        /*-------测试数据--------*/
-        mRecommendBeans = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            mRecommendBeans.add(new ItemInfoBean());
-        }
-        mAdapter.setDataList(mRecommendBeans);
+
     }
 
     protected void onMoveFocusBorder(View focusedView, float scale, float roundRadius) {
@@ -122,21 +120,33 @@ public class AmusementDetailActivity extends NActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        switch (event.getKeyCode()) {
             case KeyEvent.KEYCODE_DPAD_DOWN:
-                if (mCommentTvc.isFocused() || mPlayTvc.isFocused()) {
-                    mRecommendRlv.requestFocus();
-                    mContentSv.fullScroll(ScrollView.FOCUS_DOWN);
+                if (mPlayTvc.isFocused() || mCommentTvc.isFocused()) {
+                    if (mRecommendRlv != null) {
+                        mContentSv.scrollTo(0, mContentSv.getHeight());
+                        mRecommendRlv.requestFocus();
+                    }
                 }
                 return true;
             case KeyEvent.KEYCODE_DPAD_UP:
-                if (mRecommendRlv.isFocused()) {
-                    mContentSv.fullScroll(ScrollView.FOCUS_UP);
-                    mPlayTvc.requestFocus();
+                if (!mPlayTvc.isFocused()) {
+                    if (mContentSv.canScrollVertically(-1)) {
+                        mContentSv.scrollTo(0, 0);
+                        mPlayTvc.requestFocus();
+                    } else {
+                        mPlayTvc.requestFocus();
+                    }
                 }
                 return true;
         }
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Lg.print("picher", "" + keyCode);
         return super.onKeyDown(keyCode, event);
     }
 }

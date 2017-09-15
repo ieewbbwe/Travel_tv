@@ -11,7 +11,7 @@
 
     <include layout="@layout/layout_head"/>
 
-    <ScrollView
+    <com.tv.boost.widget.TvVerticalScrollView
         android:id="@+id/m_content_sv"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -85,7 +85,7 @@
 
                         <com.wisesoft.traveltv.ui.view.TVControlView
                             android:id="@+id/m_play_tvc"
-                            android:layout_width="100dp"
+                            android:layout_width="130dp"
                             android:layout_height="50dp"
                             android:background="@drawable/shape_gary_bg"
                             android:focusable="true"
@@ -99,7 +99,7 @@
 
                         <com.wisesoft.traveltv.ui.view.TVControlView
                             android:id="@+id/m_comment_tvc"
-                            android:layout_width="100dp"
+                            android:layout_width="130dp"
                             android:layout_height="50dp"
                             android:layout_marginLeft="16dp"
                             android:background="@drawable/shape_gary_bg"
@@ -127,5 +127,5 @@
                 app:tv_layoutManager="V7LinearLayoutManager"/>
         </RelativeLayout>
 
-    </ScrollView>
+    </com.tv.boost.widget.TvVerticalScrollView>
 </LinearLayout>

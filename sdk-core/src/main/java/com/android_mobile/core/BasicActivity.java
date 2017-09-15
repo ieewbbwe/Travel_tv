@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.android_mobile.core.ui.EmptyLayout;
 import com.android_mobile.core.ui.NavigationBar;
 import com.android_mobile.core.utiles.Lg;
-import com.trello.rxlifecycle.components.RxActivity;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.Field;
@@ -46,8 +45,8 @@ public abstract class BasicActivity extends RxAppCompatActivity implements IBasi
     private ViewStub mBodyStub;
     private View mBodyView;
     private Toast toast;
-    private Context context;
     private FragmentManager fm;
+    protected Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,7 @@ public abstract class BasicActivity extends RxAppCompatActivity implements IBasi
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(R.layout.activity_frame);
-        context = this;
+        mContext = this;
         mNavigationBar = new NavigationBar(this,
                 (ViewStub) findViewById(R.id.m_title_bar_vsb));
         mProgressBar = (LinearLayout) findViewById(R.id.m_loading_ll);
@@ -253,7 +252,7 @@ public abstract class BasicActivity extends RxAppCompatActivity implements IBasi
     }
 
     public Context getThisContext() {
-        return context;
+        return mContext;
     }
 
     @Override

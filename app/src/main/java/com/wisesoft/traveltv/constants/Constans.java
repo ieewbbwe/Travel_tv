@@ -19,6 +19,6 @@ public interface Constans {
 
     /*————数据标签————*/
     /*新闻跳转标签*/
-    String DELIVERY_NEW = "delivery_new";
+    String ITEM_BEAN = "item_bean";
 
 }

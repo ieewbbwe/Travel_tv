@@ -1,10 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/ic_home_bg"
+    android:orientation="vertical"
     tools:context="com.wisesoft.traveltv.ui.stay.StayActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <include
+        layout="@layout/layout_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/content_padding"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:orientation="horizontal">
+
+        <!--筛选栏-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_eat_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_stay"
+                app:gText="@string/label_home_stay"/>
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_search_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_search"
+                app:gText="@string/label_home_search"/>
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_sort_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_sort"
+                app:gText="@string/label_home_sort"/>
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_return_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_return"
+                app:gText="@string/label_home_return"/>
+        </LinearLayout>
+        <!--列表位置-->
+        <com.owen.tvrecyclerview.widget.TvRecyclerView
+            android:id="@+id/m_content_trv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"/>
+    </LinearLayout>
+
+</LinearLayout>

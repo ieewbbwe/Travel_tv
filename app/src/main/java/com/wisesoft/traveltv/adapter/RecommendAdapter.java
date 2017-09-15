@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android_mobile.core.BasicAdapter;
+import com.android_mobile.core.manager.image.ImageLoadFactory;
+import com.android_mobile.core.utiles.Lg;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 
@@ -28,6 +30,9 @@ public class RecommendAdapter extends BasicAdapter<ItemInfoBean, RecommendAdapte
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
         ItemInfoBean item = mDataList.get(position);
+        ImageLoadFactory.getInstance().getImageLoadHandler()
+                .displayImage(item.getImagePath(), holder.mRecommendIv);
+        Lg.d("picher", item.getImagePath());
     }
 
     @Override

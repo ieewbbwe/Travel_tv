@@ -55,7 +55,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    /*compile "com.android.support:leanback-v17:$rootProject.ext.leanbackV17Version"*/
     compile "com.android.support:appcompat-v7:$rootProject.ext.appcompatV7Version"
     compile project(':sdk-net')
     compile project(':sdk-core')

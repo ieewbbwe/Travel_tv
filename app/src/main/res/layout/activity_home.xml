@@ -61,17 +61,18 @@
     </LinearLayout>
 
     <!--content-->
-    <!--<it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
+    <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
         android:id="@+id/m_gallery_cf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/m_head_rl"
         android:focusable="true"
+        android:visibility="gone"
         app:coverHeight="@dimen/home_gallery_height"
         app:coverWidth="@dimen/home_gallery_weight"
         app:maxScaleFactor="1.5"
         app:reflectionGap="2dp"
         app:rotationThreshold="0.5"
         app:scalingThreshold="0.5"
-        app:spacing="0.6"/>-->
+        app:spacing="0.6"/>
 </RelativeLayout>

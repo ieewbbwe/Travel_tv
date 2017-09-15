@@ -1,12 +1,6 @@
 package com.wisesoft.traveltv.ui.play;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-<<<<<<< HEAD
-import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
-=======
->>>>>>> 757ea29ff3e42ff88925b220fe4bc9f2cb8b6c39
 import android.view.View;
 
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
@@ -82,7 +76,7 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                toast("选中条目："+position);
+                pushActivity(AmusementDetailActivity.class);
             }
         });
     }

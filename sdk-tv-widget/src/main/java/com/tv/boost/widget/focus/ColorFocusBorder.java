@@ -108,7 +108,7 @@ public class ColorFocusBorder extends AbsFocusBorder {
         if (mShadowWidth > 0) {
             canvas.save();
             //裁剪处理(使阴影矩形框内变为透明)
-            if (mRoundRadius > 0) {
+            if (mRoundRadius >= 0) {
                 canvas.clipRect(0, 0, getWidth(), getHeight());
                 mTempRectF.set(mFrameRectF);
                 mTempRectF.inset(mRoundRadius / 2f, mRoundRadius / 2f);

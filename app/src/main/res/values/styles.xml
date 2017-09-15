@@ -23,6 +23,8 @@
         <item name="com.wisesoft.traveltv:gTextPadding">10dp</item>
         <item name="com.wisesoft.traveltv:gTextColor">@color/text_color_gray</item>
         <item name="com.wisesoft.traveltv:gTextSize">@dimen/text_normal_size</item>
+        <item name="com.wisesoft.traveltv:gIconWidth">50dp</item>
+        <item name="com.wisesoft.traveltv:gIconHeight">50dp</item>
     </style>
 
 </resources>

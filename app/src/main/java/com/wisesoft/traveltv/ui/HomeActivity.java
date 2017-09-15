@@ -10,6 +10,7 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.GalleryAdapter;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.play.AmusementActivity;
+import com.wisesoft.traveltv.ui.stay.StayActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
 
 /**
  * Created by mxh on 2017.09.05
@@ -38,8 +40,8 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     TVIconView mTrafficRb;
     @Bind(R.id.m_settings_rb)
     TVIconView mSettingsRb;
-    /*@Bind(R.id.m_gallery_cf)
-    FeatureCoverFlow mGalleryCf;*/
+    @Bind(R.id.m_gallery_cf)
+    FeatureCoverFlow mGalleryCf;
 
     private List<ItemInfoBean> beanList = new ArrayList<>();
     private GalleryAdapter mGalleryAdapter;
@@ -63,6 +65,8 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         mStayRb.setOnClickListener(this);
         mTrafficRb.setOnClickListener(this);
         mSettingsRb.setOnClickListener(this);
+
+
     }
 
     @Override
@@ -74,7 +78,7 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         beanList.add(new ItemInfoBean(""));
         /*-----测试数据完------*/
         mGalleryAdapter = new GalleryAdapter(beanList, this);
-        //mGalleryCf.setAdapter(mGalleryAdapter);
+        mGalleryCf.setAdapter(mGalleryAdapter);
 
     }
 
@@ -82,7 +86,7 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_DOWN:
-              /*  if (isFocused(mGalleryCf)) {
+                if (isFocused(mGalleryCf)) {
                     if (mSearchRb != null)
                         mSearchRb.requestFocus();
                 }
@@ -93,7 +97,7 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
                     if (mGalleryCf != null)
                         mGalleryCf.requestFocus();
                 }
-                break;*/
+                break;
             default:
                 break;
         }
@@ -112,9 +116,11 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
             case R.id.m_play_rb:
                 pushActivity(AmusementActivity.class);
                 break;
+            case R.id.m_stay_rb:
+                pushActivity(StayActivity.class);
+                break;
             case R.id.m_search_rb:
             case R.id.m_eat_rb:
-            case R.id.m_stay_rb:
             case R.id.m_traffic_rb:
             case R.id.m_settings_rb:
                 toast("Wait For Codding...");
