@@ -78,6 +78,13 @@ public class StayActivity extends NActivity {
                 mFocusBorder.setVisible(hasFocus);
             }
         });
+        mReturnTiv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popActivity();
+            }
+        });
+
     }
 
     @Override

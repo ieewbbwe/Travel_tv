@@ -18,6 +18,7 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.RecommendAdapter;
 import com.wisesoft.traveltv.model.ItemDatas;
 import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVControlView;
 
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AmusementDetailActivity extends NActivity {
+public class AmusementDetailActivity extends NActivity implements View.OnClickListener {
 
     @Bind(R.id.m_main_iv)
     ImageView mMainIv;
@@ -106,6 +107,7 @@ public class AmusementDetailActivity extends NActivity {
                 toast("点击了:" + position);
             }
         });
+        mPlayTvc.setOnClickListener(this);
     }
 
     @Override
@@ -148,5 +150,17 @@ public class AmusementDetailActivity extends NActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         Lg.print("picher", "" + keyCode);
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.m_play_tvc:
+                pushActivity(ImageDetailActivity.class);
+                break;
+            case R.id.m_comment_tvc:
+                toast("点个赞");
+                break;
+        }
     }
 }

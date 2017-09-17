@@ -20,6 +20,8 @@
 
         <!--导航栏-->
         <LinearLayout
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="16dp"
@@ -30,24 +32,22 @@
                 android:id="@+id/m_search_tiv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
                 app:gIcon="@mipmap/ic_home_search"
                 app:gText="@string/label_home_search"
-                app:gTextColor="@color/text_color_gray"
-                app:gTextPadding="10dp"
-                app:gTextSize="@dimen/text_normal_size"/>
+                style="@style/m_home_radio_style"/>
 
 
             <com.wisesoft.traveltv.ui.view.TVIconView
                 android:id="@+id/m_return_tiv"
+                style="@style/m_home_radio_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:focusable="true"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
                 app:gIcon="@mipmap/ic_home_return"
-                app:gText="@string/label_home_return"
-                app:gTextColor="@color/text_color_gray"
-                app:gTextPadding="10dp"
-                app:gTextSize="@dimen/text_normal_size"/>
+                app:gText="@string/label_home_return" />
         </LinearLayout>
 
         <!--图片预览-->
@@ -76,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:text="君和格蕾丝大酒店"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_small_size"/>
+                    android:textSize="@dimen/text_big_size"/>
 
                 <TextView
                     android:id="@+id/m_grade_tv"
@@ -87,9 +87,10 @@
                     android:layout_toRightOf="@+id/m_title_tv"
                     android:text="综合评分：4.5分"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_smallest_size"/>
+                    android:textSize="@dimen/text_small_size"/>
 
                 <TextView
+                    android:layout_marginTop="8dp"
                     android:id="@+id/m_phone_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,9 +99,10 @@
                     android:layout_toRightOf="@+id/m_address_tv"
                     android:text="预约电话：0719-8888888"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_smallest_size"/>
+                    android:textSize="@dimen/text_small_size"/>
 
                 <TextView
+                    android:layout_marginTop="8dp"
                     android:id="@+id/m_address_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,7 +111,7 @@
                     android:maxLines="2"
                     android:text="地址：湖北省武汉市江夏区高新4路"
                     android:textColor="@color/text_color"
-                    android:textSize="@dimen/text_smallest_size"/>
+                    android:textSize="@dimen/text_small_size"/>
             </RelativeLayout>
         </RelativeLayout>
 
