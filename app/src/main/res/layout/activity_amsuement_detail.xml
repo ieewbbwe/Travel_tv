@@ -9,7 +9,9 @@
     android:orientation="vertical"
     tools:context="com.wisesoft.traveltv.ui.play.AmusementDetailActivity">
 
-    <include layout="@layout/layout_head"/>
+    <include
+        style="@style/head_style"
+        layout="@layout/layout_head"/>
 
     <com.tv.boost.widget.TvVerticalScrollView
         android:id="@+id/m_content_sv"

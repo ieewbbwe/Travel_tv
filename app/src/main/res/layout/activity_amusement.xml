@@ -10,10 +10,8 @@
 
     <!--head-->
     <include
-        layout="@layout/layout_head"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/head_height"
-        android:layout_margin="24dp" />
+        style="@style/head_style"
+        layout="@layout/layout_head" />
     <!--content-->
     <LinearLayout
         android:layout_width="match_parent"

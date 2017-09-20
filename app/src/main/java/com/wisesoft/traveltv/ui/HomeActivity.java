@@ -50,6 +50,7 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        overridePendingTransition(R.anim.push_fadein_in, R.anim.push_fadein_out);
     }
 
     @Override

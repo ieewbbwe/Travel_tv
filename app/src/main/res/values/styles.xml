@@ -27,4 +27,9 @@
         <item name="com.wisesoft.traveltv:gIconHeight">50dp</item>
     </style>
 
+    <style name="head_style">
+        <item name="android:layout_height">@dimen/head_height</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">24dp</item>
+    </style>
 </resources>

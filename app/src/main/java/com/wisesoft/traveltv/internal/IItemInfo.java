@@ -15,4 +15,5 @@ public interface IItemInfo {
 
     /*获取视屏名*/
     String getName();
+
 }

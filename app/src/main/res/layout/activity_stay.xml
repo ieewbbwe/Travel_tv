@@ -10,10 +10,8 @@
     tools:context="com.wisesoft.traveltv.ui.stay.StayActivity">
 
     <include
-        layout="@layout/layout_head"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/content_padding"/>
+        style="@style/head_style"
+        layout="@layout/layout_head"/>
 
     <LinearLayout
         android:layout_width="match_parent"
