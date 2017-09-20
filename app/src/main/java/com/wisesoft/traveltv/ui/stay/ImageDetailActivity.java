@@ -74,7 +74,7 @@ public class ImageDetailActivity extends NActivity {
     @Override
     protected void initComp() {
         ButterKnife.bind(this);
-        mImgContentLl = (LinearLayout) findViewById(R.id.m_img_content_ll);
+        mImgContentLl = (LinearLayout) findViewById(R.id.m_mxh_ll);
         //默认显示三张图片
         mImgList.add(new ImageBean("file:///android_asset/default1.jpg"));
         mImgList.add(new ImageBean("file:///android_asset/default2.jpg"));
