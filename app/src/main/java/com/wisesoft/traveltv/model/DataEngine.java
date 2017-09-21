@@ -1,5 +1,10 @@
 package com.wisesoft.traveltv.model;
 
+import android.content.Context;
+
+import com.android_mobile.core.utiles.Lg;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -9,7 +14,13 @@ import java.util.Random;
  * Describe：
  */
 
-public class ItemDatas {
+public class DataEngine {
+
+    public static Context mContext;
+
+    public static void init(Context applicationCtx) {
+        mContext = applicationCtx;
+    }
 
     private static Random random = new Random();
 
@@ -41,5 +52,24 @@ public class ItemDatas {
             itemInfoBeen.add(new ItemInfoBean(movieImgs[random.nextInt(movieImgs.length)]));
         }
         return itemInfoBeen;
+    }
+
+    public static List<ImageBean> getImages() {
+        List<ImageBean> beanList = new ArrayList<>();
+        ImageBean image = null;
+        try {
+            String[] fileNames = mContext.getAssets().list("imgs");
+            Lg.d("picher", "图片数" + fileNames.length);
+            for (String str : fileNames) {
+                Lg.d("picher", "图片数" + str);
+                String[] strs = str.split("_");
+                image = new ImageBean(strs[1].split("\\.")[0], "file:///android_asset/imgs/" + str, strs[0]);
+                beanList.add(image);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return beanList;
     }
 }
