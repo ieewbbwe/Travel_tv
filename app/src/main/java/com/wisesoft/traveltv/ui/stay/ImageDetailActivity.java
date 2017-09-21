@@ -1,16 +1,11 @@
 package com.wisesoft.traveltv.ui.stay;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.android_mobile.core.utiles.BitmapUtils;
 import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.bumptech.glide.Glide;
@@ -22,25 +17,19 @@ import com.wisesoft.traveltv.model.ImageBean;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 import com.youth.banner.Banner;
-import com.youth.banner.transformer.AccordionTransformer;
 import com.youth.banner.transformer.RotateUpTransformer;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
-import rx.Observer;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 public class ImageDetailActivity extends NActivity {
@@ -105,10 +94,10 @@ public class ImageDetailActivity extends NActivity {
                 .subscribe(new Action1<File>() {
                     @Override
                     public void call(File file) {
-                        Lg.print("picher","文件地址："+file.getPath());
+                        Lg.print("picher", "文件地址：" + file.getPath());
                     }
                 });
-        Lg.print("picher","文件地址："+(mImgContentLl==null));
+        Lg.print("picher", "文件地址：" + (mImgContentLl == null));
 
         //mImgContentLl.setBackground(new BitmapDrawable
 /*

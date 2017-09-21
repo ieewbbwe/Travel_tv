@@ -16,7 +16,7 @@ import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.RecommendAdapter;
-import com.wisesoft.traveltv.model.ItemDatas;
+import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVControlView;
@@ -62,7 +62,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         ButterKnife.bind(this);
         initBorder();
         mAdapter = new RecommendAdapter(this);
-        mAdapter.setDataList(ItemDatas.getVideos(10));
+        mAdapter.setDataList(DataEngine.getVideos(10));
         mRecommendRlv.setAdapter(mAdapter);
         mRecommendRlv.setSelectedItemAtCentered(true);
         //设置横向间距

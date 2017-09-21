@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.ui.HomeActivity;
 
 import butterknife.Bind;
@@ -57,6 +58,9 @@ public class LoadingActivity extends NActivity {
     }
 
     private void updateInitData() {
+        DataBaseDao mDao = new DataBaseDao(this);
+        mDao.initDatabase();
+
         pushActivity(HomeActivity.class, true);
     }
 

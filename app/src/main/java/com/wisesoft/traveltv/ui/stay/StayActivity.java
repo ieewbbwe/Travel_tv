@@ -12,7 +12,7 @@ import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.StaggeredAdapter;
 import com.wisesoft.traveltv.constants.Constans;
-import com.wisesoft.traveltv.model.ItemDatas;
+import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
@@ -50,7 +50,7 @@ public class StayActivity extends NActivity {
         mContentTrv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         mContentTrv.setSpacingWithMargins(15, 15);
         mAdapter = new StaggeredAdapter(this);
-        mAdapter.setDataList(ItemDatas.getVideos(60));
+        mAdapter.setDataList(DataEngine.getVideos(60));
         mContentTrv.setAdapter(mAdapter);
     }
 
