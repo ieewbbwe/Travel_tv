@@ -13,8 +13,8 @@ import java.util.List;
 @DatabaseTable(tableName = "tb_item_info")
 public class ItemInfoBean extends BaseBean implements IItemInfo {
 
-    @DatabaseField
-    private String id;
+    @DatabaseField(generatedId = true)
+    private int id;
     @DatabaseField
     private String image_url;
     @DatabaseField
@@ -24,15 +24,15 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @DatabaseField
     private String image_id;
     @DatabaseField
-    private String recommend;
+    private double recommend;
     @DatabaseField
-    private String create_time;
+    private long create_time;
     @DatabaseField
     private String introduce;
     @DatabaseField
     private String type;
     @DatabaseField
-    private String view_count;
+    private long view_count;
 
     @DatabaseField
     private String address;
@@ -59,14 +59,27 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.phone = phone;
     }
 
+
+    public ItemInfoBean(String image_url, String name, double recommend, long create_time, String introduce, String type, long view_count, String address, String phone) {
+        this.image_url = image_url;
+        this.name = name;
+        this.recommend = recommend;
+        this.create_time = create_time;
+        this.introduce = introduce;
+        this.type = type;
+        this.view_count = view_count;
+        this.address = address;
+        this.phone = phone;
+    }
+
     public ItemInfoBean() {
     }
 
-    public String getGrade() {
+    public double getGrade() {
         return recommend;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(double grade) {
         this.recommend = grade;
     }
 

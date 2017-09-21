@@ -31,11 +31,14 @@ import com.wisesoft.traveltv.R;
 
 public class TVIconView extends LinearLayout {
 
+    private static final String TEXT_SITE_TOP = "top";
+    private static final String TEXT_SITE_BOTTOM = "bottom";
     private AppCompatTextView mTextView;
     private AppCompatImageView mImageView;
     private int mColorFoucus;
     private int mColorNotFoucus;
     private double mHeight;
+    private String mTextSite = "top";
 
     public TVIconView(Context context) {
         this(context, null);
@@ -71,11 +74,17 @@ public class TVIconView extends LinearLayout {
             mImageView.setImageResource(a.getResourceId(R.styleable.IconView_gIcon, 0));
             params2.width = a.getDimensionPixelOffset(R.styleable.IconView_gIconWidth, LayoutParams.WRAP_CONTENT);
             params2.height = a.getDimensionPixelOffset(R.styleable.IconView_gIconHeight, LayoutParams.WRAP_CONTENT);
+            mTextSite = a.getString(R.styleable.IconView_gTextSite);
+
             a.recycle();
         }
-
-        addView(mTextView, params1);
-        addView(mImageView, params2);
+        if (TEXT_SITE_BOTTOM.equals(mTextSite)) {
+            addView(mImageView, params2);
+            addView(mTextView, params1);
+        } else {
+            addView(mTextView, params1);
+            addView(mImageView, params2);
+        }
         setOrientation(VERTICAL);
 
         mColorFoucus = Color.parseColor("#ededed");

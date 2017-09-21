@@ -14,10 +14,10 @@
         android:layout_height="80dp"
         android:padding="@dimen/content_padding"
         android:scaleType="centerCrop"
-        android:visibility="gone"
         android:src="@mipmap/ic_broadcast_logo" />
     <!--Time-->
     <LinearLayout
+        android:padding="16dp"
         android:background="@drawable/shape_alpha_black"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -78,6 +78,5 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop"
-        android:visibility="gone"
         android:src="@mipmap/ic_app_logo" />
 </RelativeLayout>

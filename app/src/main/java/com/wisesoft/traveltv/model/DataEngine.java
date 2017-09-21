@@ -3,9 +3,13 @@ package com.wisesoft.traveltv.model;
 import android.content.Context;
 
 import com.android_mobile.core.utiles.Lg;
+import com.wisesoft.traveltv.R;
+import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.db.DataBaseDao;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -45,7 +49,6 @@ public class DataEngine {
             "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3179642771,1751426616&fm=26&gp=0.jpg"
     };
 
-
     public static List<ItemInfoBean> getVideos(int count) {
         List<ItemInfoBean> itemInfoBeen = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -59,9 +62,7 @@ public class DataEngine {
         ImageBean image = null;
         try {
             String[] fileNames = mContext.getAssets().list("imgs");
-            Lg.d("picher", "图片数" + fileNames.length);
             for (String str : fileNames) {
-                Lg.d("picher", "图片数" + str);
                 String[] strs = str.split("_");
                 image = new ImageBean(strs[1].split("\\.")[0], "file:///android_asset/imgs/" + str, strs[0]);
                 beanList.add(image);
@@ -69,7 +70,49 @@ public class DataEngine {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return beanList;
+    }
+
+    public static List<ItemInfoBean> getItemInfos() {
+        ImageBean image;
+        List<ItemInfoBean> itemList = new ArrayList<>();
+        Random random = new Random();
+        DataBaseDao mBaseDao = new DataBaseDao(mContext);
+        List<String> titles = Arrays.asList(mContext.getResources().getStringArray(R.array.default_play_titles));
+        List<String> introduces = Arrays.asList(mContext.getResources().getStringArray(R.array.default_play_introduces));
+        List<String> address = Arrays.asList(mContext.getResources().getStringArray(R.array.default_play_address));
+
+        for (int i = 0; i < titles.size(); i++) {
+            image = mBaseDao.queryImageByOrder(i + 1, Constans.TYPE_PLAY);
+
+            itemList.add(new ItemInfoBean((image != null) ? image.getImgUrl() : "", titles.get(i),
+                    random.nextInt(5) + 1, System.currentTimeMillis(), introduces.get(i),
+                    Constans.TYPE_PLAY, random.nextInt(6000), address.get(i), "18772943998"));
+        }
+
+        List<String> eatTitles = Arrays.asList(mContext.getResources().getStringArray(R.array.default_eat_titles));
+        List<String> eatIntroduces = Arrays.asList(mContext.getResources().getStringArray(R.array.default_eat_introduces));
+        List<String> eatAddress = Arrays.asList(mContext.getResources().getStringArray(R.array.default_eat_address));
+
+        for (int i = 0; i < eatTitles.size(); i++) {
+            image = mBaseDao.queryImageByOrder(i + 1, Constans.TYPE_EAT);
+
+            itemList.add(new ItemInfoBean((image != null) ? image.getImgUrl() : "", eatTitles.get(i),
+                    random.nextInt(5) + 1, System.currentTimeMillis(), eatIntroduces.get(i),
+                    Constans.TYPE_EAT, random.nextInt(6000), eatAddress.get(i), "18772943998"));
+        }
+
+        List<String> stayTitles = Arrays.asList(mContext.getResources().getStringArray(R.array.default_stay_titles));
+        List<String> stayIntroduces = Arrays.asList(mContext.getResources().getStringArray(R.array.default_stay_introduces));
+        List<String> stayAddress = Arrays.asList(mContext.getResources().getStringArray(R.array.default_stay_address));
+
+        for (int i = 0; i < stayTitles.size(); i++) {
+            image = mBaseDao.queryImageByOrder(i + 1, Constans.TYPE_STAY);
+
+            itemList.add(new ItemInfoBean((image != null) ? image.getImgUrl() : "", stayTitles.get(i),
+                    random.nextInt(5) + 1, System.currentTimeMillis(), stayIntroduces.get(i),
+                    Constans.TYPE_STAY, random.nextInt(6000), stayAddress.get(i), "18772943998"));
+        }
+        return itemList;
     }
 }

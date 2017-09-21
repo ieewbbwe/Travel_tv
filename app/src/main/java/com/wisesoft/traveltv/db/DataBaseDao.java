@@ -2,8 +2,12 @@ package com.wisesoft.traveltv.db;
 
 import android.content.Context;
 
+import com.android_mobile.core.manager.SharedPrefManager;
+import com.android_mobile.core.utiles.CollectionUtils;
+import com.android_mobile.core.utiles.Lg;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
+import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ImageBean;
 import com.wisesoft.traveltv.model.ItemInfoBean;
@@ -46,8 +50,9 @@ public class DataBaseDao {
                 @Override
                 public Void call() throws Exception {
                     updateImage();
-                    updateVideo();
-                    updateItemInfo();
+                    // updateVideo();
+                     updateItemInfo();
+                    SharedPrefManager.putBoolean(Constans.IS_INIT_DATA,true);
                     return null;
                 }
             });
@@ -57,7 +62,17 @@ public class DataBaseDao {
     }
 
     private void updateItemInfo() {
+        try {
+            List<ItemInfoBean> beanList = DataEngine.getItemInfos();
+            Lg.print("picher","条目:"+beanList.size());
+            for (ItemInfoBean item : beanList) {
+                mItemDao.create(item);
+                mItemDao.create(item);
+            }
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateVideo() {
@@ -75,8 +90,25 @@ public class DataBaseDao {
         }
     }
 
-    public List<ItemInfoBean> getItemInfos() {
-        return null;
+    public List<ItemInfoBean> getItemInfos(String typeEat) {
+        List<ItemInfoBean> items = null;
+        try {
+            items =  mItemDao.queryBuilder().where().eq("type",typeEat).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return items;
     }
 
+    public ImageBean queryImageByOrder(int order, String type) {
+        List<ImageBean> imgs = null;
+        try {
+            imgs = mImageDao.queryBuilder().where().eq("img_order", order)
+                    .and().eq("type", type).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return CollectionUtils.isNotEmpty(imgs) ? imgs.get(0) : null;
+    }
 }

@@ -35,11 +35,11 @@ public class StaggeredAdapter extends BasicAdapter<ItemInfoBean, StaggeredAdapte
 
         int dimenId;
         if (position % 3 == 0) {
-            dimenId = 430;
+            dimenId = 400;
         } else if (position % 5 == 0) {
             dimenId = 310;
         } else if (position % 7 == 0) {
-            dimenId = 400;
+            dimenId = 360;
         } else {
             dimenId = 210;
         }

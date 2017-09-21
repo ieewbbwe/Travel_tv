@@ -4,11 +4,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
+import com.android_mobile.core.manager.SharedPrefManager;
+import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.ui.HomeActivity;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by mxh on 2017/8/8.
@@ -58,8 +66,15 @@ public class LoadingActivity extends NActivity {
     }
 
     private void updateInitData() {
-        DataBaseDao mDao = new DataBaseDao(this);
-        mDao.initDatabase();
+        if (!SharedPrefManager.getBoolean(Constans.IS_INIT_DATA, false)) {
+            Executors.newCachedThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    DataBaseDao mDao = new DataBaseDao(mContext);
+                    mDao.initDatabase();
+                }
+            });
+        }
 
         pushActivity(HomeActivity.class, true);
     }

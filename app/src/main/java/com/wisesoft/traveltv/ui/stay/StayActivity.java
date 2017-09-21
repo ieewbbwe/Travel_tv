@@ -47,7 +47,7 @@ public class StayActivity extends NActivity {
     protected void initComp() {
         initBorder();
         ButterKnife.bind(this);
-        mContentTrv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+        mContentTrv.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL));
         mContentTrv.setSpacingWithMargins(15, 15);
         mAdapter = new StaggeredAdapter(this);
         mAdapter.setDataList(DataEngine.getVideos(60));

@@ -21,4 +21,9 @@ public interface Constans {
     /*新闻跳转标签*/
     String ITEM_BEAN = "item_bean";
 
+    String TYPE_PLAY = "play";
+    String TYPE_EAT = "eat";
+    String TYPE_STAY = "stay";
+    String TYPE_TRAFFIC = "traffic";
+    String IS_INIT_DATA = "is_init_data";
 }

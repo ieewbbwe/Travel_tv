@@ -12,6 +12,7 @@
         <attr name="gTextPadding" format="dimension"/>
         <attr name="gIconWidth" format="dimension"/>
         <attr name="gIconHeight" format="dimension"/>
+        <attr name="gTextSite" format="string"/>
     </declare-styleable>
 
     <declare-styleable name="ControlView">

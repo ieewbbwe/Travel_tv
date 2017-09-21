@@ -9,6 +9,7 @@ import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.GalleryAdapter;
 import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.ui.eat.DeliciousActivity;
 import com.wisesoft.traveltv.ui.play.AmusementActivity;
 import com.wisesoft.traveltv.ui.stay.StayActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
@@ -120,8 +121,10 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
             case R.id.m_stay_rb:
                 pushActivity(StayActivity.class);
                 break;
-            case R.id.m_search_rb:
             case R.id.m_eat_rb:
+                pushActivity(DeliciousActivity.class);
+                break;
+            case R.id.m_search_rb:
             case R.id.m_traffic_rb:
             case R.id.m_settings_rb:
                 toast("Wait For Codding...");

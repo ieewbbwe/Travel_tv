@@ -10,8 +10,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "tb_image")
 public class ImageBean extends BaseBean {
 
-    @DatabaseField
-    private String id;
+    @DatabaseField(generatedId = true)
+    private int id;
     @DatabaseField
     private String image_path;
     @DatabaseField
@@ -20,14 +20,48 @@ public class ImageBean extends BaseBean {
     private String type;
     @DatabaseField
     private String definition;
+    @DatabaseField(columnName = "img_order")
+    private String order;
 
     public ImageBean() {
     }
 
-    public ImageBean(String id, String image_path, String type) {
-        this.id = id;
+    public ImageBean(String order,String image_path, String type) {
         this.image_path = image_path;
         this.type = type;
+        this.order = order;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 
     public String getDefinition() {
