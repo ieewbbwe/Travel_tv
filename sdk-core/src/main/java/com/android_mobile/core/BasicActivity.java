@@ -47,11 +47,13 @@ public abstract class BasicActivity extends RxAppCompatActivity implements IBasi
     private Toast toast;
     private FragmentManager fm;
     protected Context mContext;
+    private BasicApplication mApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        BasicApplication.activityStack.add(this);
+        mApplication = (BasicApplication) getApplication();
+        //mApplication.getActivityStack().add(this);
         fm = getSupportFragmentManager();
         super.onCreate(savedInstanceState);
     }
@@ -116,7 +118,8 @@ public abstract class BasicActivity extends RxAppCompatActivity implements IBasi
 
     @Override
     public void popActivity() {
-        BasicApplication.activityStack.pop().finish();
+        finish();
+        //mApplication.activityStack.pop().finish();
     }
 
     @Override
@@ -267,11 +270,12 @@ public abstract class BasicActivity extends RxAppCompatActivity implements IBasi
     }
 
     public void exitAppWithToast() {
-        while (BasicApplication.activityStack.size() > 0) {
-            BasicApplication.activityStack.pop().finish();
+        while (mApplication.activityStack.size() > 0) {
+            mApplication.activityStack.pop().finish();
         }
         finish();
         System.gc();
         System.exit(0);
     }
+
 }

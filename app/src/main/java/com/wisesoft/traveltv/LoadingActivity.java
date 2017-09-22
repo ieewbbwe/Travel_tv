@@ -27,6 +27,7 @@ public class LoadingActivity extends NActivity {
 
     @Bind(R.id.m_loading_iv)
     ImageView mLoadingIv;
+    private DataBaseDao mDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class LoadingActivity extends NActivity {
      */
     @Override
     protected void initData() {
+        mDao = new DataBaseDao(mContext);
         //加载一些初始化数据
         new Handler().postDelayed(new Runnable() {
 
@@ -70,7 +72,6 @@ public class LoadingActivity extends NActivity {
             Executors.newCachedThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
-                    DataBaseDao mDao = new DataBaseDao(mContext);
                     mDao.initDatabase();
                 }
             });

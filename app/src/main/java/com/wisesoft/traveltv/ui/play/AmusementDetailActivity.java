@@ -3,6 +3,7 @@ package com.wisesoft.traveltv.ui.play;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
@@ -36,6 +37,12 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class AmusementDetailActivity extends NActivity implements View.OnClickListener {
 
@@ -65,6 +72,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     //本页的条目对象
     private ItemInfoBean mItemInfoBean;
     private FrameLayout mContentLl;
+    private Bitmap mBlueBt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +154,22 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         Glide.with(this).load(mItemInfoBean.getImgUrl())
                 .asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                mContentLl.setBackground(new BitmapDrawable(BitmapUtils.progressBitmapPoxBlur(resource)));
+            public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Observable.create(new Observable.OnSubscribe<Bitmap>() {
+                    @Override
+                    public void call(Subscriber<? super Bitmap> subscriber) {
+                        mBlueBt = BitmapUtils.progressBitmapPoxBlur(
+                                resource, getScreenWidth(), getScreenHeight());
+                        subscriber.onNext(mBlueBt);
+                    }
+                }).subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<Bitmap>() {
+                            @Override
+                            public void call(Bitmap bitmap) {
+                                mContentLl.setBackground(new BitmapDrawable(mBlueBt));
+                            }
+                        });
             }
         });
     }
@@ -210,6 +232,15 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
             case R.id.m_comment_tvc:
                 toast("点个赞");
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBlueBt != null) {
+            mBlueBt.recycle();
+            mBlueBt = null;
         }
     }
 }

@@ -25,7 +25,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static DataBaseHelper mInstance;
     private static final String DB_NAME = "travel.db";
-    private Map<String, Dao> daos = new HashMap<>();
+    private static Map<String, Dao> daos = new HashMap<>();
 
     private DataBaseHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);

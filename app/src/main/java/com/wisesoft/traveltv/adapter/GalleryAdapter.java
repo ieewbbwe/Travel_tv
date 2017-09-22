@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class GalleryAdapter extends BaseAdapter {
     private Context ctx;
     private List<ItemInfoBean> list;
+    private OnItemClickListener mItemClickListener;
 
     public GalleryAdapter(List<ItemInfoBean> list, Context context) {
         this.ctx = context;
@@ -29,7 +31,7 @@ public class GalleryAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return list==null?0:list.size();
+        return list == null ? 0 : list.size();
     }
 
     @Override
@@ -43,7 +45,7 @@ public class GalleryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
         if (convertView == null) {
             convertView = LayoutInflater.from(ctx).inflate(R.layout.layout_gallery, null);
@@ -51,7 +53,27 @@ public class GalleryAdapter extends BaseAdapter {
             convertView.setTag(vh);
         }
         vh = (ViewHolder) convertView.getTag();
+        ItemInfoBean item = list.get(position);
+        ImageLoadFactory.getInstance().getImageLoadHandler()
+                .displayImage(item.getImgUrl(), vh.image);
+
+        if (mItemClickListener != null) {
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mItemClickListener.onClick(v, position);
+                }
+            });
+        }
         return convertView;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        void onClick(View v, int position);
     }
 
     static class ViewHolder {

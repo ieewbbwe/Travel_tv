@@ -68,7 +68,7 @@ public class TimeTextView extends TextView {
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
-                       // Lg.print("TimeTextView", (long) o);
+                        Lg.print("TimeTextView", (long) o);
                         mCalendar = Calendar.getInstance();
                        setTime(MM_dd_Week,mCalendar);
                     }

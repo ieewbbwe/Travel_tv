@@ -134,7 +134,9 @@ public class ImageDetailActivity extends NActivity {
                 .asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                mImgContentFl.setBackground(new BitmapDrawable(BitmapUtils.progressBitmapPoxBlur(resource)));
+                Bitmap mBlueBt = BitmapUtils.progressBitmapPoxBlur(
+                        resource,getScreenWidth(),getScreenHeight());
+                mImgContentFl.setBackground(new BitmapDrawable(mBlueBt));
             }
         });
     }

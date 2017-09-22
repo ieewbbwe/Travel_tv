@@ -9,6 +9,7 @@ import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
+import com.wisesoft.traveltv.NApplication;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.StaggeredAdapter;
 import com.wisesoft.traveltv.constants.Constans;
@@ -41,6 +42,7 @@ public class StayActivity extends NActivity {
     TvRecyclerView mContentTrv;
     private StaggeredAdapter mAdapter;
     private List<ItemInfoBean> items;
+    private DataBaseDao mBaseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +94,20 @@ public class StayActivity extends NActivity {
 
     @Override
     protected void initData() {
-        DataBaseDao mBaseDao = new DataBaseDao(this);
-        items = mBaseDao.getItemInfos(30);
+        mBaseDao = new DataBaseDao(this);
+        items = mBaseDao.getItemInfos(Constans.TYPE_STAY,10);
+        items.addAll(mBaseDao.getItemInfos(30));
         Collections.shuffle(items);
         mAdapter.setDataList(items);
         mContentTrv.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+
+        NApplication.getRefWatcher(this).watch(this);
+
     }
 }

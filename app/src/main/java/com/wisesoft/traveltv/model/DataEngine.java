@@ -20,9 +20,11 @@ import java.util.Random;
 public class DataEngine {
 
     public static Context mContext;
+    private static DataBaseDao mDao;
 
     public static void init(Context applicationCtx) {
         mContext = applicationCtx;
+        mDao = new DataBaseDao(mContext);
     }
 
     private static Random random = new Random();
@@ -76,13 +78,12 @@ public class DataEngine {
         ImageBean image;
         List<ItemInfoBean> itemList = new ArrayList<>();
         Random random = new Random();
-        DataBaseDao mBaseDao = new DataBaseDao(mContext);
         List<String> titles = Arrays.asList(mContext.getResources().getStringArray(R.array.default_play_titles));
         List<String> introduces = Arrays.asList(mContext.getResources().getStringArray(R.array.default_play_introduces));
         List<String> address = Arrays.asList(mContext.getResources().getStringArray(R.array.default_play_address));
 
         for (int i = 0; i < titles.size(); i++) {
-            image = mBaseDao.queryImageByOrder(i + 1, Constans.TYPE_PLAY);
+            image = mDao.queryImageByOrder(i + 1, Constans.TYPE_PLAY);
 
             itemList.add(new ItemInfoBean((image != null) ? image.getImgUrl() : "", titles.get(i),
                     random.nextInt(5) + 1, System.currentTimeMillis(), introduces.get(i),
@@ -94,7 +95,7 @@ public class DataEngine {
         List<String> eatAddress = Arrays.asList(mContext.getResources().getStringArray(R.array.default_eat_address));
 
         for (int i = 0; i < eatTitles.size(); i++) {
-            image = mBaseDao.queryImageByOrder(i + 1, Constans.TYPE_EAT);
+            image = mDao.queryImageByOrder(i + 1, Constans.TYPE_EAT);
 
             itemList.add(new ItemInfoBean((image != null) ? image.getImgUrl() : "", eatTitles.get(i),
                     random.nextInt(5) + 1, System.currentTimeMillis(), eatIntroduces.get(i),
@@ -106,7 +107,7 @@ public class DataEngine {
         List<String> stayAddress = Arrays.asList(mContext.getResources().getStringArray(R.array.default_stay_address));
 
         for (int i = 0; i < stayTitles.size(); i++) {
-            image = mBaseDao.queryImageByOrder(i + 1, Constans.TYPE_STAY);
+            image = mDao.queryImageByOrder(i + 1, Constans.TYPE_STAY);
 
             itemList.add(new ItemInfoBean((image != null) ? image.getImgUrl() : "", stayTitles.get(i),
                     random.nextInt(5) + 1, System.currentTimeMillis(), stayIntroduces.get(i),
@@ -117,14 +118,12 @@ public class DataEngine {
 
     public static List<ItemInfoBean> getLandingBanner() {
         List<ItemInfoBean> beanList;
-        DataBaseDao mDao = new DataBaseDao(mContext);
         beanList = mDao.getHotItemInfos(3);
         return beanList;
     }
 
     public static List<ItemInfoBean> getRecommendInfo(String type, int count) {
         List<ItemInfoBean> beanList;
-        DataBaseDao mDao = new DataBaseDao(mContext);
         beanList = mDao.getItemInfos(type, count);
         return beanList;
     }

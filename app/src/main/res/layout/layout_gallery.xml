@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:clickable="true"
     android:layout_width="@dimen/home_gallery_weight"
     android:layout_height="@dimen/home_gallery_height">
     <ImageView

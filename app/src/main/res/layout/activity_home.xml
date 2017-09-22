@@ -65,7 +65,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/m_head_rl"
         android:focusable="true"
-        android:visibility="gone"
         app:coverHeight="@dimen/home_gallery_height"
         app:coverWidth="@dimen/home_gallery_weight"
         app:maxScaleFactor="1.5"

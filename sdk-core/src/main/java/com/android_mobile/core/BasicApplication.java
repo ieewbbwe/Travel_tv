@@ -17,7 +17,7 @@ import java.util.Stack;
 
 public class BasicApplication extends Application {
 
-    public static Stack<Activity> activityStack = new Stack<Activity>();
+    public Stack<Activity> activityStack = new Stack<Activity>();
 
     private Context applicationContext;
 
@@ -30,5 +30,8 @@ public class BasicApplication extends Application {
         Thread.setDefaultUncaughtExceptionHandler(UncaughtException.getInstance(applicationContext));
     }
 
+    public Stack<Activity> getActivityStack(){
+        return activityStack;
+    }
 
 }
