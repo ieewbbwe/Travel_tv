@@ -2,7 +2,6 @@ package com.wisesoft.traveltv.model;
 
 import android.content.Context;
 
-import com.android_mobile.core.utiles.Lg;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
@@ -114,5 +113,12 @@ public class DataEngine {
                     Constans.TYPE_STAY, random.nextInt(6000), stayAddress.get(i), "18772943998"));
         }
         return itemList;
+    }
+
+    public static List<ItemInfoBean> getLandingBanner() {
+        List<ItemInfoBean> beanList;
+        DataBaseDao mDao = new DataBaseDao(mContext);
+        beanList = mDao.getItemInfos(3);
+        return beanList;
     }
 }

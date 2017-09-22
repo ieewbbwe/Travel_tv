@@ -1,16 +1,21 @@
 package com.wisesoft.traveltv.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.GalleryAdapter;
+import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.eat.DeliciousActivity;
 import com.wisesoft.traveltv.ui.play.AmusementActivity;
+import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.stay.StayActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
@@ -68,20 +73,23 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         mTrafficRb.setOnClickListener(this);
         mSettingsRb.setOnClickListener(this);
 
-
+        mGalleryCf.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(HomeActivity.this, AmusementDetailActivity.class);
+                intent.putExtra(Constans.ITEM_BEAN, beanList.get(position));
+                pushActivity(intent, false);
+            }
+        });
     }
 
     @Override
     protected void initData() {
         /*-----测试数据-------*/
-        beanList.add(new ItemInfoBean(""));
-        beanList.add(new ItemInfoBean(""));
-        beanList.add(new ItemInfoBean(""));
-        beanList.add(new ItemInfoBean(""));
+        beanList = DataEngine.getLandingBanner();
         /*-----测试数据完------*/
         mGalleryAdapter = new GalleryAdapter(beanList, this);
         mGalleryCf.setAdapter(mGalleryAdapter);
-
     }
 
     @Override

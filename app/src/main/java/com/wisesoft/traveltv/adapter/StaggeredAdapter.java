@@ -9,7 +9,6 @@ import android.widget.ImageView;
 
 import com.android_mobile.core.BasicAdapter;
 import com.android_mobile.core.manager.image.ImageLoadFactory;
-import com.android_mobile.core.utiles.Lg;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 
@@ -29,9 +28,7 @@ public class StaggeredAdapter extends BasicAdapter<ItemInfoBean, StaggeredAdapte
         View itemView = holder.itemView;
 
         ImageLoadFactory.getInstance().getImageLoadHandler()
-                .displayImage(mDataList.get(position).getImagePath(), holder.mItemIv);
-
-        Lg.d("picher", "" + mDataList.get(position).getImagePath());
+                .displayImage(mDataList.get(position).getImgUrl(), holder.mItemIv);
 
         int dimenId;
         if (position % 3 == 0) {

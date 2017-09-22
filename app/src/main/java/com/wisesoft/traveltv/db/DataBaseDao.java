@@ -51,8 +51,8 @@ public class DataBaseDao {
                 public Void call() throws Exception {
                     updateImage();
                     // updateVideo();
-                     updateItemInfo();
-                    SharedPrefManager.putBoolean(Constans.IS_INIT_DATA,true);
+                    updateItemInfo();
+                    SharedPrefManager.putBoolean(Constans.IS_INIT_DATA, true);
                     return null;
                 }
             });
@@ -64,7 +64,7 @@ public class DataBaseDao {
     private void updateItemInfo() {
         try {
             List<ItemInfoBean> beanList = DataEngine.getItemInfos();
-            Lg.print("picher","条目:"+beanList.size());
+            Lg.print("picher", "条目:" + beanList.size());
             for (ItemInfoBean item : beanList) {
                 mItemDao.create(item);
                 mItemDao.create(item);
@@ -93,7 +93,7 @@ public class DataBaseDao {
     public List<ItemInfoBean> getItemInfos(String typeEat) {
         List<ItemInfoBean> items = null;
         try {
-            items =  mItemDao.queryBuilder().where().eq("type",typeEat).query();
+            items = mItemDao.queryBuilder().where().eq("type", typeEat).query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -110,5 +110,15 @@ public class DataBaseDao {
             e.printStackTrace();
         }
         return CollectionUtils.isNotEmpty(imgs) ? imgs.get(0) : null;
+    }
+
+    public List<ItemInfoBean> getItemInfos(long count) {
+        List<ItemInfoBean> beanList = null;
+        try {
+            beanList = mItemDao.queryBuilder().orderBy("view_count", false).limit(count).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return beanList;
     }
 }

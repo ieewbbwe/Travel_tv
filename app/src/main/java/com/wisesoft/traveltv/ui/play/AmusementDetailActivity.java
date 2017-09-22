@@ -1,13 +1,22 @@
 package com.wisesoft.traveltv.ui.play;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android_mobile.core.manager.image.ImageLoadFactory;
+import com.android_mobile.core.utiles.BitmapUtils;
 import com.android_mobile.core.utiles.Lg;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -16,6 +25,7 @@ import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.RecommendAdapter;
+import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
@@ -49,7 +59,10 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
 
     private RecommendAdapter mAdapter;
 
+    //推荐信息
     private List<ItemInfoBean> mRecommendBeans;
+    //本页的条目对象
+    private ItemInfoBean mItemInfoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +73,8 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     @Override
     protected void initComp() {
         ButterKnife.bind(this);
+        LinearLayout mContenLl = (LinearLayout) findViewById(R.id.m_content_ll);
+        Lg.d("picher", "找到根布局？" + (mContenLl != null));
         initBorder();
         mAdapter = new RecommendAdapter(this);
         mAdapter.setDataList(DataEngine.getVideos(10));
@@ -112,6 +127,28 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
 
     @Override
     protected void initData() {
+        mItemInfoBean = (ItemInfoBean) getIntent().getSerializableExtra(Constans.ITEM_BEAN);
+        if (mItemInfoBean != null) {
+            showItemDetail(mItemInfoBean);
+        }
+    }
+
+    private void showItemDetail(@NonNull ItemInfoBean mItemInfoBean) {
+        ImageLoadFactory.getInstance().getImageLoadHandler()
+                .displayImage(mItemInfoBean.getImgUrl(), mMainIv);
+        mTitleTv.setText(mItemInfoBean.getName());
+        mEvaluateTv.setText(mItemInfoBean.getGradeStr());
+        mIntroduceTv.setText(mItemInfoBean.getIntroduceStr());
+        mAnyInfo.setText(mItemInfoBean.getAnotherStr());
+
+        //虚化背景
+        Glide.with(this).load(mItemInfoBean.getImgUrl())
+                .asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                mMainIv.setImageDrawable(new BitmapDrawable(BitmapUtils.processBitmapBlurFast(resource)));
+            }
+        });
 
     }
 
@@ -154,7 +191,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.m_play_tvc:
                 pushActivity(ImageDetailActivity.class);
                 break;

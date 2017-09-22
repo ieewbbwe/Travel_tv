@@ -99,10 +99,6 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.image_url = imagePath;
     }
 
-    public String getImagePath() {
-        return image_url;
-    }
-
     public void setImagePath(String imagePath) {
         this.image_url = imagePath;
     }
@@ -136,4 +132,14 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     public String getPhoneStr() {
         return "预约电话：" + phone;
     }
+
+    public String getIntroduceStr() {
+        return "景点介绍：\n " + introduce;
+    }
+
+    public String getAnotherStr() {
+
+        return "门票价格：160元/人     开放时间：08:00 - 17:00" + "\n" + getAddressStr();
+    }
+
 }
