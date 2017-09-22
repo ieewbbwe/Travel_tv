@@ -34,15 +34,15 @@ public class BitmapUtils {
     /**
      * 水平方向模糊度
      */
-    private static float hRadius = 10;
+    private static float hRadius = 5;
     /**
      * 竖直方向模糊度
      */
-    private static float vRadius = 10;
+    private static float vRadius = 5;
     /**
      * 模糊迭代度
      */
-    private static int iterations = 7;
+    private static int iterations = 2;
 
     /**
      * Drawable 转换为Bitmap
@@ -89,7 +89,8 @@ public class BitmapUtils {
             Matrix matrix = new Matrix();
             if (degree == 90) {
                 matrix.postRotate(90); //顺时针翻转90度
-            }if (degree == 270) {
+            }
+            if (degree == 270) {
                 matrix.postRotate(270);
             }
             Bitmap bMapRotate = Bitmap.createBitmap(weak.get(), 0, 0, weak

@@ -1,5 +1,6 @@
 package com.wisesoft.traveltv.ui.play;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -7,13 +8,12 @@ import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.android_mobile.core.utiles.BitmapUtils;
-import com.android_mobile.core.utiles.Lg;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -31,6 +31,7 @@ import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVControlView;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -63,6 +64,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     private List<ItemInfoBean> mRecommendBeans;
     //本页的条目对象
     private ItemInfoBean mItemInfoBean;
+    private FrameLayout mContentLl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +75,9 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     @Override
     protected void initComp() {
         ButterKnife.bind(this);
-        LinearLayout mContenLl = (LinearLayout) findViewById(R.id.m_content_ll);
-        Lg.d("picher", "找到根布局？" + (mContenLl != null));
+        mContentLl = (FrameLayout) findViewById(R.id.contentfl);
         initBorder();
         mAdapter = new RecommendAdapter(this);
-        mAdapter.setDataList(DataEngine.getVideos(10));
         mRecommendRlv.setAdapter(mAdapter);
         mRecommendRlv.setSelectedItemAtCentered(true);
         //设置横向间距
@@ -130,6 +130,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         mItemInfoBean = (ItemInfoBean) getIntent().getSerializableExtra(Constans.ITEM_BEAN);
         if (mItemInfoBean != null) {
             showItemDetail(mItemInfoBean);
+            showRecommendView(mItemInfoBean.getType());
         }
     }
 
@@ -146,10 +147,20 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
                 .asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                mMainIv.setImageDrawable(new BitmapDrawable(BitmapUtils.processBitmapBlurFast(resource)));
+                mContentLl.setBackground(new BitmapDrawable(BitmapUtils.progressBitmapPoxBlur(resource)));
             }
         });
+    }
 
+    /**
+     * 展示推荐信息
+     *
+     * @param type 推荐类型参数
+     */
+    private void showRecommendView(String type) {
+        mRecommendBeans = DataEngine.getRecommendInfo(type, 10);
+        Collections.shuffle(mRecommendBeans);
+        mAdapter.setDataList(mRecommendBeans);
     }
 
     protected void onMoveFocusBorder(View focusedView, float scale, float roundRadius) {
@@ -185,7 +196,6 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Lg.print("picher", "" + keyCode);
         return super.onKeyDown(keyCode, event);
     }
 
@@ -193,7 +203,9 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_play_tvc:
-                pushActivity(ImageDetailActivity.class);
+                Intent intent = new Intent(AmusementDetailActivity.this, ImageDetailActivity.class);
+                intent.putExtra(Constans.ITEM_BEAN, mItemInfoBean);
+                pushActivity(intent, false);
                 break;
             case R.id.m_comment_tvc:
                 toast("点个赞");

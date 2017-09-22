@@ -2,6 +2,7 @@ package com.wisesoft.traveltv.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.internal.IItemInfo;
 
 import java.util.List;
@@ -121,6 +122,22 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.name = name;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public long getView_count() {
+        return view_count;
+    }
+
+    public void setView_count(long view_count) {
+        this.view_count = view_count;
+    }
+
     public String getGradeStr() {
         return "综合评分：" + recommend;
     }
@@ -133,13 +150,27 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         return "预约电话：" + phone;
     }
 
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
     public String getIntroduceStr() {
         return "景点介绍：\n " + introduce;
     }
 
     public String getAnotherStr() {
+        String otherInfo = null;
+        if (type.equals(Constans.TYPE_PLAY)) {
+            otherInfo = "门票价格：160元/人     开放时间：08:00 - 17:00";
+        } else {
+            otherInfo = "人均消费：88元/人     营业时间：08:00 - 17:00";
+        }
 
-        return "门票价格：160元/人     开放时间：08:00 - 17:00" + "\n" + getAddressStr();
+        return otherInfo + "\n" + getAddressStr();
     }
 
 }

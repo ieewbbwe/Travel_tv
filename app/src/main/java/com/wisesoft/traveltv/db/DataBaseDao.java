@@ -7,6 +7,7 @@ import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ImageBean;
@@ -90,15 +91,43 @@ public class DataBaseDao {
         }
     }
 
+    public List<ItemInfoBean> getItemInfos() {
+        return getItemInfos("", -1);
+    }
+
     public List<ItemInfoBean> getItemInfos(String typeEat) {
+        return getItemInfos(typeEat, -1);
+    }
+
+    public List<ItemInfoBean> getItemInfos(long limit) {
+        return getItemInfos("", limit);
+    }
+
+    public List<ItemInfoBean> getItemInfos(String type, long limit) {
         List<ItemInfoBean> items = null;
         try {
-            items = mItemDao.queryBuilder().where().eq("type", typeEat).query();
+            QueryBuilder<ItemInfoBean, Integer> builder = mItemDao.queryBuilder();
+            if (!"".equals(type)) {
+                builder.where().eq("type", type);
+            }
+            if (limit > 0) {
+                builder.limit(limit);
+            }
+            items = builder.query();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return items;
+    }
+
+    public List<ItemInfoBean> getHotItemInfos(long count) {
+        List<ItemInfoBean> beanList = null;
+        try {
+            beanList = mItemDao.queryBuilder().orderBy("view_count", false).limit(count).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return beanList;
     }
 
     public ImageBean queryImageByOrder(int order, String type) {
@@ -112,13 +141,4 @@ public class DataBaseDao {
         return CollectionUtils.isNotEmpty(imgs) ? imgs.get(0) : null;
     }
 
-    public List<ItemInfoBean> getItemInfos(long count) {
-        List<ItemInfoBean> beanList = null;
-        try {
-            beanList = mItemDao.queryBuilder().orderBy("view_count", false).limit(count).query();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return beanList;
-    }
 }

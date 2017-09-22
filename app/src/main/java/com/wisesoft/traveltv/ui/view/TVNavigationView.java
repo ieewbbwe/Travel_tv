@@ -24,6 +24,6 @@ public class TVNavigationView extends LinearLayout {
     }
 
     public void addNavigationTab(TVIconView iconView) {
-
+        
     }
 }

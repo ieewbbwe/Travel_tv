@@ -480,7 +480,7 @@
     <!--普通文字颜色-->
     <color name="text_color">#ededed</color>
     <!-- 灰色字体颜色 -->
-    <color name="text_color_gray">#7f7f7f</color>
+    <color name="text_color_gray">#d4d4d4</color>
     <!--所有布局白色背景-->
     <color name="bg_white">#ffffff</color>
     <!--所有布局灰色背景-->

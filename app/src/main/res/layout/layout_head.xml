@@ -15,7 +15,7 @@
         android:padding="@dimen/content_padding"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_broadcast_logo"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
     <!--Time-->
     <LinearLayout
         android:layout_width="wrap_content"
@@ -80,5 +80,5 @@
         android:padding="@dimen/content_padding"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_app_logo"
-        android:visibility="gone"/>
+        android:visibility="visible"/>
 </RelativeLayout>

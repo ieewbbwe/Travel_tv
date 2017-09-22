@@ -118,7 +118,24 @@ public class DataEngine {
     public static List<ItemInfoBean> getLandingBanner() {
         List<ItemInfoBean> beanList;
         DataBaseDao mDao = new DataBaseDao(mContext);
-        beanList = mDao.getItemInfos(3);
+        beanList = mDao.getHotItemInfos(3);
+        return beanList;
+    }
+
+    public static List<ItemInfoBean> getRecommendInfo(String type, int count) {
+        List<ItemInfoBean> beanList;
+        DataBaseDao mDao = new DataBaseDao(mContext);
+        beanList = mDao.getItemInfos(type, count);
+        return beanList;
+    }
+
+    public static List<ItemInfoBean> getTrafficInfo() {
+        List<ItemInfoBean> beanList = new ArrayList<>();
+        beanList.add(new ItemInfoBean());
+        beanList.add(new ItemInfoBean());
+        beanList.add(new ItemInfoBean());
+        beanList.add(new ItemInfoBean());
+
         return beanList;
     }
 }

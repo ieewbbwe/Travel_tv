@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +12,8 @@
     <!--head-->
     <include
         style="@style/head_style"
-        layout="@layout/layout_head" />
+        layout="@layout/layout_head"/>
+
     <!--content-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,11 +25,12 @@
         android:paddingRight="24dp">
         <!--imageLooper-->
         <ImageView
+            android:id="@+id/m_banner_iv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:scaleType="fitXY"
-            android:src="@mipmap/ic_img_item_default" />
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_img_item_default"/>
 
         <com.owen.tvrecyclerview.widget.TvRecyclerView
             android:id="@+id/m_list_rlv"
@@ -36,9 +39,9 @@
             android:layout_marginLeft="24dp"
             android:layout_weight="4"
             android:focusable="true"
-            app:tv_layoutManager="V7LinearLayoutManager"
             app:tv_isMenu="true"
-            app:tv_selectedItemIsCentered="true" />
+            app:tv_layoutManager="V7LinearLayoutManager"
+            app:tv_selectedItemIsCentered="true"/>
         <!--pullList-->
     </LinearLayout>
     <!--foot-->
@@ -54,18 +57,18 @@
             android:id="@+id/m_return_tiv"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_return"
-            app:gText="@string/label_home_return" />
+            app:gText="@string/label_home_return"/>
 
         <com.wisesoft.traveltv.ui.view.TVIconView
             android:id="@+id/m_search_tiv"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_search"
-            app:gText="@string/label_home_search" />
+            app:gText="@string/label_home_search"/>
 
         <com.wisesoft.traveltv.ui.view.TVIconView
             android:id="@+id/m_play_tiv"
             style="@style/m_home_radio_style"
             app:gIcon="@mipmap/ic_home_play"
-            app:gText="@string/label_home_play" />
+            app:gText="@string/label_home_play"/>
     </LinearLayout>
 </RelativeLayout>

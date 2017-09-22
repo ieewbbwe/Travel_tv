@@ -1,10 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@mipmap/ic_home_bg"
+    android:orientation="vertical"
     tools:context="com.wisesoft.traveltv.ui.traffic.TrafficActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <!--head-->
+    <include
+        style="@style/head_style"
+        layout="@layout/layout_head"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/content_padding"
+        android:orientation="horizontal">
+
+        <!--导航栏-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_eat_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_traffic"
+                app:gText="@string/label_home_traffic"
+                app:gTextSite="bottom"/>
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_search_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_search"
+                app:gText="@string/label_home_search"
+                app:gTextSite="bottom"/>
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_sort_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_sort"
+                app:gText="@string/label_home_sort"
+                app:gTextSite="bottom"/>
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_return_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                app:gIcon="@mipmap/ic_home_return"
+                app:gText="@string/label_home_return"
+                app:gTextSite="bottom"/>
+        </LinearLayout>
+        <!--列表-->
+        <com.owen.tvrecyclerview.widget.TvRecyclerView
+            android:id="@+id/m_list_rlv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_weight="3"
+            app:tv_layoutManager="V7LinearLayoutManager"
+            app:tv_selectedItemIsCentered="true"/>
+        <!--交通信息-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/m_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="宜昌三峡机场"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal_size"/>
+
+            <TextView
+                android:id="@+id/m_introduce_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="宜昌三峡机场（IATA：YIH，ICAO：ZHYC）位于中国湖北省宜昌市猇亭区，距市中心26公里，距三峡大坝55公里，北接宜黄高速公路，南临长江，东临焦枝铁路，是辐射“三峡城市群”和鄂西、湘西、渝东地区的重要区域性机场，成为湖北省除武汉之外最大的航空辅助集散中心。"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_small_size"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

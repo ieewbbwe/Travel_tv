@@ -31,6 +31,7 @@ public class RecommendAdapter extends BasicAdapter<ItemInfoBean, RecommendAdapte
         ItemInfoBean item = mDataList.get(position);
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(item.getImgUrl(), holder.mRecommendIv);
+        holder.mTitleTv.setText(item.getName());
     }
 
     @Override

@@ -1,17 +1,24 @@
 package com.wisesoft.traveltv.ui.play;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.android_mobile.core.manager.image.ImageLoadFactory;
+import com.android_mobile.core.utiles.CollectionUtils;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ItemListAdapter;
+import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
@@ -31,6 +38,8 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
     TVIconView mSearchTiv;
     @Bind(R.id.m_play_tiv)
     TVIconView mPlayTiv;
+    @Bind(R.id.m_banner_iv)
+    ImageView mBannerIv;
 
     private List<ItemInfoBean> beanList = new ArrayList<>();
     private ItemListAdapter mAdapter;
@@ -51,34 +60,33 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
     @Override
     protected void initListener() {
         mReturnTiv.setOnClickListener(this);
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                pushActivity(AmusementDetailActivity.class);
-            }
-        });
+
     }
 
     @Override
     protected void initData() {
-        /*----测试数据-----*/
-        for (int i = 0; i < 10; i++) {
-            beanList.add(new ItemInfoBean("三峡大坝" + i));
-        }
-        /*----测试数据----*/
+        DataBaseDao mDao = new DataBaseDao(this);
+        beanList = mDao.getItemInfos(Constans.TYPE_PLAY);
+        Collections.shuffle(beanList);
         mAdapter = new ItemListAdapter(this);
         mAdapter.setDataList(beanList);
         mListRlv.setAdapter(mAdapter);
-        //mListRlv.setLayoutManager(new LinearLayoutManager(this));
-        //mListRlv.setSpacingWithMargins(5, 5);//设置行列间距
         mListRlv.setSelectedItemAtCentered(true);//条目居中
+
+        if (CollectionUtils.isNotEmpty(beanList)) {
+            ImageLoadFactory.getInstance().getImageLoadHandler()
+                    .displayImage(beanList.get(0).getImgUrl(), mBannerIv);
+        }
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                pushActivity(AmusementDetailActivity.class);
+                Intent intent = new Intent(AmusementActivity.this, AmusementDetailActivity.class);
+                intent.putExtra(Constans.ITEM_BEAN, mAdapter.getItemObject(position));
+                pushActivity(intent, false);
             }
         });
+
     }
 
     @Override

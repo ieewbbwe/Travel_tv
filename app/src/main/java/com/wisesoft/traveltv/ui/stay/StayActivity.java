@@ -12,9 +12,13 @@ import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.StaggeredAdapter;
 import com.wisesoft.traveltv.constants.Constans;
-import com.wisesoft.traveltv.model.DataEngine;
+import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
+
+import java.util.Collections;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,6 +40,7 @@ public class StayActivity extends NActivity {
     @Bind(R.id.m_content_trv)
     TvRecyclerView mContentTrv;
     private StaggeredAdapter mAdapter;
+    private List<ItemInfoBean> items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +52,9 @@ public class StayActivity extends NActivity {
     protected void initComp() {
         initBorder();
         ButterKnife.bind(this);
-        mContentTrv.setLayoutManager(new StaggeredGridLayoutManager(5, StaggeredGridLayoutManager.VERTICAL));
+        mContentTrv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         mContentTrv.setSpacingWithMargins(15, 15);
         mAdapter = new StaggeredAdapter(this);
-        mAdapter.setDataList(DataEngine.getVideos(60));
-        mContentTrv.setAdapter(mAdapter);
     }
 
     @Override
@@ -89,6 +92,10 @@ public class StayActivity extends NActivity {
 
     @Override
     protected void initData() {
-
+        DataBaseDao mBaseDao = new DataBaseDao(this);
+        items = mBaseDao.getItemInfos(30);
+        Collections.shuffle(items);
+        mAdapter.setDataList(items);
+        mContentTrv.setAdapter(mAdapter);
     }
 }

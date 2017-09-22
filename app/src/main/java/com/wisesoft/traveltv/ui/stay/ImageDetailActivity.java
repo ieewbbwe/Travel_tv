@@ -1,14 +1,19 @@
 package com.wisesoft.traveltv.ui.stay;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.android_mobile.core.utiles.BitmapUtils;
 import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
@@ -19,18 +24,11 @@ import com.wisesoft.traveltv.ui.view.TVIconView;
 import com.youth.banner.Banner;
 import com.youth.banner.transformer.RotateUpTransformer;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 public class ImageDetailActivity extends NActivity {
 
@@ -48,8 +46,8 @@ public class ImageDetailActivity extends NActivity {
     TextView mAddressTv;
     @Bind(R.id.m_image_display_bn)
     Banner mImageDisplayBn;            //图片展示位
-    //@Bind(R.id.m_img_content_ll)
-    LinearLayout mImgContentLl;
+    @Bind(R.id.m_content_fl)
+    FrameLayout mImgContentFl;
 
     private List<ImageBean> mImgList = new ArrayList<>();
     private ItemInfoBean mItemInfo;
@@ -63,7 +61,6 @@ public class ImageDetailActivity extends NActivity {
     @Override
     protected void initComp() {
         ButterKnife.bind(this);
-        mImgContentLl = (LinearLayout) findViewById(R.id.m_mxh_ll);
         //默认显示三张图片
         mImgList.add(new ImageBean("file:///android_asset/default1.jpg"));
         mImgList.add(new ImageBean("file:///android_asset/default2.jpg"));
@@ -77,7 +74,7 @@ public class ImageDetailActivity extends NActivity {
         //banner设置方法全部调用完毕时最后调用
         mImageDisplayBn.start();
 
-        Observable.create(new Observable.OnSubscribe<File>() {
+        /*Observable.create(new Observable.OnSubscribe<File>() {
             @Override
             public void call(Subscriber<? super File> subscriber) {
                 File f = null;
@@ -97,12 +94,8 @@ public class ImageDetailActivity extends NActivity {
                         Lg.print("picher", "文件地址：" + file.getPath());
                     }
                 });
-        Lg.print("picher", "文件地址：" + (mImgContentLl == null));
+        Lg.print("picher", "文件地址：" + (mImgContentLl == null));*/
 
-        //mImgContentLl.setBackground(new BitmapDrawable
-/*
-                (BitmapUtils.processBitmapBlurFast(BitmapFactory.decodeResource(getResources(),R.mipmap.ic_img_item_default))));
-*/
     }
 
     @Override
@@ -129,10 +122,21 @@ public class ImageDetailActivity extends NActivity {
         mGradeTv.setText(mItemInfo.getGradeStr());
         mAddressTv.setText(mItemInfo.getAddressStr());
         mPhoneTv.setText(mItemInfo.getPhoneStr());
-        mImgList = mItemInfo.getImageList();
+        //mImgList = mItemInfo.getImageList();
+        mImgList.add(new ImageBean(mItemInfo.getImgUrl()));
+        Lg.d("picher", "图片数：" + mImgList.size());
         if (CollectionUtils.isNotEmpty(mImgList)) {
             mImageDisplayBn.update(mImgList);
         }
+
+        //虚化背景
+        Glide.with(this).load(mItemInfo.getImgUrl())
+                .asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                mImgContentFl.setBackground(new BitmapDrawable(BitmapUtils.progressBitmapPoxBlur(resource)));
+            }
+        });
     }
 
     @Override
