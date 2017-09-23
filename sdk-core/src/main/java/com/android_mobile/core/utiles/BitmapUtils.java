@@ -35,11 +35,11 @@ public class BitmapUtils {
     /**
      * 水平方向模糊度
      */
-    private static float hRadius = 5;
+    private static float hRadius = 3;
     /**
      * 竖直方向模糊度
      */
-    private static float vRadius = 5;
+    private static float vRadius = 3;
     /**
      * 模糊迭代度
      */
@@ -250,12 +250,84 @@ public class BitmapUtils {
     }
 
     /**
-     * 高斯模糊
+     * 柔化效果(高斯模糊)(优化后比上面快三倍)
+     * @param bmp
+     * @return
      */
-    public static Bitmap progressBitmapPoxBlur(Bitmap bmp,float pixelW, float pixelH) {
-        if (bmp != null) {
-            bmp = ratio(bmp,pixelW,pixelH);
+    public static Bitmap blurImageAmeliorate(Bitmap bmp)
+    {
+        long start = System.currentTimeMillis();
+        // 高斯矩阵
+        int[] gauss = new int[] { 1, 2, 1, 2, 4, 2, 1, 2, 1 };
 
+        int width = bmp.getWidth();
+        int height = bmp.getHeight();
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+
+        int pixR = 0;
+        int pixG = 0;
+        int pixB = 0;
+
+        int pixColor = 0;
+
+        int newR = 0;
+        int newG = 0;
+        int newB = 0;
+
+        int delta = 16; // 值越小图片会越亮，越大则越暗
+
+        int idx = 0;
+        int[] pixels = new int[width * height];
+        bmp.getPixels(pixels, 0, width, 0, 0, width, height);
+        for (int i = 1, length = height - 1; i < length; i++)
+        {
+            for (int k = 1, len = width - 1; k < len; k++)
+            {
+                idx = 0;
+                for (int m = -1; m <= 1; m++)
+                {
+                    for (int n = -1; n <= 1; n++)
+                    {
+                        pixColor = pixels[(i + m) * width + k + n];
+                        pixR = Color.red(pixColor);
+                        pixG = Color.green(pixColor);
+                        pixB = Color.blue(pixColor);
+
+                        newR = newR + (int) (pixR * gauss[idx]);
+                        newG = newG + (int) (pixG * gauss[idx]);
+                        newB = newB + (int) (pixB * gauss[idx]);
+                        idx++;
+                    }
+                }
+
+                newR /= delta;
+                newG /= delta;
+                newB /= delta;
+
+                newR = Math.min(255, Math.max(0, newR));
+                newG = Math.min(255, Math.max(0, newG));
+                newB = Math.min(255, Math.max(0, newB));
+
+                pixels[i * width + k] = Color.argb(255, newR, newG, newB);
+
+                newR = 0;
+                newG = 0;
+                newB = 0;
+            }
+        }
+
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        long end = System.currentTimeMillis();
+        Lg.d("may", "used time="+(end - start));
+        return bitmap;
+    }
+
+    /**
+     * 高斯模糊
+     * 算法有问题，会存在OOM
+     */
+    public static Bitmap progressBitmapPoxBlur(Bitmap bmp) {
+        if (bmp != null) {
             int width = bmp.getWidth();
             int height = bmp.getHeight();
             int[] inPixels = new int[width * height];
@@ -702,8 +774,10 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap ratio(Bitmap image, float pixelW, float pixelH) {
+        Lg.print("picher","压缩前：\n pixW:"+pixelW+"pixH:"+pixelH);
+        Lg.print("picher","压缩前：\n W:"+image.getWidth()+"H:"+image.getHeight()+"size:"+image.getByteCount());
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, os);
+        image.compress(Bitmap.CompressFormat.JPEG, 50, os);
         if( os.toByteArray().length / 1024>1024) {//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出
             os.reset();//重置baos即清空baos
             image.compress(Bitmap.CompressFormat.JPEG, 50, os);//这里压缩50%，把压缩后的数据存放到baos中
@@ -726,6 +800,7 @@ public class BitmapUtils {
         } else if (w < h && h > hh) {//如果高度高的话根据宽度固定大小缩放
             be = (int) (newOpts.outHeight / hh);
         }
+        Lg.print("picher","缩放比例"+be);
         if (be <= 0) be = 1;
         newOpts.inSampleSize = be;//设置缩放比例
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
@@ -733,6 +808,7 @@ public class BitmapUtils {
         bitmap = BitmapFactory.decodeStream(is, null, newOpts);
         //压缩好比例大小后再进行质量压缩
 //      return compress(bitmap, maxSize); // 这里再进行质量压缩的意义不大，反而耗资源，删除
+        Lg.print("picher","压缩后：\n W:"+bitmap.getWidth()+"H:"+bitmap.getHeight()+"size:"+bitmap.getByteCount());
         return bitmap;
     }
 

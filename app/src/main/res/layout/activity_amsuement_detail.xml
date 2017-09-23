@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,7 +21,7 @@
 
             <include
                 style="@style/head_style"
-                layout="@layout/layout_head"/>
+                layout="@layout/layout_head" />
 
             <com.tv.boost.widget.TvVerticalScrollView
                 android:id="@+id/m_content_sv"
@@ -101,7 +100,7 @@
                             android:layout_width="520dp"
                             android:layout_height="350dp"
                             android:scaleType="centerCrop"
-                            android:src="@mipmap/ic_img_item_default"/>
+                            android:src="@mipmap/ic_img_item_default" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -117,7 +116,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:text="三峡大坝"
                                 android:textColor="@color/text_color"
-                                android:textSize="@dimen/text_big_size"/>
+                                android:textSize="@dimen/text_big_size" />
 
                             <TextView
                                 android:id="@+id/m_evaluate_tv"
@@ -126,7 +125,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:text="综合评价：4.5分"
                                 android:textColor="@color/text_color_gray"
-                                android:textSize="@dimen/text_small_size"/>
+                                android:textSize="@dimen/text_small_size" />
 
                             <TextView
                                 android:id="@+id/m_introduce_tv"
@@ -136,7 +135,7 @@
                                 android:lineSpacingExtra="4dp"
                                 android:text="景点介绍：\n 三峡大坝，位于中国湖北省宜昌市境内，距下游葛洲坝水利枢纽工程38公里；是当今世界最大的水利发电工程——三峡水电站的主体工程、三峡大坝旅游区的核心景观、三峡水库的东端。"
                                 android:textColor="@color/text_color_gray"
-                                android:textSize="@dimen/text_small_size"/>
+                                android:textSize="@dimen/text_small_size" />
 
                             <TextView
                                 android:id="@+id/m_any_info"
@@ -145,7 +144,7 @@
                                 android:lineSpacingExtra="4dp"
                                 android:text="门票价格：160元/人     开放时间：08:00 - 17:00 \n 地址：湖北宜昌市夷陵区三峡坝区柳树湾游客中心"
                                 android:textColor="@color/text_color_gray"
-                                android:textSize="@dimen/text_small_size"/>
+                                android:textSize="@dimen/text_small_size" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -165,9 +164,9 @@
                                     app:cText="@string/label_play"
                                     app:cTextColor="@color/white"
                                     app:cTextPadding="6dp"
-                                    app:cTextSize="@dimen/text_small_size"/>
-
-                                <com.wisesoft.traveltv.ui.view.TVControlView
+                                    app:cTextSize="@dimen/text_small_size" />
+                                
+                                 <com.wisesoft.traveltv.ui.view.TVControlView
                                     android:id="@+id/m_comment_tvc"
                                     android:layout_width="130dp"
                                     android:layout_height="50dp"
@@ -176,11 +175,11 @@
                                     android:focusable="true"
                                     android:gravity="center_vertical"
                                     android:orientation="horizontal"
-                                    app:cIcon="@mipmap/ic_play"
+                                    app:cIcon="@mipmap/ic_comment"
                                     app:cText="@string/label_like"
                                     app:cTextColor="@color/white"
                                     app:cTextPadding="6dp"
-                                    app:cTextSize="@dimen/text_small_size"/>
+                                    app:cTextSize="@dimen/text_small_size" />
 
                             </LinearLayout>
 
@@ -194,7 +193,7 @@
                         android:layout_below="@+id/top"
                         android:layout_marginBottom="16dp"
                         android:orientation="horizontal"
-                        app:tv_layoutManager="V7LinearLayoutManager"/>
+                        app:tv_layoutManager="V7LinearLayoutManager" />
                 </RelativeLayout>
                 <!--</LinearLayout>-->
             </com.tv.boost.widget.TvVerticalScrollView>

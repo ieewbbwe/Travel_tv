@@ -127,7 +127,9 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                toast("点击了:" + position);
+                Intent intent = new Intent(mContext, AmusementDetailActivity.class);
+                intent.putExtra(Constans.ITEM_BEAN, mAdapter.getItemObject(position));
+                pushActivity(intent, false);
             }
         });
         mPlayTvc.setOnClickListener(this);
@@ -149,7 +151,6 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         mEvaluateTv.setText(mItemInfoBean.getGradeStr());
         mIntroduceTv.setText(mItemInfoBean.getIntroduceStr());
         mAnyInfo.setText(mItemInfoBean.getAnotherStr());
-
         //虚化背景
         Glide.with(this).load(mItemInfoBean.getImgUrl())
                 .asBitmap().into(new SimpleTarget<Bitmap>() {
@@ -158,8 +159,10 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
                 Observable.create(new Observable.OnSubscribe<Bitmap>() {
                     @Override
                     public void call(Subscriber<? super Bitmap> subscriber) {
-                        mBlueBt = BitmapUtils.progressBitmapPoxBlur(
-                                resource, getScreenWidth(), getScreenHeight());
+
+                        mBlueBt = BitmapUtils.blurImageAmeliorate(
+                                BitmapUtils.ratio(resource, getScreenWidth(), getScreenHeight())
+                        );
                         subscriber.onNext(mBlueBt);
                     }
                 }).subscribeOn(Schedulers.computation())
@@ -225,7 +228,12 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_play_tvc:
-                Intent intent = new Intent(AmusementDetailActivity.this, ImageDetailActivity.class);
+                Intent intent;
+                if (mItemInfoBean.getType().equals(Constans.TYPE_STAY)) {
+                    intent = new Intent(AmusementDetailActivity.this, PlayVideoActivity.class);
+                } else {
+                    intent = new Intent(AmusementDetailActivity.this, ImageDetailActivity.class);
+                }
                 intent.putExtra(Constans.ITEM_BEAN, mItemInfoBean);
                 pushActivity(intent, false);
                 break;

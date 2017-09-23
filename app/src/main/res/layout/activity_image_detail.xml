@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,7 +23,7 @@
                 style="@style/head_style"
                 layout="@layout/layout_head"
                 android:paddingLeft="@dimen/content_padding"
-                android:paddingRight="@dimen/content_padding"/>
+                android:paddingRight="@dimen/content_padding" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -51,7 +50,7 @@
                         android:layout_margin="8dp"
                         android:layout_weight="0"
                         app:gIcon="@mipmap/ic_home_search"
-                        app:gText="@string/label_home_search"/>
+                        app:gText="@string/label_home_search" />
 
                     <com.wisesoft.traveltv.ui.view.TVIconView
                         android:id="@+id/m_return_tiv"
@@ -61,7 +60,7 @@
                         android:layout_margin="8dp"
                         android:layout_weight="0"
                         app:gIcon="@mipmap/ic_home_return"
-                        app:gText="@string/label_home_return"/>
+                        app:gText="@string/label_home_return" />
                 </LinearLayout>
 
                 <!--图片预览-->
@@ -73,7 +72,7 @@
                         android:id="@+id/m_image_display_bn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_above="@+id/m_bottom_info"/>
+                        android:layout_above="@+id/m_bottom_info" />
 
                     <RelativeLayout
                         android:id="@+id/m_bottom_info"
@@ -89,42 +88,58 @@
                             android:layout_height="wrap_content"
                             android:text="君和格蕾丝大酒店"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_big_size"/>
+                            android:textSize="@dimen/text_big_size" />
 
-                        <TextView
-                            android:id="@+id/m_grade_tv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignBottom="@+id/m_title_tv"
-                            android:layout_marginLeft="16dp"
-                            android:layout_toRightOf="@+id/m_title_tv"
-                            android:text="综合评分：4.5分"
-                            android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_small_size"/>
-
-                        <TextView
-                            android:id="@+id/m_phone_tv"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/m_grade_ll"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/m_title_tv"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_toRightOf="@+id/m_address_tv"
-                            android:text="预约电话：0719-8888888"
-                            android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_small_size"/>
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:text="推荐指数："
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_small_size" />
+
+                            <RatingBar
+                                android:id="@+id/m_grade_rb"
+                                style="@style/RatingStyle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:isIndicator="true"
+                                android:maxHeight="25dp"
+                                android:minHeight="25dp"
+                                android:rating="4.5" />
+                        </LinearLayout>
+
+                        <!-- <TextView
+                             android:id="@+id/m_phone_tv"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_below="@+id/m_title_tv"
+                             android:layout_marginLeft="16dp"
+                             android:layout_marginTop="4dp"
+                             android:layout_toRightOf="@+id/m_address_tv"
+                             android:text="预约电话：0719-8888888"
+                             android:textColor="@color/text_color"
+                             android:textSize="@dimen/text_small_size"/>-->
 
                         <TextView
                             android:id="@+id/m_address_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/m_title_tv"
-                            android:layout_marginTop="8dp"
+                            android:layout_below="@+id/m_grade_ll"
+                            android:layout_marginTop="4dp"
                             android:ellipsize="end"
                             android:maxLines="2"
                             android:text="地址：湖北省武汉市江夏区高新4路"
                             android:textColor="@color/text_color"
-                            android:textSize="@dimen/text_small_size"/>
+                            android:textSize="@dimen/text_small_size" />
 
                         <!--右边信息-->
                         <LinearLayout
@@ -132,13 +147,35 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:orientation="vertical">
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:text="提供："
                                 android:textColor="@color/text_color"
-                                android:textSize="@dimen/text_small_size"/>
+                                android:textSize="@dimen/text_normal_size" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:drawableLeft="@mipmap/ic_provide_p"
+                                android:gravity="center_vertical"
+                                android:text="停车位"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_normal_size" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:drawableLeft="@mipmap/ic_provide_wifi"
+                                android:gravity="center_vertical"
+                                android:text="无线上网"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_normal_size" />
                         </LinearLayout>
                     </RelativeLayout>
                 </RelativeLayout>

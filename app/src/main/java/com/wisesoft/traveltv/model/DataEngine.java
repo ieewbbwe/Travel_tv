@@ -130,11 +130,15 @@ public class DataEngine {
 
     public static List<ItemInfoBean> getTrafficInfo() {
         List<ItemInfoBean> beanList = new ArrayList<>();
-        beanList.add(new ItemInfoBean());
-        beanList.add(new ItemInfoBean());
-        beanList.add(new ItemInfoBean());
-        beanList.add(new ItemInfoBean());
+        List<String> trafficTitles = Arrays.asList(mContext.getResources().getStringArray(R.array.default_traffic_titles));
+        List<String> trafficIntroduces = Arrays.asList(mContext.getResources().getStringArray(R.array.default_traffic_introduces));
+        List<String> trafficAddress = Arrays.asList(mContext.getResources().getStringArray(R.array.default_traffic_address));
 
+        for (int i = 0; i < trafficTitles.size(); i++) {
+            beanList.add(new ItemInfoBean("file:///android_asset/traffic_" + (i + 1)+".png", trafficTitles.get(i),
+                    random.nextInt(5) + 1, System.currentTimeMillis(), trafficIntroduces.get(i),
+                    Constans.TYPE_TRAFFIC, random.nextInt(6000), trafficAddress.get(i), "18772943998"));
+        }
         return beanList;
     }
 }

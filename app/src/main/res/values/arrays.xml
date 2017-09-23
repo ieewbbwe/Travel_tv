@@ -97,4 +97,26 @@
         <item>（宜昌）胜利四路42号（近白龙公园）</item>
         <item>（宜昌）中山路16号</item>
     </string-array>
+
+    <string-array name="default_traffic_titles">
+        <item>宜昌三峡机场</item>
+        <item>宜昌火车站</item>
+        <item>宜昌长途客运中心站</item>
+        <item>宜昌港</item>
+    </string-array>
+
+    <string-array name="default_traffic_introduces">
+        <item>位于中国湖北省宜昌市猇亭区，距市中心26公里，距三峡大坝55公里，北接宜黄高速公路，南临长江，东临焦枝铁路，是辐射“三峡城市群”和鄂西、湘西、渝东地区的重要区域性机场，成为湖北省除武汉之外最大的航空辅助集散中心。</item>
+        <item>始建1970年9月，于1971年12月1日营运，是鸦宜铁路的终点。隶属武汉铁路局宜昌车务段管辖，现为二等站。</item>
+        <item>宜昌汽车客运中心站位于宜昌市伍家岗区，由宜昌交运集团投资2亿元建设，引进了先进的自助售票机、自助检票机、自助寄存柜等系列自助服务系统，并配合设置网上订票、信息发布、到达服务、自动停车场管理等系统，使旅客出行更加便利快捷。</item>
+        <item>滚滚长江，在三峡大坝前蓄成高峡平湖之后，倾泄而下，过葛洲坝，出西陵峡口便缓缓流经宜昌港。宜昌港地处长江中、上游的分界点，处于我国中、西部两个经济区的双重覆盖之中，素有“川鄂咽喉”之称。</item>
+    </string-array>
+
+    <string-array name="default_traffic_address">
+        <item>湖北省宜昌市猇亭区机场路8号</item>
+        <item>宜昌市东山大道107号</item>
+        <item>伍家岗区宜昌东火车站旁</item>
+        <item>宜昌市伍家岗区沿江大道142号</item>
+    </string-array>
+
 </resources>

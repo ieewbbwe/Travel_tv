@@ -29,6 +29,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 public class ImageDetailActivity extends NActivity {
 
@@ -38,10 +43,10 @@ public class ImageDetailActivity extends NActivity {
     TVIconView mReturnTiv;
     @Bind(R.id.m_title_tv)
     TextView mTitleTv;
-    @Bind(R.id.m_grade_tv)
-    TextView mGradeTv;
-    @Bind(R.id.m_phone_tv)
-    TextView mPhoneTv;
+   /* @Bind(R.id.m_grade_tv)
+    TextView mGradeTv;*/
+   /* @Bind(R.id.m_phone_tv)
+    TextView mPhoneTv;*/
     @Bind(R.id.m_address_tv)
     TextView mAddressTv;
     @Bind(R.id.m_image_display_bn)
@@ -68,33 +73,11 @@ public class ImageDetailActivity extends NActivity {
         //设置图片加载器
         mImageDisplayBn.setImageLoader(new GlideImageLoader());
         //设置图片集合
-        mImageDisplayBn.setImages(mImgList);
+       // mImageDisplayBn.setImages(mImgList);
         mImageDisplayBn.setBannerAnimation(RotateUpTransformer.class);
         mImageDisplayBn.setDelayTime(5000);
         //banner设置方法全部调用完毕时最后调用
-        mImageDisplayBn.start();
-
-        /*Observable.create(new Observable.OnSubscribe<File>() {
-            @Override
-            public void call(Subscriber<? super File> subscriber) {
-                File f = null;
-                try {
-                    f = Glide.with(mContext).load("file:///android_asset/default1.jpg")
-                            .downloadOnly((int) getScreenWidth(), (int) getScreenHeight()).get();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-                subscriber.onNext(f);
-            }
-        }).subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<File>() {
-                    @Override
-                    public void call(File file) {
-                        Lg.print("picher", "文件地址：" + file.getPath());
-                    }
-                });
-        Lg.print("picher", "文件地址：" + (mImgContentLl == null));*/
+      //  mImageDisplayBn.start();
 
     }
 
@@ -119,24 +102,36 @@ public class ImageDetailActivity extends NActivity {
 
     private void showItemInfo(ItemInfoBean mItemInfo) {
         mTitleTv.setText(mItemInfo.getName());
-        mGradeTv.setText(mItemInfo.getGradeStr());
+        //mGradeTv.setText(mItemInfo.getGradeStr());
         mAddressTv.setText(mItemInfo.getAddressStr());
-        mPhoneTv.setText(mItemInfo.getPhoneStr());
+        //mPhoneTv.setText(mItemInfo.getPhoneStr());
         //mImgList = mItemInfo.getImageList();
-        mImgList.add(new ImageBean(mItemInfo.getImgUrl()));
-        Lg.d("picher", "图片数：" + mImgList.size());
+        mImgList.add(0,new ImageBean(mItemInfo.getImgUrl()));
         if (CollectionUtils.isNotEmpty(mImgList)) {
             mImageDisplayBn.update(mImgList);
+            mImageDisplayBn.start();
         }
 
         //虚化背景
         Glide.with(this).load(mItemInfo.getImgUrl())
                 .asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                Bitmap mBlueBt = BitmapUtils.progressBitmapPoxBlur(
-                        resource,getScreenWidth(),getScreenHeight());
-                mImgContentFl.setBackground(new BitmapDrawable(mBlueBt));
+            public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                Observable.create(new Observable.OnSubscribe<Bitmap>() {
+                    @Override
+                    public void call(Subscriber<? super Bitmap> subscriber) {
+                        subscriber.onNext(BitmapUtils.blurImageAmeliorate(
+                                BitmapUtils.ratio(resource,getScreenWidth(),getScreenHeight())
+                        ));
+                    }
+                }).subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Action1<Bitmap>() {
+                            @Override
+                            public void call(Bitmap bitmap) {
+                                mImgContentFl.setBackground(new BitmapDrawable(bitmap));
+                            }
+                        });
             }
         });
     }

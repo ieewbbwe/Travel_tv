@@ -159,7 +159,20 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     }
 
     public String getIntroduceStr() {
-        return "景点介绍：\n " + introduce;
+        String str;
+        switch (type) {
+            case Constans.TYPE_EAT:
+                str = "美食介绍：";
+                break;
+            case Constans.TYPE_STAY:
+                str = "酒店介绍：";
+                break;
+            default:
+                str = "景点介绍：";
+                break;
+        }
+        return str + "\n " + introduce;
+
     }
 
     public String getAnotherStr() {

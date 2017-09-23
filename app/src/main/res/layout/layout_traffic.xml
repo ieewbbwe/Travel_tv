@@ -10,7 +10,8 @@
     <ImageView
         android:id="@+id/m_traffic_iv"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        android:layout_height="250dp"
         android:src="@mipmap/ic_img_item_default"/>
 
     <TextView

@@ -18,6 +18,7 @@ import com.wisesoft.traveltv.ui.eat.DeliciousActivity;
 import com.wisesoft.traveltv.ui.play.AmusementActivity;
 import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.stay.StayActivity;
+import com.wisesoft.traveltv.ui.traffic.TrafficActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
 import java.util.ArrayList;
@@ -150,8 +151,10 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
             case R.id.m_eat_rb:
                 pushActivity(DeliciousActivity.class);
                 break;
-            case R.id.m_search_rb:
             case R.id.m_traffic_rb:
+                pushActivity(TrafficActivity.class);
+                break;
+            case R.id.m_search_rb:
             case R.id.m_settings_rb:
                 toast("Wait For Codding...");
                 break;
