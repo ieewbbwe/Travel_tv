@@ -6,6 +6,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.android_mobile.core.BasicAdapter;
 import com.android_mobile.core.manager.image.ImageLoadFactory;
@@ -26,9 +27,10 @@ public class StaggeredAdapter extends BasicAdapter<ItemInfoBean, StaggeredAdapte
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
         View itemView = holder.itemView;
-
+        ItemInfoBean item = mDataList.get(position);
+        holder.mTitleTv.setText(item.getName());
         ImageLoadFactory.getInstance().getImageLoadHandler()
-                .displayImage(mDataList.get(position).getImgUrl(), holder.mItemIv);
+                .displayImage(item.getImgUrl(), holder.mItemIv);
 
         int dimenId;
         if (position % 3 == 0) {
@@ -57,10 +59,12 @@ public class StaggeredAdapter extends BasicAdapter<ItemInfoBean, StaggeredAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView mItemIv;
+        private TextView mTitleTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mItemIv = (ImageView) itemView.findViewById(R.id.m_item_iv);
+            mTitleTv = (TextView) itemView.findViewById(R.id.m_title_tv);
         }
     }
 }

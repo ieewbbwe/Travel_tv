@@ -97,9 +97,11 @@
 
                         <ImageView
                             android:id="@+id/m_main_iv"
-                            android:layout_width="520dp"
+                            android:layout_width="560dp"
+                            android:padding="1dp"
                             android:layout_height="350dp"
-                            android:scaleType="centerCrop"
+                            android:scaleType="fitXY"
+                            android:background="@drawable/stroke_gary"
                             android:src="@mipmap/ic_img_item_default" />
 
                         <LinearLayout
@@ -125,7 +127,7 @@
                                 android:layout_marginBottom="8dp"
                                 android:text="综合评价：4.5分"
                                 android:textColor="@color/text_color_gray"
-                                android:textSize="@dimen/text_small_size" />
+                                android:textSize="@dimen/text_normal_size" />
 
                             <TextView
                                 android:id="@+id/m_introduce_tv"
@@ -135,7 +137,7 @@
                                 android:lineSpacingExtra="4dp"
                                 android:text="景点介绍：\n 三峡大坝，位于中国湖北省宜昌市境内，距下游葛洲坝水利枢纽工程38公里；是当今世界最大的水利发电工程——三峡水电站的主体工程、三峡大坝旅游区的核心景观、三峡水库的东端。"
                                 android:textColor="@color/text_color_gray"
-                                android:textSize="@dimen/text_small_size" />
+                                android:textSize="@dimen/text_normal_size" />
 
                             <TextView
                                 android:id="@+id/m_any_info"
@@ -144,7 +146,7 @@
                                 android:lineSpacingExtra="4dp"
                                 android:text="门票价格：160元/人     开放时间：08:00 - 17:00 \n 地址：湖北宜昌市夷陵区三峡坝区柳树湾游客中心"
                                 android:textColor="@color/text_color_gray"
-                                android:textSize="@dimen/text_small_size" />
+                                android:textSize="@dimen/text_normal_size" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -164,7 +166,7 @@
                                     app:cText="@string/label_play"
                                     app:cTextColor="@color/white"
                                     app:cTextPadding="6dp"
-                                    app:cTextSize="@dimen/text_small_size" />
+                                    app:cTextSize="@dimen/text_normal_size" />
                                 
                                  <com.wisesoft.traveltv.ui.view.TVControlView
                                     android:id="@+id/m_comment_tvc"
@@ -192,6 +194,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/top"
                         android:layout_marginBottom="16dp"
+                        android:padding="15dp"
                         android:orientation="horizontal"
                         app:tv_layoutManager="V7LinearLayoutManager" />
                 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.wisesoft.traveltv.ui.play;
 import android.os.Bundle;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoView;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
@@ -36,4 +37,9 @@ public class PlayVideoActivity extends NActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GSYVideoPlayer.releaseAllVideos();
+    }
 }

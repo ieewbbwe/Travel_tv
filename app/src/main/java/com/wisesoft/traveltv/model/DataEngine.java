@@ -141,4 +141,44 @@ public class DataEngine {
         }
         return beanList;
     }
+
+    public static List<FilterBean> getFilterData() {
+        List<FilterBean> beanList = new ArrayList<>();
+        List<String> filterAreaStr = Arrays.asList(mContext.getResources()
+                .getStringArray(R.array.default_area));
+        List<String> filterStatStr = Arrays.asList(mContext.getResources()
+                .getStringArray(R.array.default_star));
+        List<String> filterPriceStr = Arrays.asList(mContext.getResources()
+                .getStringArray(R.array.default_price));
+        /*初始化区域筛选类*/
+        FilterBean areaFilter = new FilterBean("001","区域");
+        List<FilterBean> areaChilds = new ArrayList<>();
+        areaChilds.add(new FilterBean("-1","全部"));
+        for(int i = 0;i<filterAreaStr.size();i++){
+            areaChilds.add(new FilterBean(""+i,filterAreaStr.get(i)));
+        }
+        areaFilter.setChildBean(areaChilds);
+
+        /*初始化星级筛选类*/
+        FilterBean starFilter = new FilterBean("002","星级");
+        List<FilterBean> starChilds = new ArrayList<>();
+        starChilds.add(new FilterBean("-1","全部"));
+        for(int i = 0;i<filterStatStr.size();i++){
+            starChilds.add(new FilterBean(""+i,filterStatStr.get(i)));
+        }
+        starFilter.setChildBean(starChilds);
+
+        FilterBean priceFilter = new FilterBean("002","价格");
+        List<FilterBean> priceChilds = new ArrayList<>();
+        priceChilds.add(new FilterBean("-1","全部"));
+        for(int i = 0;i<filterPriceStr.size();i++){
+            priceChilds.add(new FilterBean(""+i,filterPriceStr.get(i)));
+        }
+        priceFilter.setChildBean(priceChilds);
+
+        beanList.add(areaFilter);
+        beanList.add(starFilter);
+        beanList.add(priceFilter);
+        return beanList;
+    }
 }

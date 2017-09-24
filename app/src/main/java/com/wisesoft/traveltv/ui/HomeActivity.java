@@ -78,7 +78,6 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         mGalleryCf.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Lg.print("picher","onItemClick");
                 Intent intent = new Intent(HomeActivity.this, AmusementDetailActivity.class);
                 intent.putExtra(Constans.ITEM_BEAN, beanList.get(position));
                 pushActivity(intent, false);
@@ -88,13 +87,15 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         mGalleryCf.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER
-                        && event.getAction()==KeyEvent.ACTION_UP){
-                    Lg.print("picher","onKey");
-                    Intent intent = new Intent(HomeActivity.this, AmusementDetailActivity.class);
-                    intent.putExtra(Constans.ITEM_BEAN, beanList.get(mGalleryCf.getScrollPosition()));
-                    pushActivity(intent, false);
-                    return true;
+                switch (keyCode){
+                    case KeyEvent.KEYCODE_ENTER:
+                    case KeyEvent.KEYCODE_DPAD_CENTER:
+                        if(event.getAction()==KeyEvent.ACTION_UP){
+                            Intent intent = new Intent(HomeActivity.this, AmusementDetailActivity.class);
+                            intent.putExtra(Constans.ITEM_BEAN, beanList.get(mGalleryCf.getScrollPosition()));
+                            pushActivity(intent, false);
+                            return true;
+                        }
                 }
                 return false;
             }

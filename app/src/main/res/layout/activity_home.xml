@@ -68,7 +68,7 @@
         app:coverHeight="@dimen/home_gallery_height"
         app:coverWidth="@dimen/home_gallery_weight"
         app:maxScaleFactor="1.5"
-        app:reflectionGap="2dp"
+        app:reflectionGap="4dp"
         app:rotationThreshold="0.5"
         app:scalingThreshold="0.5"
         app:spacing="0.6"/>

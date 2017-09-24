@@ -22,6 +22,7 @@ import com.wisesoft.traveltv.model.ImageBean;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 import com.youth.banner.Banner;
+import com.youth.banner.transformer.CubeOutTransformer;
 import com.youth.banner.transformer.RotateUpTransformer;
 
 import java.util.ArrayList;
@@ -74,7 +75,7 @@ public class ImageDetailActivity extends NActivity {
         mImageDisplayBn.setImageLoader(new GlideImageLoader());
         //设置图片集合
        // mImageDisplayBn.setImages(mImgList);
-        mImageDisplayBn.setBannerAnimation(RotateUpTransformer.class);
+        mImageDisplayBn.setBannerAnimation(CubeOutTransformer.class);
         mImageDisplayBn.setDelayTime(5000);
         //banner设置方法全部调用完毕时最后调用
       //  mImageDisplayBn.start();

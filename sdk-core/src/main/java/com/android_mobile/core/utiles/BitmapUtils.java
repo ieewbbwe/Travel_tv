@@ -197,7 +197,8 @@ public class BitmapUtils {
      */
     public static Bitmap processBitmapBlurFast(Bitmap bmp) {
         // 高斯矩阵
-        int[] gauss = new int[]{1, 2, 1, 2, 4, 2, 1, 2, 1};
+        //int[] gauss = new int[]{1, 2, 1, 2, 4, 2, 1, 2, 1};
+        int[] gauss = new int[]{2, 4, 2, 4, 6, 4, 2, 4, 2};
         int width = bmp.getWidth();
         int height = bmp.getHeight();
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
@@ -258,7 +259,8 @@ public class BitmapUtils {
     {
         long start = System.currentTimeMillis();
         // 高斯矩阵
-        int[] gauss = new int[] { 1, 2, 1, 2, 4, 2, 1, 2, 1 };
+        //int[] gauss = new int[] { 1, 2, 1, 2, 4, 2, 1, 2, 1 };
+        int[] gauss = new int[]{2, 4, 2, 4, 4, 2, 1, 2, 1};
 
         int width = bmp.getWidth();
         int height = bmp.getHeight();
@@ -274,7 +276,7 @@ public class BitmapUtils {
         int newG = 0;
         int newB = 0;
 
-        int delta = 16; // 值越小图片会越亮，越大则越暗
+        int delta = 20; // 值越小图片会越亮，越大则越暗
 
         int idx = 0;
         int[] pixels = new int[width * height];

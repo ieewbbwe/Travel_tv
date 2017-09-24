@@ -89,7 +89,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         mRecommendRlv.setAdapter(mAdapter);
         mRecommendRlv.setSelectedItemAtCentered(true);
         //设置横向间距
-        mRecommendRlv.setSpacingWithMargins(0, 10);
+        mRecommendRlv.setSpacingWithMargins(0, 20);
     }
 
     public void initBorder() {
@@ -121,7 +121,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
 
             @Override
             public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
-                onMoveFocusBorder(itemView, 1f, 0);
+                onMoveFocusBorder(itemView, 1.1f, 0);
             }
         });
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -159,7 +159,6 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
                 Observable.create(new Observable.OnSubscribe<Bitmap>() {
                     @Override
                     public void call(Subscriber<? super Bitmap> subscriber) {
-
                         mBlueBt = BitmapUtils.blurImageAmeliorate(
                                 BitmapUtils.ratio(resource, getScreenWidth(), getScreenHeight())
                         );

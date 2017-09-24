@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:gravity="center_vertical"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/m_filter_title_tv"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_small_size"
+        android:text="区域"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_marginLeft="@dimen/content_padding"
+        android:layout_marginRight="@dimen/content_padding"
+        android:layout_width="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/text_color"
+        android:layout_marginBottom="8dp"
+        android:layout_height="match_parent"/>
+
+    <com.owen.tvrecyclerview.widget.TvRecyclerView
+        android:id="@+id/m_filter_rlv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

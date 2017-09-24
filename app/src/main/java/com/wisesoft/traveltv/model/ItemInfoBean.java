@@ -39,6 +39,10 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     private String address;
     @DatabaseField
     private String phone;
+    @DatabaseField
+    private double minPrice;
+    @DatabaseField
+    private double maxPrice;
 
     private List<ImageBean> images;
     private List<VideoBean> videos;

@@ -119,4 +119,33 @@
         <item>宜昌市伍家岗区沿江大道142号</item>
     </string-array>
 
+    <!--暂时写死，后期写入数据库-->
+    <string-array name="default_area">
+        <item>西陵区</item>
+        <item>伍家岗区</item>
+        <item>点军区</item>
+        <item>猇亭区</item>
+        <item>夷陵区</item>
+        <item>秭归县</item>
+        <item>远安县</item>
+        <item>兴山县</item>
+        <item>长阳自治县</item>
+        <item>五峰自治县</item>
+    </string-array>
+
+    <string-array name="default_star">
+        <item>一星级</item>
+        <item>两星级</item>
+        <item>三星级</item>
+        <item>四星级</item>
+        <item>五星级</item>
+    </string-array>
+
+    <string-array name="default_price">
+        <item>100元以下</item>
+        <item>101~300元</item>
+        <item>301~500元</item>
+        <item>501~1000元</item>
+        <item>1000元以上</item>
+    </string-array>
 </resources>

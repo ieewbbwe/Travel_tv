@@ -41,7 +41,7 @@ public abstract class BasicActivity extends RxAppCompatActivity implements IBasi
     protected NavigationBar mNavigationBar;
     private EmptyLayout mEmptyLl;
     private RelativeLayout mRootView;
-    private View mShadow;
+    protected View mShadow;
     private ViewStub mBodyStub;
     private View mBodyView;
     private Toast toast;

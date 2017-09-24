@@ -82,7 +82,7 @@ public class TrafficActivity extends NActivity {
         mListRlv.setSpacingWithMargins(15, 0);
 
         //虚化背景
-        Glide.with(this).load("file:///android_asset/traffic_2.png")
+        Glide.with(this).load("file:///android_asset/traffic_bg.png")
                 .asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {

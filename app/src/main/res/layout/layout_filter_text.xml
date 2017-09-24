@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:padding="8dp"
+    android:background="@drawable/selector_filter_bg_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/m_filter_tv"
+        android:text="五星级"
+        android:textColor="@color/text_color"
+        android:textSize="@dimen/text_small_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

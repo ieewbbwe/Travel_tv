@@ -2,7 +2,6 @@ package com.wisesoft.traveltv.ui.eat;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
@@ -14,12 +13,10 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.StaggeredAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
-import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,7 +52,8 @@ public class DeliciousActivity extends NActivity {
     protected void initComp() {
         initBorder();
         ButterKnife.bind(this);
-        mContentTrv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
+        mContentTrv.setLayoutManager(new StaggeredGridLayoutManager(
+                4, StaggeredGridLayoutManager.VERTICAL));
         mContentTrv.setSpacingWithMargins(15, 15);
         mAdapter = new StaggeredAdapter(this);
 
@@ -91,7 +89,12 @@ public class DeliciousActivity extends NActivity {
                 popActivity();
             }
         });
-
+        mSortTiv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFilterPop(Constans.TYPE_EAT);
+            }
+        });
     }
 
     @Override
@@ -102,4 +105,5 @@ public class DeliciousActivity extends NActivity {
         mAdapter.setDataList(items);
         mContentTrv.setAdapter(mAdapter);
     }
+
 }
