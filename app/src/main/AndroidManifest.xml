@@ -52,11 +52,16 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".ui.play.AmusementDetailActivity"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".ui.stay.ImageDetailActivity"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".ui.play.PlayVideoActivity"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.stay.ImageDetailActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.play.PlayVideoActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.play.AmusementMapActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

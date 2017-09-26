@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string-array name="default_hotel_food_title">
+        <item>三游神仙鸡</item>
+        <item>白刹肥鱼</item>
+        <item>海皇捞粉丝</item>
+        <item>长江野生江鲢</item>
+        <item>甜蒜东坡肉</item>
+        <item>农家四宝</item>
+        <item>柴火洋芋饭</item>
+        <item>正宗土鸡汤</item>
+        <item>油爆清江虾</item>
+        <item>自己人一锅鲜</item>
+        <item>果木烤鸭</item>
+        <item>葱烧海参</item>
+        <item>鸭嘴鱼火锅</item>
+        <item>胖墩鱼火锅</item>
+        <item>夹馍扣肉</item>
+        <item>深海鲍鱼粥</item>
+        <item>梁记油焖大闸蟹</item>
+        <item>梁记蒜蓉粉丝虾</item>
+        <item>绝味焖泥鳅</item>
+        <item>养生莲米炖甲鱼</item>
+        <item>滨江醉花螺</item>
+        <item>高原手抓乳牛排</item>
+        <item>高兴招牌鸭</item>
+        <item>木瓜百合羹</item>
+        <item>油闷大龙虾</item>
+        <item>油闷大龙虾拼盘</item>
+        <item>麻辣小龙虾</item>
+        <item>精品羊蝎子</item>
+        <item>自然烤肉串</item>
+        <item>高汤养生羊肉火锅</item>
+    </string-array>
+
     <string-array name="default_play_titles">
         <item>三峡大坝（5A）</item>
         <item>三峡人家（5A）</item>

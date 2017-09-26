@@ -38,10 +38,10 @@ import rx.schedulers.Schedulers;
 
 public class ImageDetailActivity extends NActivity {
 
-    @Bind(R.id.m_search_tiv)
+  /*  @Bind(R.id.m_search_tiv)
     TVIconView mSearchTiv;
     @Bind(R.id.m_return_tiv)
-    TVIconView mReturnTiv;
+    TVIconView mReturnTiv;*/
     @Bind(R.id.m_title_tv)
     TextView mTitleTv;
    /* @Bind(R.id.m_grade_tv)
@@ -84,12 +84,12 @@ public class ImageDetailActivity extends NActivity {
 
     @Override
     protected void initListener() {
-        mReturnTiv.setOnClickListener(new View.OnClickListener() {
+       /* mReturnTiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popActivity();
             }
-        });
+        });*/
     }
 
     @Override

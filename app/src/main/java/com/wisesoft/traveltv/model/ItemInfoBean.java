@@ -34,6 +34,9 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     private String type;
     @DatabaseField
     private long view_count;
+    //TODO 临时字段
+    @DatabaseField
+    private String hotel_id;  //所在type的位置
 
     @DatabaseField
     private String address;
@@ -47,6 +50,21 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     private List<ImageBean> images;
     private List<VideoBean> videos;
 
+    public String getHotel_id() {
+        return hotel_id;
+    }
+
+    public void setHotel_id(String hotel_id) {
+        this.hotel_id = hotel_id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getAddress() {
         return address;
@@ -75,6 +93,21 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.view_count = view_count;
         this.address = address;
         this.phone = phone;
+    }
+
+    public ItemInfoBean(String image_url, String name, double recommend,
+                        long create_time, String introduce, String type,
+                        long view_count, String address, String phone,String hotel_id) {
+        this.image_url = image_url;
+        this.name = name;
+        this.recommend = recommend;
+        this.create_time = create_time;
+        this.introduce = introduce;
+        this.type = type;
+        this.view_count = view_count;
+        this.address = address;
+        this.phone = phone;
+        this.hotel_id = hotel_id;
     }
 
     public ItemInfoBean() {

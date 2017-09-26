@@ -127,7 +127,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(mContext, AmusementDetailActivity.class);
+                Intent intent = new Intent(mContext, ImageDetailActivity.class);
                 intent.putExtra(Constans.ITEM_BEAN, mAdapter.getItemObject(position));
                 pushActivity(intent, false);
             }
@@ -174,6 +174,11 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
                         });
             }
         });
+
+        //TODO 暂时只有酒店类型才能播视屏
+        /*if(!mItemInfoBean.getType().equals(Constans.TYPE_STAY)){
+            mPlayTvc.setText("看图");
+        }*/
     }
 
     /**
@@ -182,7 +187,12 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
      * @param type 推荐类型参数
      */
     private void showRecommendView(String type) {
-        mRecommendBeans = DataEngine.getRecommendInfo(type, 10);
+        if(type.equals(Constans.TYPE_EAT)){
+            //默认查询10条，不够则循环
+            mRecommendBeans = DataEngine.getHotelFoodInfo(mItemInfoBean.getHotel_id());
+        }else{
+            mRecommendBeans = DataEngine.getRecommendInfo(type, 10);
+        }
         Collections.shuffle(mRecommendBeans);
         mAdapter.setDataList(mRecommendBeans);
     }

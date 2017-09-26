@@ -17,6 +17,7 @@ import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.eat.DeliciousActivity;
 import com.wisesoft.traveltv.ui.play.AmusementActivity;
 import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
+import com.wisesoft.traveltv.ui.play.AmusementMapActivity;
 import com.wisesoft.traveltv.ui.stay.StayActivity;
 import com.wisesoft.traveltv.ui.traffic.TrafficActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
@@ -144,7 +145,8 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_play_rb:
-                pushActivity(AmusementActivity.class);
+                //pushActivity(AmusementActivity.class);
+                pushActivity(AmusementMapActivity.class);
                 break;
             case R.id.m_stay_rb:
                 pushActivity(StayActivity.class);

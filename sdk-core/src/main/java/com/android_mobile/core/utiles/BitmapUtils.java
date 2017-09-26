@@ -276,7 +276,7 @@ public class BitmapUtils {
         int newG = 0;
         int newB = 0;
 
-        int delta = 20; // 值越小图片会越亮，越大则越暗
+        int delta = 21; // 值越小图片会越亮，越大则越暗
 
         int idx = 0;
         int[] pixels = new int[width * height];

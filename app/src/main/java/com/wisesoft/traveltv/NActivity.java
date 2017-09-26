@@ -51,15 +51,10 @@ public abstract class NActivity extends BaseActivity {
     /**
      * 弹出筛选菜单
      */
-    public void showFilterPop(String type) {
+    public void showFilterPop(String type,OnItemClickListener clickListener) {
         if (mFilterPop == null) {
             mFilterPop = new TVBottomFilterPop(mContext, type);
-            mFilterPop.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void OnItemClick(View v, FilterBean parentFilter, FilterBean childFilter) {
-                    toast("点击了 " + parentFilter.getName() + ":" + childFilter.getName());
-                }
-            });
+            mFilterPop.setOnItemClickListener(clickListener);
             mFilterPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
                 @Override
                 public void onDismiss() {

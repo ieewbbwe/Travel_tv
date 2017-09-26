@@ -54,9 +54,25 @@ public class DataBaseDao {
                     // updateVideo();
                     updateItemInfo();
                     SharedPrefManager.putBoolean(Constans.IS_INIT_DATA, true);
+
+                    //逻辑修改，菜肴图片与酒店关联
+                    updateHotelImg();
+                    updateHotelItemInfo();
                     return null;
                 }
             });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateHotelItemInfo() {
+        try {
+            List<ItemInfoBean> beanList = DataEngine.getHotelFoodInfos();
+            for (ItemInfoBean item : beanList) {
+                mItemDao.create(item);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,6 +105,18 @@ public class DataBaseDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void updateHotelImg() {
+        try {
+            List<ImageBean> beanList = DataEngine.getHotelImages();
+            for (ImageBean item : beanList) {
+                mImageDao.create(item);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public List<ItemInfoBean> getItemInfos() {
@@ -130,6 +158,7 @@ public class DataBaseDao {
         return beanList;
     }
 
+    //根据order查找图片
     public ImageBean queryImageByOrder(int order, String type) {
         List<ImageBean> imgs = null;
         try {
@@ -141,4 +170,35 @@ public class DataBaseDao {
         return CollectionUtils.isNotEmpty(imgs) ? imgs.get(0) : null;
     }
 
+    //按照酒店id查找相关图片
+    public List<ItemInfoBean> queryItemInfoByHotelId(String hotel_id) {
+        List<ItemInfoBean> infoBeen = null;
+        try {
+            infoBeen = mItemDao.queryBuilder().where().eq("type", Constans.TYPE_HOTEL_FOOD).and()
+                    .eq("hotel_id", hotel_id).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return infoBeen;
+    }
+
+    public List<ImageBean> queryImageByHotelOrder(String hotel_id) {
+        List<ImageBean> imageBeen = null;
+        try {
+            imageBeen = mImageDao.queryBuilder().where().eq("type", Constans.TYPE_HOTEL_FOOD)
+                    .and().eq("hotel_id", hotel_id).query();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return imageBeen;
+    }
+
+    public ItemInfoBean getItemInfoByName(String name) {
+        try {
+            return mItemDao.queryBuilder().where().like("name", "%"+name+"%").queryForFirst();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

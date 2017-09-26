@@ -13,9 +13,11 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.StaggeredAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.model.FilterBean;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
+import com.wisesoft.traveltv.ui.view.weight.pop.OnItemClickListener;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,6 +43,7 @@ public class DeliciousActivity extends NActivity {
     TvRecyclerView mContentTrv;
     private StaggeredAdapter mAdapter;
     private List<ItemInfoBean> items;
+    private DataBaseDao mBaseDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,14 +95,21 @@ public class DeliciousActivity extends NActivity {
         mSortTiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFilterPop(Constans.TYPE_EAT);
+                showFilterPop(Constans.TYPE_EAT, new OnItemClickListener() {
+                    @Override
+                    public void OnItemClick(View v, FilterBean parentFilter, FilterBean childFilter) {
+                        items = mBaseDao.getItemInfos(Constans.TYPE_EAT);
+                        Collections.shuffle(items);
+                        mAdapter.setDataList(items);
+                    }
+                });
             }
         });
     }
 
     @Override
     protected void initData() {
-        DataBaseDao mBaseDao = new DataBaseDao(this);
+        mBaseDao = new DataBaseDao(this);
         items = mBaseDao.getItemInfos(Constans.TYPE_EAT);
         Collections.shuffle(items);
         mAdapter.setDataList(items);

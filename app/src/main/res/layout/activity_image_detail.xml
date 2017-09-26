@@ -28,12 +28,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/content_padding"
-                android:layout_marginTop="8dp"
+                android:layout_margin="24dp"
                 android:orientation="horizontal">
 
                 <!--导航栏-->
-                <LinearLayout
+              <!--  <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="16dp"
@@ -61,7 +60,7 @@
                         android:layout_weight="0"
                         app:gIcon="@mipmap/ic_home_return"
                         app:gText="@string/label_home_return" />
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <!--图片预览-->
                 <RelativeLayout
@@ -133,7 +132,8 @@
                             android:id="@+id/m_address_tv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/m_grade_ll"
+                            android:layout_below="@+id/right"
+                            android:layout_alignParentRight="true"
                             android:layout_marginTop="4dp"
                             android:ellipsize="end"
                             android:maxLines="2"

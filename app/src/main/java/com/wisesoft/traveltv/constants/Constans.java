@@ -26,4 +26,7 @@ public interface Constans {
     String TYPE_STAY = "stay";
     String TYPE_TRAFFIC = "traffic";
     String IS_INIT_DATA = "is_init_data";
+
+    //为演示临时添加
+    String TYPE_HOTEL_FOOD = "hotel";
 }

@@ -80,6 +80,7 @@ public class TrafficActivity extends NActivity {
         mAdapter.setDataList(mList);
         mListRlv.setAdapter(mAdapter);
         mListRlv.setSpacingWithMargins(15, 0);
+        Lg.print("picher","交通页准备虚化");
 
         //虚化背景
         Glide.with(this).load("file:///android_asset/traffic_bg.png")
@@ -89,6 +90,7 @@ public class TrafficActivity extends NActivity {
                 Observable.create(new Observable.OnSubscribe<Bitmap>() {
                     @Override
                     public void call(Subscriber<? super Bitmap> subscriber) {
+                        Lg.print("picher","交通页开始处理虚化");
                         subscriber.onNext(BitmapUtils.blurImageAmeliorate(
                                 BitmapUtils.ratio(resource,getScreenWidth(),getScreenHeight())
                         ));
@@ -98,6 +100,7 @@ public class TrafficActivity extends NActivity {
                         .subscribe(new Action1<Bitmap>() {
                             @Override
                             public void call(Bitmap bitmap) {
+                                Lg.print("picher","交通页虚化处理完成");
                                 mBg.setBackground(new BitmapDrawable(bitmap));
                             }
                         });

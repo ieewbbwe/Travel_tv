@@ -99,7 +99,7 @@ public class DataEngine {
 
             itemList.add(new ItemInfoBean((image != null) ? image.getImgUrl() : "", eatTitles.get(i),
                     random.nextInt(5) + 1, System.currentTimeMillis(), eatIntroduces.get(i),
-                    Constans.TYPE_EAT, random.nextInt(6000), eatAddress.get(i), "18772943998"));
+                    Constans.TYPE_EAT, random.nextInt(6000), eatAddress.get(i), "18772943998", image.getOrder()));
         }
 
         List<String> stayTitles = Arrays.asList(mContext.getResources().getStringArray(R.array.default_stay_titles));
@@ -135,7 +135,7 @@ public class DataEngine {
         List<String> trafficAddress = Arrays.asList(mContext.getResources().getStringArray(R.array.default_traffic_address));
 
         for (int i = 0; i < trafficTitles.size(); i++) {
-            beanList.add(new ItemInfoBean("file:///android_asset/traffic_" + (i + 1)+".png", trafficTitles.get(i),
+            beanList.add(new ItemInfoBean("file:///android_asset/traffic_" + (i + 1) + ".png", trafficTitles.get(i),
                     random.nextInt(5) + 1, System.currentTimeMillis(), trafficIntroduces.get(i),
                     Constans.TYPE_TRAFFIC, random.nextInt(6000), trafficAddress.get(i), "18772943998"));
         }
@@ -151,28 +151,28 @@ public class DataEngine {
         List<String> filterPriceStr = Arrays.asList(mContext.getResources()
                 .getStringArray(R.array.default_price));
         /*初始化区域筛选类*/
-        FilterBean areaFilter = new FilterBean("001","区域");
+        FilterBean areaFilter = new FilterBean("001", "区域");
         List<FilterBean> areaChilds = new ArrayList<>();
-        areaChilds.add(new FilterBean("-1","全部"));
-        for(int i = 0;i<filterAreaStr.size();i++){
-            areaChilds.add(new FilterBean(""+i,filterAreaStr.get(i)));
+        areaChilds.add(new FilterBean("-1", "全部"));
+        for (int i = 0; i < filterAreaStr.size(); i++) {
+            areaChilds.add(new FilterBean("" + i, filterAreaStr.get(i)));
         }
         areaFilter.setChildBean(areaChilds);
 
         /*初始化星级筛选类*/
-        FilterBean starFilter = new FilterBean("002","星级");
+        FilterBean starFilter = new FilterBean("002", "星级");
         List<FilterBean> starChilds = new ArrayList<>();
-        starChilds.add(new FilterBean("-1","全部"));
-        for(int i = 0;i<filterStatStr.size();i++){
-            starChilds.add(new FilterBean(""+i,filterStatStr.get(i)));
+        starChilds.add(new FilterBean("-1", "全部"));
+        for (int i = 0; i < filterStatStr.size(); i++) {
+            starChilds.add(new FilterBean("" + i, filterStatStr.get(i)));
         }
         starFilter.setChildBean(starChilds);
 
-        FilterBean priceFilter = new FilterBean("002","价格");
+        FilterBean priceFilter = new FilterBean("002", "价格");
         List<FilterBean> priceChilds = new ArrayList<>();
-        priceChilds.add(new FilterBean("-1","全部"));
-        for(int i = 0;i<filterPriceStr.size();i++){
-            priceChilds.add(new FilterBean(""+i,filterPriceStr.get(i)));
+        priceChilds.add(new FilterBean("-1", "全部"));
+        for (int i = 0; i < filterPriceStr.size(); i++) {
+            priceChilds.add(new FilterBean("" + i, filterPriceStr.get(i)));
         }
         priceFilter.setChildBean(priceChilds);
 
@@ -180,5 +180,53 @@ public class DataEngine {
         beanList.add(starFilter);
         beanList.add(priceFilter);
         return beanList;
+    }
+
+    public static List<ImageBean> getHotelImages() {
+        List<ImageBean> beanList = new ArrayList<>();
+        ImageBean image = null;
+        try {
+            String[] fileNames = mContext.getAssets().list("hotel");
+            for (String str : fileNames) {
+                String[] strs = str.split("_");
+                image = new ImageBean(strs[2].split("\\.")[0],
+                        "file:///android_asset/hotel/" + str, strs[0], strs[1]);
+                beanList.add(image);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return beanList;
+    }
+
+    //放入所有 吃相关 酒店的食品图片
+    public static List<ItemInfoBean> getHotelFoodInfos() {
+        List<ItemInfoBean> itemList = new ArrayList<>();
+        Random random = new Random();
+        List<String> titles = Arrays.asList(mContext.getResources()
+                .getStringArray(R.array.default_hotel_food_title));
+        int count = 0;
+        for (int i = 0; i < titles.size(); i++) {
+            List<ImageBean> imageBeen = mDao.queryImageByHotelOrder("" + (i + 1));
+            for (ImageBean item : imageBeen) {
+                itemList.add(new ItemInfoBean((item != null) ? item.getImgUrl() : "", titles.get(count),
+                        random.nextInt(5) + 1, System.currentTimeMillis(), "",
+                        Constans.TYPE_HOTEL_FOOD, random.nextInt(6000), "湖北省宜昌市点军区土城乡宜昌车溪民俗风景区",
+                        "18772943998", (item != null) ? item.getHotelId() : ""));
+                count++;
+            }
+        }
+        return itemList;
+    }
+
+    //根据酒店id查找相关图片条目
+    public static List<ItemInfoBean> getHotelFoodInfo(String hotel_id) {
+        List<ItemInfoBean> itemList = new ArrayList<>();
+        List<ItemInfoBean> been = mDao.queryItemInfoByHotelId(hotel_id);
+        //由於圖片不夠，因此循環幾遍顯示
+        for (int i = 0; i < 3; i++) {
+            itemList.addAll(been);
+        }
+        return itemList;
     }
 }

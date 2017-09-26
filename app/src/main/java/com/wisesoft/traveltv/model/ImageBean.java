@@ -22,6 +22,9 @@ public class ImageBean extends BaseBean {
     private String definition;
     @DatabaseField(columnName = "img_order")
     private String order;
+    //TODO 临时字段，方便演示，按逻辑应该只存在id并与酒店表关联
+    @DatabaseField
+    private String hotel_id; //所属酒店id
 
     public ImageBean() {
     }
@@ -30,6 +33,21 @@ public class ImageBean extends BaseBean {
         this.image_path = image_path;
         this.type = type;
         this.order = order;
+    }
+
+    public ImageBean(String order, String image_path, String type, String hotelId) {
+        this.order = order;
+        this.image_path = image_path;
+        this.type = type;
+        this.hotel_id = hotelId;
+    }
+
+    public String getHotelId() {
+        return hotel_id;
+    }
+
+    public void setHotelId(String hotelId) {
+        this.hotel_id = hotelId;
     }
 
     public int getId() {

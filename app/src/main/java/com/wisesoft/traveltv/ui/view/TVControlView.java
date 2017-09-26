@@ -60,4 +60,10 @@ public class TVControlView extends LinearLayout {
             typedArray.recycle();
         }
     }
+
+    public void setText(String s) {
+        if(mTextView!=null){
+            mTextView.setText(s);
+        }
+    }
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_amusement_map"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_home_bg"
+    tools:context="com.wisesoft.traveltv.ui.play.AmusementMapActivity">
+    <!--head-->
+    <include
+        style="@style/head_style"
+        layout="@layout/layout_head" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/m_head_rl"
+        android:layout_marginBottom="24dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.wisesoft.traveltv.ui.view.TVImageView
+            android:id="@+id/m_zhaojun_tiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="360dp"
+            android:layout_marginStart="360dp"
+            android:clickable="true"
+            android:gravity="center"
+            android:focusable="true"
+            android:src="@mipmap/ic_play_zhaojun"
+            app:layout_constraintLeft_toLeftOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            android:layout_marginTop="30dp" />
+
+        <com.wisesoft.traveltv.ui.view.TVImageView
+            android:id="@+id/m_drift_tiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_play_drift"
+            android:layout_marginStart="110dp"
+            app:layout_constraintLeft_toRightOf="@+id/m_zhaojun_tiv"
+            android:layout_marginLeft="110dp"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            android:layout_marginTop="32dp" />
+
+        <com.wisesoft.traveltv.ui.view.TVImageView
+            android:id="@+id/m_waterfall_tiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_play_waterfall"
+            app:layout_constraintLeft_toRightOf="@+id/m_drift_tiv"
+            android:layout_marginStart="80dp"
+            android:layout_marginLeft="80dp"
+            app:layout_constraintTop_toTopOf="@+id/imageView"
+            android:layout_marginTop="90dp" />
+
+        <com.wisesoft.traveltv.ui.view.TVImageView
+            android:id="@+id/m_fish_tiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_play_fish"
+            app:layout_constraintTop_toBottomOf="@+id/m_waterfall_tiv"
+            android:layout_marginStart="200dp"
+            app:layout_constraintLeft_toRightOf="@+id/m_dam_tiv"
+            android:layout_marginLeft="200dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintRight_toRightOf="@+id/imageView" />
+
+        <com.wisesoft.traveltv.ui.view.TVImageView
+            android:id="@+id/m_dam_tiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_play_dam"
+            android:layout_marginTop="90dp"
+            app:layout_constraintTop_toBottomOf="@+id/m_zhaojun_tiv"
+            app:layout_constraintLeft_toLeftOf="@+id/imageView"
+            android:layout_marginStart="280dp"
+            android:layout_marginLeft="280dp" />
+
+        <com.wisesoft.traveltv.ui.view.TVImageView
+            android:id="@+id/m_family_tiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="180dp"
+            android:layout_marginLeft="650dp"
+            android:layout_marginStart="650dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@mipmap/ic_play_family"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintLeft_toLeftOf="@+id/imageView" />
+    </android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>
