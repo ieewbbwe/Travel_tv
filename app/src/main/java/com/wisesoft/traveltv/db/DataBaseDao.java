@@ -201,4 +201,8 @@ public class DataBaseDao {
             return null;
         }
     }
+
+    public List<ItemInfoBean> getRecommendInfo(String typePlay) {
+        return getItemInfos(typePlay,5);
+    }
 }

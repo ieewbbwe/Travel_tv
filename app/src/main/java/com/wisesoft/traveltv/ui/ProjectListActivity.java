@@ -1,32 +1,32 @@
-package com.wisesoft.traveltv.ui.play;
+package com.wisesoft.traveltv.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.android_mobile.core.manager.image.ImageLoadFactory;
-import com.android_mobile.core.utiles.Lg;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
+import com.wisesoft.traveltv.NApplication;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.adapter.ItemListAdapter;
+import com.wisesoft.traveltv.adapter.StayAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.FilterBean;
 import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
+import com.wisesoft.traveltv.ui.stay.StayDetailActivity;
+import com.wisesoft.traveltv.ui.view.TVIconView;
 import com.wisesoft.traveltv.ui.view.weight.pop.TVFilterView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,20 +34,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by mxh on 2017.09.05
- * Describe：分类-玩
+ * Created by mxh on 2017.10.20
+ * Describe：分类-列表
  */
-public class AmusementActivity extends NActivity implements View.OnClickListener {
+public class ProjectListActivity extends NActivity implements View.OnClickListener {
 
-    /*@Bind(R.id.m_return_tiv)
-    TVIconView mReturnTiv;
+    @Bind(R.id.m_eat_tiv)
+    TVIconView mEatTiv;
     @Bind(R.id.m_search_tiv)
     TVIconView mSearchTiv;
-    @Bind(R.id.m_play_tiv)
-    TVIconView mPlayTiv;
-    @Bind(R.id.m_banner_iv)
-    ImageView mBannerIv;*/
-    @Bind(R.id.m_list_rlv)
+ /*   @Bind(R.id.m_sort_tiv)
+    TVIconView mSortTiv;*/
+    @Bind(R.id.m_return_tiv)
+    TVIconView mReturnTiv;
+    @Bind(R.id.m_content_trv)
     TvRecyclerView mListRlv;
     @Bind(R.id.m_filter_tfv)
     TVFilterView mFilterTfv;
@@ -58,26 +58,25 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
     @Bind(R.id.m_content_sv)
     ScrollView mContentSv;
 
-    private List<ItemInfoBean> beanList = new ArrayList<>();
-    private List<ItemInfoBean> recommendList = new ArrayList<>();
-    private ItemListAdapter mAdapter;
-    private GridLayoutManager gridLayoutManager;
+    private StayAdapter mAdapter;
+    private List<ItemInfoBean> items;
+    private DataBaseDao mBaseDao;
+    private List<ItemInfoBean> recommendList;
+    private String mPageType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amusement);
+        setContentView(R.layout.activity_project_list);
     }
 
     @Override
     protected void initComp() {
-        ButterKnife.bind(this);
         initBorder();
+        ButterKnife.bind(this);
+        mListRlv.setLayoutManager(new V7GridLayoutManager(this,3));
         mListRlv.setSpacingWithMargins(20, 20);
-        mAdapter = new ItemListAdapter(this);
-        gridLayoutManager = new V7GridLayoutManager(this, 3);
-        mListRlv.setLayoutManager(gridLayoutManager);
-        mListRlv.setSelectedItemAtCentered(true);//条目居中
+        mAdapter = new StayAdapter(this);
     }
 
     @Override
@@ -90,34 +89,38 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
             }
 
         });
+
+        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(mContext, StayDetailActivity.class);
+                intent.putExtra(Constans.ITEM_BEAN, mAdapter.getDataList().get(position));
+                pushActivity(intent, false);
+            }
+        });
+
         mListRlv.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 mFocusBorder.setVisible(hasFocus);
             }
         });
-        mAdapter.setOnItemClickListener(new OnItemClickListener() {
+        mReturnTiv.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                jumpToDetail(mAdapter.getItemObject(position));
+            public void onClick(View v) {
+                popActivity();
             }
         });
         mFilterTfv.setOnItemClickListener(new com.wisesoft.traveltv.ui.view.weight.pop.OnItemClickListener() {
             @Override
             public void OnItemClick(View v, FilterBean parentFilter, FilterBean childFilter) {
                 //toast("点击了 " + parentFilter.getName() + ":" + childFilter.getName());
+                items = mBaseDao.getItemInfos(Constans.TYPE_STAY,10);
+                Collections.shuffle(items);
+                mAdapter.setDataList(items);
+
             }
         });
-
-       /* gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position == 0) {
-                    return 3;
-                }
-                return 1;
-            }
-        });*/
         mFocusBorder.boundGlobalFocusListener(new FocusBorder.OnFocusCallback() {
             @Override
             public FocusBorder.Options onFocus(View oldFocus, View newFocus) {
@@ -138,21 +141,38 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
 
     @Override
     protected void initData() {
-        DataBaseDao mDao = new DataBaseDao(this);
-        beanList = mDao.getItemInfos(Constans.TYPE_PLAY);
-        Collections.shuffle(beanList);
+        mPageType = getIntent().getStringExtra(Constans.ARG_PAGE_TYPE);
 
-        mAdapter.setDataList(beanList);
+        mBaseDao = new DataBaseDao(this);
+        items = mBaseDao.getItemInfos(mPageType,10);
+        items.addAll(mBaseDao.getItemInfos(30));
+        Collections.shuffle(items);
+        mAdapter.setDataList(items);
         mListRlv.setAdapter(mAdapter);
 
-        mFilterTfv.setFilterList(DataEngine.getPlayFilterData());
+        mFilterTfv.setFilterList(DataEngine.getFilterData(mPageType));
 
-        recommendList = mDao.getRecommendInfo(Constans.TYPE_PLAY);
+        recommendList = mBaseDao.getRecommendInfo(mPageType);
         Collections.shuffle(recommendList);
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(recommendList.get(0).getImgUrl(),mHead1Iv);
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(recommendList.get(1).getImgUrl(),mHead2Iv);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.m_return_tiv:
+                popActivity();
+                break;
+            case R.id.m_head1_iv:
+                jumpToDetail(recommendList.get(0));
+                break;
+            case R.id.m_head2_iv:
+                jumpToDetail(recommendList.get(1));
+                break;
+        }
     }
 
     @Override
@@ -188,23 +208,18 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.m_return_tiv:
-                popActivity();
-                break;
-            case R.id.m_head1_iv:
-                jumpToDetail(recommendList.get(0));
-                break;
-            case R.id.m_head2_iv:
-                jumpToDetail(recommendList.get(1));
-                break;
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+
+        NApplication.getRefWatcher(this).watch(this);
+
     }
 
     public void jumpToDetail(ItemInfoBean itemObject) {
-        Intent intent = new Intent(this, AmusementDetailActivity.class);
+        Intent intent = new Intent(this, StayDetailActivity.class);
         intent.putExtra(Constans.ITEM_BEAN, itemObject);
         pushActivity(intent, false);
     }
+
 }

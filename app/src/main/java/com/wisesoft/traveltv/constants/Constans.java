@@ -29,4 +29,7 @@ public interface Constans {
 
     //为演示临时添加
     String TYPE_HOTEL_FOOD = "hotel";
+
+    //传递的参数
+    String ARG_PAGE_TYPE = "arg_page_type";
 }

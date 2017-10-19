@@ -42,7 +42,7 @@ public class TVBottomFilterPop extends BasicPopWindow {
                 .getDefaultDisplay().getMetrics(mDisplayMetrics);
 
         mFilterV = (TVFilterView) view.findViewById(R.id.m_filter_fv);
-        mFilterV.setFilterList(DataEngine.getFilterData());
+        mFilterV.setFilterList(DataEngine.getStayFilterData());
         // 设置弹出窗体显示时的动画，从底部向上弹出
         setAnimationStyle(com.android_mobile.core.R.style.take_photo_anim);
         setHeight((int) (mDisplayMetrics.heightPixels * 0.3));

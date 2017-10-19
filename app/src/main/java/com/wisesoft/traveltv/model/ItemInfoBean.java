@@ -212,6 +212,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     }
 
+    @Deprecated
     public String getAnotherStr() {
         String otherInfo = null;
         if (type.equals(Constans.TYPE_PLAY)) {
@@ -221,6 +222,16 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         }
 
         return otherInfo + "\n" + getAddressStr();
+    }
+
+    public String getPriceTimeStr(){
+        String otherInfo = null;
+        if (type.equals(Constans.TYPE_PLAY)) {
+            otherInfo = "门票价格：160元/人 \n开放时间：08:00 - 17:00";
+        } else {
+            otherInfo = "人均消费：88元/人 \n营业时间：08:00 - 17:00";
+        }
+        return otherInfo;
     }
 
 }

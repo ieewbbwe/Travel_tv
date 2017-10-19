@@ -142,7 +142,19 @@ public class DataEngine {
         return beanList;
     }
 
-    public static List<FilterBean> getFilterData() {
+    public static List<FilterBean> getFilterData(String type) {
+        switch (type) {
+            case Constans.TYPE_PLAY:
+                return getPlayFilterData();
+            case Constans.TYPE_STAY:
+                return getStayFilterData();
+            case Constans.TYPE_EAT:
+            default:
+                return null;
+        }
+    }
+
+    public static List<FilterBean> getStayFilterData() {
         List<FilterBean> beanList = new ArrayList<>();
         List<String> filterAreaStr = Arrays.asList(mContext.getResources()
                 .getStringArray(R.array.default_area));
@@ -228,5 +240,18 @@ public class DataEngine {
             itemList.addAll(been);
         }
         return itemList;
+    }
+
+    public static List<FilterBean> getPlayFilterData() {
+        List<FilterBean> beanList = new ArrayList<>();
+         /*初始化景观筛选类*/
+        FilterBean landScapeFilter = new FilterBean("004", "类型");
+        List<FilterBean> landScapeChilds = new ArrayList<>();
+        landScapeChilds.add(new FilterBean("-1", "全部"));
+        landScapeChilds.add(new FilterBean("0", "自然景观"));
+        landScapeChilds.add(new FilterBean("1", "人文景观"));
+        landScapeFilter.setChildBean(landScapeChilds);
+        beanList.add(landScapeFilter);
+        return beanList;
     }
 }

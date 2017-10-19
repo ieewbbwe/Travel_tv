@@ -1,9 +1,8 @@
-package com.wisesoft.traveltv.ui.play;
+package com.wisesoft.traveltv.ui.stay;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
@@ -25,11 +24,13 @@ import com.tv.boost.widget.TvVerticalScrollView;
 import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
+import com.wisesoft.traveltv.adapter.ProjectListAdapter;
 import com.wisesoft.traveltv.adapter.RecommendAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
-import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
+import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
+import com.wisesoft.traveltv.ui.play.PlayVideoActivity;
 import com.wisesoft.traveltv.ui.view.TVControlView;
 
 import java.util.Collections;
@@ -41,10 +42,9 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class AmusementDetailActivity extends NActivity implements View.OnClickListener {
+public class StayDetailActivity extends NActivity implements View.OnClickListener {
 
     @Bind(R.id.m_main_iv)
     ImageView mMainIv;
@@ -67,7 +67,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     @Bind(R.id.m_content_sv)
     TvVerticalScrollView mContentSv;
 
-    private RecommendAdapter mAdapter;
+    private ProjectListAdapter mAdapter;
 
     //推荐信息
     private List<ItemInfoBean> mRecommendBeans;
@@ -79,7 +79,7 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_amsuement_detail);
+        setContentView(R.layout.activity_stay_detail);
     }
 
     @Override
@@ -87,20 +87,11 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         ButterKnife.bind(this);
         mContentLl = (FrameLayout) findViewById(R.id.contentfl);
         initBorder();
-        mAdapter = new RecommendAdapter(this);
+        mAdapter = new ProjectListAdapter(this);
         mRecommendRlv.setAdapter(mAdapter);
         mRecommendRlv.setSelectedItemAtCentered(true);
         //设置横向间距
         mRecommendRlv.setSpacingWithMargins(0, 20);
-    }
-
-    public void initBorder() {
-        mFocusBorder = new FocusBorder.Builder().asColor()
-                .shadowWidth(TypedValue.COMPLEX_UNIT_DIP, 18f) //阴影宽度(方式二)
-                .shadowColor(getResources().getColor(R.color.colorPrimary)) //阴影颜色
-                .borderWidth(TypedValue.COMPLEX_UNIT_DIP, 2f) //边框宽度
-                .borderColor(getResources().getColor(R.color.white)) //边框颜色
-                .build(this);
     }
 
     @Override
@@ -146,6 +137,15 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
         }
     }
 
+    public void initBorder() {
+        mFocusBorder = new FocusBorder.Builder().asColor()
+                .shadowWidth(TypedValue.COMPLEX_UNIT_DIP, 18f) //阴影宽度(方式二)
+                .shadowColor(getResources().getColor(R.color.colorPrimary)) //阴影颜色
+                .borderWidth(TypedValue.COMPLEX_UNIT_DIP, 2f) //边框宽度
+                .borderColor(getResources().getColor(R.color.white)) //边框颜色
+                .build(this);
+    }
+
     private void showItemDetail(@NonNull ItemInfoBean mItemInfoBean) {
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(mItemInfoBean.getImgUrl(), mMainIv);
@@ -177,18 +177,8 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
                         });
             }
         });
-
-        //TODO 暂时只有酒店类型才能播视屏
-        /*if(!mItemInfoBean.getType().equals(Constans.TYPE_STAY)){
-            mPlayTvc.setText("看图");
-        }*/
     }
 
-    /**
-     * 展示推荐信息
-     *
-     * @param type 推荐类型参数
-     */
     private void showRecommendView(String type) {
         if(type.equals(Constans.TYPE_EAT)){
             //默认查询10条，不够则循环
@@ -232,19 +222,14 @@ public class AmusementDetailActivity extends NActivity implements View.OnClickLi
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_play_tvc:
                 Intent intent;
                 if (mItemInfoBean.getType().equals(Constans.TYPE_STAY)) {
-                    intent = new Intent(AmusementDetailActivity.this, PlayVideoActivity.class);
+                    intent = new Intent(this, PlayVideoActivity.class);
                 } else {
-                    intent = new Intent(AmusementDetailActivity.this, ImageDetailActivity.class);
+                    intent = new Intent(this, ImageDetailActivity.class);
                 }
                 intent.putExtra(Constans.ITEM_BEAN, mItemInfoBean);
                 pushActivity(intent, false);

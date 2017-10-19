@@ -27,7 +27,7 @@ public class BasicApplication extends Application {
         applicationContext = getApplicationContext();
         SharedPrefManager.init(applicationContext);
         ImageLoadFactory.init(applicationContext);
-        Thread.setDefaultUncaughtExceptionHandler(UncaughtException.getInstance(applicationContext));
+        //Thread.setDefaultUncaughtExceptionHandler(UncaughtException.getInstance(applicationContext));
     }
 
     public Stack<Activity> getActivityStack(){

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,63 +11,166 @@
     <!--head-->
     <include
         style="@style/head_style"
-        layout="@layout/layout_head"/>
+        layout="@layout/layout_head" />
 
     <!--content-->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/m_bottom_bar"
         android:layout_below="@+id/m_head_rl"
-        android:orientation="horizontal"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
-        <!--imageLooper-->
-        <ImageView
-            android:id="@+id/m_banner_iv"
-            android:layout_width="0dp"
+        <!--leftBar-->
+        <LinearLayout
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_img_item_default"/>
+            android:layout_marginRight="8dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <com.owen.tvrecyclerview.widget.TvRecyclerView
-            android:id="@+id/m_list_rlv"
-            android:layout_width="0dp"
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_eat_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                android:padding="8dp"
+                app:gIcon="@mipmap/ic_home_play"
+                app:gLight="true"
+                app:gText="@string/label_home_play"
+                app:gTextSite="bottom" />
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_search_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                android:padding="8dp"
+                app:gIcon="@mipmap/ic_home_search"
+                app:gLight="true"
+                app:gText="@string/label_home_search"
+                app:gTextSite="bottom" />
+
+            <com.wisesoft.traveltv.ui.view.TVIconView
+                android:id="@+id/m_return_tiv"
+                style="@style/m_home_radio_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="0"
+                android:padding="8dp"
+                app:gIcon="@mipmap/ic_home_return"
+                app:gLight="true"
+                app:gText="@string/label_home_recommend"
+                app:gTextSite="bottom" />
+
+            <!--   <com.wisesoft.traveltv.ui.view.TVIconView
+                   android:id="@+id/m_sort_tiv"
+                   style="@style/m_home_radio_style"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="8dp"
+                   android:layout_weight="0"
+                   app:gIcon="@mipmap/ic_home_sort"
+                   app:gText="@string/label_home_sort"
+                   app:gTextSite="bottom" />-->
+
+        </LinearLayout>
+
+        <!--right-->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="24dp"
-            android:layout_weight="4"
-            android:focusable="true"
-            app:tv_isMenu="true"
-            app:tv_layoutManager="V7LinearLayoutManager"
-            app:tv_selectedItemIsCentered="true"/>
-        <!--pullList-->
-    </LinearLayout>
-    <!--foot-->
-    <LinearLayout
-        android:id="@+id/m_bottom_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:orientation="horizontal">
+            android:layout_marginLeft="8dp"
+            android:layout_toRightOf="@+id/left"
+            android:orientation="vertical">
 
-        <com.wisesoft.traveltv.ui.view.TVIconView
-            android:id="@+id/m_return_tiv"
-            style="@style/m_home_radio_style"
-            app:gIcon="@mipmap/ic_home_return"
-            app:gText="@string/label_home_return"/>
+            <com.wisesoft.traveltv.ui.view.weight.pop.TVFilterView
+                android:id="@+id/m_filter_tfv"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="12dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
-        <com.wisesoft.traveltv.ui.view.TVIconView
-            android:id="@+id/m_search_tiv"
-            style="@style/m_home_radio_style"
-            app:gIcon="@mipmap/ic_home_search"
-            app:gText="@string/label_home_search"/>
+            <ScrollView
+                android:id="@+id/m_content_sv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <com.wisesoft.traveltv.ui.view.TVIconView
-            android:id="@+id/m_play_tiv"
-            style="@style/m_home_radio_style"
-            app:gIcon="@mipmap/ic_home_play"
-            app:gText="@string/label_home_play"/>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:padding="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/m_head1_iv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:focusable="true"
+                            android:layout_marginRight="24dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/default1" />
+
+                        <ImageView
+                            android:id="@+id/m_head2_iv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:focusable="true"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/default2" />
+                    </LinearLayout>
+
+                    <com.owen.tvrecyclerview.widget.TvRecyclerView
+                        android:id="@+id/m_list_rlv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:focusable="true"
+                        android:padding="15dp"
+                        app:tv_isMenu="true"
+                        app:tv_selectedItemIsCentered="true" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--  <LinearLayout
+         android:id="@+id/m_bottom_bar"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_marginBottom="16dp"
+         android:orientation="horizontal">
+
+         <com.wisesoft.traveltv.ui.view.TVIconView
+             android:id="@+id/m_return_tiv"
+             style="@style/m_home_radio_style"
+             app:gIcon="@mipmap/ic_home_return"
+             app:gText="@string/label_home_return"/>
+
+         <com.wisesoft.traveltv.ui.view.TVIconView
+             android:id="@+id/m_search_tiv"
+             style="@style/m_home_radio_style"
+             app:gIcon="@mipmap/ic_home_search"
+             app:gText="@string/label_home_search"/>
+
+         <com.wisesoft.traveltv.ui.view.TVIconView
+             android:id="@+id/m_play_tiv"
+             style="@style/m_home_radio_style"
+             app:gIcon="@mipmap/ic_home_play"
+             app:gText="@string/label_home_play"/>
+     </LinearLayout>-->
 </RelativeLayout>

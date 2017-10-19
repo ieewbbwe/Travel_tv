@@ -39,6 +39,8 @@ public class TVIconView extends LinearLayout {
     private int mColorNotFoucus;
     private double mHeight;
     private String mTextSite = "top";
+    private boolean isLight;
+    private boolean isAnim;
 
     public TVIconView(Context context) {
         this(context, null);
@@ -62,6 +64,8 @@ public class TVIconView extends LinearLayout {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.IconView, defStyleAttr, 0);
         if (a != null) {
+            isAnim = a.getBoolean(R.styleable.IconView_gIsAnim,true);
+            isLight = a.getBoolean(R.styleable.IconView_gLight,false);
             mTextView.setText(a.getText(R.styleable.IconView_gText));
             ColorStateList colorStateList = a.getColorStateList(R.styleable.IconView_gTextColor);
             if (null != colorStateList) {
@@ -95,12 +99,14 @@ public class TVIconView extends LinearLayout {
     @Override
     protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
         super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
-        if (gainFocus) {
-            runScaleAnim(this, 1.1f, 1.1f);
-        } else {
-            runScaleAnim(this, 1 / 1.1f, 1 / 1.1f);
+        if(isAnim){
+            if (gainFocus) {
+                runScaleAnim(this, 1.1f, 1.1f);
+            } else {
+                runScaleAnim(this, 1 / 1.1f, 1 / 1.1f);
+            }
+            tintImage(gainFocus);
         }
-        tintImage(gainFocus);
 
     }
 
@@ -120,6 +126,9 @@ public class TVIconView extends LinearLayout {
         DrawableCompat.setTint(wrap, gainFocus ? mColorFoucus : mColorNotFoucus);
         mImageView.setImageDrawable(wrap);
         mTextView.setTextColor(gainFocus ? mColorFoucus : mColorNotFoucus);
+        if(isLight){
+            setBackground(gainFocus?getResources().getDrawable(R.drawable.shap_focus_bg):null);
+        }
     }
 
     private void runScaleAnim(View v, float scaleX, float scaleY) {

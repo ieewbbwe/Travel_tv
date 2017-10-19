@@ -16,45 +16,78 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by picher on 2017/9/9.
- * Describe：二级栏目列表适配器
+ * Created by picher on 2017/10/18.
+ * Describe：
  */
 
-public class ItemListAdapter extends BasicAdapter<ItemInfoBean, ItemListAdapter.ViewHolder> {
+public class ItemListAdapter extends BasicAdapter<ItemInfoBean, RecyclerView.ViewHolder> {
+
+    private static final int TYPE_HEAD = 0x01;
 
     public ItemListAdapter(Context context) {
         super(context);
     }
 
     @Override
-    public void onBindItemHolder(ViewHolder holder, int position) {
-        ItemInfoBean itemInfoBean = mDataList.get(position);
-        ImageLoadFactory.getInstance().getImageLoadHandler()
-                .displayImage(itemInfoBean.getImgUrl(), holder.mItemIv);
-        holder.mTitleTv.setText(itemInfoBean.getName());
-        holder.mScoreTv.setText(itemInfoBean.getGradeStr());
-        holder.mIntroduceTv.setText(itemInfoBean.getIntroduce());
+    public void onBindItemHolder(RecyclerView.ViewHolder holder, int position) {
+        ItemInfoBean item = mDataList.get(position);
+        if(holder instanceof ViewHolder){
+            ViewHolder h = (ViewHolder) holder;
+            ImageLoadFactory.getInstance().getImageLoadHandler()
+                    .displayImage(item.getImgUrl(), h.mRecommendIv);
+            h.mTitleTv.setText(item.getName());
+        }else{
+            HeadHolder h = (HeadHolder) holder;
+            ImageLoadFactory.getInstance().getImageLoadHandler()
+                    .displayImage(item.getImgUrl(), h.mHead1Iv);
+            ImageLoadFactory.getInstance().getImageLoadHandler()
+                    .displayImage(mDataList.get(position+1).getImgUrl(), h.mHead2Iv);
+        }
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.layout_list_item, null));
+    public int getItemViewType(int position) {
+        if(position==0){
+            return TYPE_HEAD;
+        }
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(mInflater.inflate(R.layout.layout_stay, null));
+
+        /*if(viewType ==TYPE_HEAD){
+            return new HeadHolder(mInflater.inflate(R.layout.layout_stay_head, null));
+        }else{
+            return new ViewHolder(mInflater.inflate(R.layout.layout_stay, null));
+        }*/
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.m_item_iv)
-        ImageView mItemIv;
+        @Bind(R.id.m_recommend_iv)
+        ImageView mRecommendIv;
         @Bind(R.id.m_title_tv)
         TextView mTitleTv;
-        @Bind(R.id.m_score_tv)
-        TextView mScoreTv;
-        @Bind(R.id.m_introduce_tv)
-        TextView mIntroduceTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
     }
+
+    public static class HeadHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.m_head1_iv)
+        ImageView mHead1Iv;
+        @Bind(R.id.m_head2_iv)
+        ImageView mHead2Iv;
+
+        public HeadHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
 }

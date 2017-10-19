@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -80,11 +81,13 @@ public class TVFilterView extends LinearLayout {
      * @param parentFilter 父级筛选集合
      */
     public void setFilterList(List<FilterBean> parentFilter) {
-        mInflaterAdapters.clear();
-        View v;
-        for (int i = 0; i < parentFilter.size(); i++) {
-            v = newFilterLayout(parentFilter.get(i), i);
-            addView(v);
+        if(CollectionUtils.isNotEmpty(parentFilter)){
+            mInflaterAdapters.clear();
+            View v;
+            for (int i = 0; i < parentFilter.size(); i++) {
+                v = newFilterLayout(parentFilter.get(i), i);
+                addView(v);
+            }
         }
     }
 

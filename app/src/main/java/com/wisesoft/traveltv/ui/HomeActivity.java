@@ -37,18 +37,19 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
 
     @Bind(R.id.m_bottom_bar)
     ViewGroup mBottomBar;
-    @Bind(R.id.m_search_rb)
-    TVIconView mSearchRb;
+
     @Bind(R.id.m_play_rb)
     TVIconView mPlayRb;
     @Bind(R.id.m_eat_rb)
     TVIconView mEatRb;
     @Bind(R.id.m_stay_rb)
     TVIconView mStayRb;
+   /* @Bind(R.id.m_search_rb)
+    TVIconView mSearchRb;
     @Bind(R.id.m_traffic_rb)
     TVIconView mTrafficRb;
     @Bind(R.id.m_settings_rb)
-    TVIconView mSettingsRb;
+    TVIconView mSettingsRb;*/
     @Bind(R.id.m_gallery_cf)
     FeatureCoverFlow mGalleryCf;
 
@@ -69,12 +70,12 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
 
     @Override
     protected void initListener() {
-        mSearchRb.setOnClickListener(this);
         mPlayRb.setOnClickListener(this);
         mEatRb.setOnClickListener(this);
         mStayRb.setOnClickListener(this);
+        /*mSearchRb.setOnClickListener(this);
         mTrafficRb.setOnClickListener(this);
-        mSettingsRb.setOnClickListener(this);
+        mSettingsRb.setOnClickListener(this);*/
 
         mGalleryCf.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -118,13 +119,13 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_DOWN:
                 if (isFocused(mGalleryCf)) {
-                    if (mSearchRb != null)
-                        mSearchRb.requestFocus();
+                    if (mPlayRb != null)
+                        mPlayRb.requestFocus();
                 }
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
-                if (isFocused(mSearchRb) || isFocused(mPlayRb) || isFocused(mEatRb)
-                        || isFocused(mStayRb) || isFocused(mTrafficRb) || isFocused(mSettingsRb)) {
+                if (isFocused(mPlayRb) || isFocused(mEatRb)
+                        || isFocused(mStayRb) /*|| isFocused(mTrafficRb) || isFocused(mSettingsRb)||isFocused(mSearchRb)*/ ) {
                     if (mGalleryCf != null)
                         mGalleryCf.requestFocus();
                 }
@@ -145,22 +146,28 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_play_rb:
-                //pushActivity(AmusementActivity.class);
-                pushActivity(AmusementMapActivity.class);
+                pushActivity(AmusementActivity.class);
+                //pushActivity(AmusementMapActivity.class);
                 break;
             case R.id.m_stay_rb:
-                pushActivity(StayActivity.class);
+                Intent intent1 = new Intent(this,ProjectListActivity.class);
+                intent1.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_STAY);
+                pushActivity(intent1);
+                //pushActivity(StayActivity.class);
                 break;
             case R.id.m_eat_rb:
-                pushActivity(DeliciousActivity.class);
+                Intent intent = new Intent(this,ProjectListActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_EAT);
+                pushActivity(intent);
+                //pushActivity(DeliciousActivity.class);
                 break;
-            case R.id.m_traffic_rb:
+            /*case R.id.m_traffic_rb:
                 pushActivity(TrafficActivity.class);
                 break;
             case R.id.m_search_rb:
             case R.id.m_settings_rb:
                 toast("Wait For Codding...");
-                break;
+                break;*/
         }
     }
 }

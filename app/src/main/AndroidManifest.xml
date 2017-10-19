@@ -62,6 +62,12 @@
         <activity
             android:name=".ui.play.AmusementMapActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.stay.StayDetailActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".ui.ProjectListActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
