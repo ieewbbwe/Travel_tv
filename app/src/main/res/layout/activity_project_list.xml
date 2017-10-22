@@ -30,58 +30,61 @@
             <com.wisesoft.traveltv.ui.view.TVIconView
                 android:id="@+id/m_eat_tiv"
                 style="@style/m_home_radio_style"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:padding="8dp"
                 android:layout_weight="0"
                 app:gIcon="@mipmap/ic_home_stay"
+                app:gLight="true"
                 app:gText="@string/label_home_stay"
                 app:gTextSite="bottom" />
 
             <com.wisesoft.traveltv.ui.view.TVIconView
                 android:id="@+id/m_search_tiv"
                 style="@style/m_home_radio_style"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:padding="8dp"
                 android:layout_weight="0"
                 app:gIcon="@mipmap/ic_home_search"
+                app:gLight="true"
                 app:gText="@string/label_home_search"
                 app:gTextSite="bottom" />
-
-         <!--   <com.wisesoft.traveltv.ui.view.TVIconView
-                android:id="@+id/m_sort_tiv"
-                style="@style/m_home_radio_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="0"
-                app:gIcon="@mipmap/ic_home_sort"
-                app:gText="@string/label_home_sort"
-                app:gTextSite="bottom" />-->
 
             <com.wisesoft.traveltv.ui.view.TVIconView
                 android:id="@+id/m_return_tiv"
                 style="@style/m_home_radio_style"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:padding="8dp"
                 android:layout_weight="0"
-                app:gIcon="@mipmap/ic_home_return"
+                app:gIcon="@mipmap/ic_home_recommend"
+                app:gLight="true"
                 app:gText="@string/label_home_recommend"
                 app:gTextSite="bottom" />
+            <!--   <com.wisesoft.traveltv.ui.view.TVIconView
+                   android:id="@+id/m_sort_tiv"
+                   style="@style/m_home_radio_style"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="8dp"
+                   android:layout_weight="0"
+                   app:gIcon="@mipmap/ic_home_sort"
+                   app:gText="@string/label_home_sort"
+                   app:gTextSite="bottom" />-->
+
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <com.wisesoft.traveltv.ui.view.weight.pop.TVFilterView
                 android:id="@+id/m_filter_tfv"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
             <ScrollView
                 android:id="@+id/m_content_sv"
@@ -95,17 +98,17 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:padding="8dp"
                         android:layout_height="350dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:padding="8dp">
 
                         <ImageView
                             android:id="@+id/m_head1_iv"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_marginRight="24dp"
                             android:layout_weight="1"
                             android:focusable="true"
-                            android:layout_marginRight="24dp"
                             android:scaleType="centerCrop"
                             android:src="@mipmap/default1" />
 

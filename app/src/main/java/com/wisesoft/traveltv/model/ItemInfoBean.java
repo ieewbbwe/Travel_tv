@@ -82,6 +82,10 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.phone = phone;
     }
 
+    public ItemInfoBean(String image_url, String type) {
+        this.image_url = image_url;
+        this.type = type;
+    }
 
     public ItemInfoBean(String image_url, String name, double recommend, long create_time, String introduce, String type, long view_count, String address, String phone) {
         this.image_url = image_url;
@@ -227,9 +231,9 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     public String getPriceTimeStr(){
         String otherInfo = null;
         if (type.equals(Constans.TYPE_PLAY)) {
-            otherInfo = "门票价格：160元/人 \n开放时间：08:00 - 17:00";
+            otherInfo = "门票价格：160元/人  开放时间：08:00 - 17:00";
         } else {
-            otherInfo = "人均消费：88元/人 \n营业时间：08:00 - 17:00";
+            otherInfo = "人均消费：88元/人  营业时间：08:00 - 17:00";
         }
         return otherInfo;
     }

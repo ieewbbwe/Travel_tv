@@ -24,12 +24,10 @@ import com.tv.boost.widget.TvVerticalScrollView;
 import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.adapter.ProjectListAdapter;
-import com.wisesoft.traveltv.adapter.RecommendAdapter;
+import com.wisesoft.traveltv.adapter.ProjectRecommendAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
-import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.play.PlayVideoActivity;
 import com.wisesoft.traveltv.ui.view.TVControlView;
 
@@ -67,7 +65,7 @@ public class StayDetailActivity extends NActivity implements View.OnClickListene
     @Bind(R.id.m_content_sv)
     TvVerticalScrollView mContentSv;
 
-    private ProjectListAdapter mAdapter;
+    private ProjectRecommendAdapter mAdapter;
 
     //推荐信息
     private List<ItemInfoBean> mRecommendBeans;
@@ -87,7 +85,7 @@ public class StayDetailActivity extends NActivity implements View.OnClickListene
         ButterKnife.bind(this);
         mContentLl = (FrameLayout) findViewById(R.id.contentfl);
         initBorder();
-        mAdapter = new ProjectListAdapter(this);
+        mAdapter = new ProjectRecommendAdapter(this);
         mRecommendRlv.setAdapter(mAdapter);
         mRecommendRlv.setSelectedItemAtCentered(true);
         //设置横向间距

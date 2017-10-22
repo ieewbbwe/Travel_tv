@@ -135,5 +135,11 @@ public class TVIconView extends LinearLayout {
         v.animate().scaleX(scaleX).scaleY(scaleY).setDuration(300);
     }
 
+    public void setImageResource(int imgRes){
+        if(mImageView != null){
+            mImageView.setImageResource(imgRes);
+        }
+    }
+
 
 }

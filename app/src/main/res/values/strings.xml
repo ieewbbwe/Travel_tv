@@ -9,6 +9,8 @@
     <string name="label_home_return">返回</string>
     <string name="label_home_sort">排序</string>
     <string name="label_play">播放</string>
-    <string name="label_like">好评</string>
+    <string name="label_like">点赞</string>
     <string name="label_home_recommend">推荐</string>
+    <string name="label_traffic">路线</string>
+    <string name="label_comment">综合评分：</string>
 </resources>

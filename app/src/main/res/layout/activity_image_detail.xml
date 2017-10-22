@@ -111,8 +111,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:isIndicator="true"
-                                android:maxHeight="25dp"
-                                android:minHeight="25dp"
                                 android:rating="4.5" />
                         </LinearLayout>
 

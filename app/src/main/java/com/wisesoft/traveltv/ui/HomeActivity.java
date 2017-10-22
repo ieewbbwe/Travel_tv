@@ -7,19 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.android_mobile.core.utiles.Lg;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.GalleryAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
-import com.wisesoft.traveltv.ui.eat.DeliciousActivity;
-import com.wisesoft.traveltv.ui.play.AmusementActivity;
-import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
-import com.wisesoft.traveltv.ui.play.AmusementMapActivity;
-import com.wisesoft.traveltv.ui.stay.StayActivity;
-import com.wisesoft.traveltv.ui.traffic.TrafficActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
 import java.util.ArrayList;
@@ -80,9 +73,12 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         mGalleryCf.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ItemInfoBean item = beanList.get(position);
+                jumpToListByType(item.getType());
+               /* //跳转到详情
                 Intent intent = new Intent(HomeActivity.this, AmusementDetailActivity.class);
                 intent.putExtra(Constans.ITEM_BEAN, beanList.get(position));
-                pushActivity(intent, false);
+                pushActivity(intent, false);*/
             }
         });
 
@@ -93,9 +89,8 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
                     case KeyEvent.KEYCODE_ENTER:
                     case KeyEvent.KEYCODE_DPAD_CENTER:
                         if(event.getAction()==KeyEvent.ACTION_UP){
-                            Intent intent = new Intent(HomeActivity.this, AmusementDetailActivity.class);
-                            intent.putExtra(Constans.ITEM_BEAN, beanList.get(mGalleryCf.getScrollPosition()));
-                            pushActivity(intent, false);
+                            ItemInfoBean item = beanList.get(mGalleryCf.getScrollPosition());
+                            jumpToListByType(item.getType());
                             return true;
                         }
                 }
@@ -146,19 +141,16 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.m_play_rb:
-                pushActivity(AmusementActivity.class);
+                jumpToListByType(Constans.TYPE_PLAY);
+                //pushActivity(AmusementActivity.class);
                 //pushActivity(AmusementMapActivity.class);
                 break;
             case R.id.m_stay_rb:
-                Intent intent1 = new Intent(this,ProjectListActivity.class);
-                intent1.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_STAY);
-                pushActivity(intent1);
+                jumpToListByType(Constans.TYPE_STAY);
                 //pushActivity(StayActivity.class);
                 break;
             case R.id.m_eat_rb:
-                Intent intent = new Intent(this,ProjectListActivity.class);
-                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_EAT);
-                pushActivity(intent);
+                jumpToListByType(Constans.TYPE_EAT);
                 //pushActivity(DeliciousActivity.class);
                 break;
             /*case R.id.m_traffic_rb:
@@ -169,5 +161,25 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
                 toast("Wait For Codding...");
                 break;*/
         }
+    }
+
+    private void jumpToListByType(String type) {
+        Intent intent;
+        switch (type){
+            case Constans.TYPE_PLAY:
+                intent = new Intent(this,ProjectListActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_PLAY);
+                break;
+            case Constans.TYPE_EAT:
+                intent = new Intent(this,ProjectListActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_EAT);
+                break;
+            case Constans.TYPE_STAY:
+            default:
+                intent = new Intent(this,ProjectListActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_STAY);
+                break;
+        }
+        pushActivity(intent);
     }
 }
