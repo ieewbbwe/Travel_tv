@@ -90,9 +90,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
-                    android:layout_marginTop="16dp"
-                    android:paddingLeft="@dimen/content_padding"
-                    android:paddingRight="@dimen/content_padding">
+                    android:layout_marginTop="16dp">
 
                     <RelativeLayout
                         android:id="@+id/top"
@@ -155,7 +153,7 @@
                                     android:rating="4.5" />
                             </RelativeLayout>
 
-                            <TextView
+                            <com.wisesoft.traveltv.ui.view.CheckOverSizeTextView
                                 android:id="@+id/m_introduce_tv"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -166,6 +164,15 @@
                                 android:text="景点介绍：\n 三峡大坝，位于中国湖北省宜昌市境内，距下游葛洲坝水利枢纽工程38公里；是当今世界最大的水利发电工程——三峡水电站的主体工程、三峡大坝旅游区的核心景观、三峡水库的东端。"
                                 android:textColor="@color/text_color"
                                 android:textSize="@dimen/text_small_size" />
+
+                           <!-- <TextView
+                                android:id="@+id/m_expend_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:text="@string/label_expend_all"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_smallest_size" />-->
 
                             <TextView
                                 android:id="@+id/m_price_time_tv"

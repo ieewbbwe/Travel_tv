@@ -2,15 +2,18 @@ package com.wisesoft.traveltv.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android_mobile.core.manager.image.ImageLoadFactory;
@@ -31,6 +34,7 @@ import com.wisesoft.traveltv.model.DataEngine;
 import com.wisesoft.traveltv.model.ItemInfoBean;
 import com.wisesoft.traveltv.ui.play.PlayVideoActivity;
 import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
+import com.wisesoft.traveltv.ui.view.CheckOverSizeTextView;
 import com.wisesoft.traveltv.ui.view.TVControlView;
 
 import java.util.Collections;
@@ -53,7 +57,7 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
     @Bind(R.id.m_evaluate_tv)
     TextView mEvaluateTv;
     @Bind(R.id.m_introduce_tv)
-    TextView mIntroduceTv;
+    CheckOverSizeTextView mIntroduceTv;
     @Bind(R.id.m_any_info)
     TextView mAnyInfo;
     @Bind(R.id.m_price_time_tv)
@@ -91,11 +95,25 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
         ButterKnife.bind(this);
         mContentLl = (FrameLayout) findViewById(R.id.contentfl);
         initBorder();
+        restRatingHeight();
         mAdapter = new ProjectRecommendAdapter(this);
         mRecommendRlv.setAdapter(mAdapter);
         mRecommendRlv.setSelectedItemAtCentered(true);
         //设置横向间距
         mRecommendRlv.setSpacingWithMargins(0, 20);
+    }
+
+    /**
+     * 重置星星布局高度
+     */
+    private void restRatingHeight() {
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_rate_solid);
+        int startHeight = bmp.getHeight();
+        if (startHeight != 0) {
+            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) mGradeRb.getLayoutParams();
+            lp.height = startHeight;
+            mGradeRb.setLayoutParams(lp);
+        }
     }
 
     @Override
@@ -191,13 +209,17 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
                         });
             }
         });
+        //判断介绍超出显示...
+        if (mIntroduceTv.isOverSize()) {
+            
+        }
     }
 
     private void showRecommendView(String type) {
-        if(type.equals(Constans.TYPE_EAT)){
+        if (type.equals(Constans.TYPE_EAT)) {
             //默认查询10条，不够则循环
             mRecommendBeans = DataEngine.getHotelFoodInfo(mItemInfoBean.getHotel_id());
-        }else{
+        } else {
             mRecommendBeans = DataEngine.getRecommendInfo(type, 10);
         }
         Collections.shuffle(mRecommendBeans);

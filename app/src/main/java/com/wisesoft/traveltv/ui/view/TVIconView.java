@@ -142,4 +142,9 @@ public class TVIconView extends LinearLayout {
     }
 
 
+    public void setText(int textRes) {
+        if(mTextView != null){
+            mTextView.setText(textRes);
+        }
+    }
 }

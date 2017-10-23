@@ -71,6 +71,7 @@
         <activity
             android:name=".ui.ProjectDetailActivity"
             android:screenOrientation="landscape" />
+        <activity android:name=".ui.SearchResultActivity"></activity>
     </application>
 
 </manifest>

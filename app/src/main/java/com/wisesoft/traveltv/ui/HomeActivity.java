@@ -37,12 +37,12 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
     TVIconView mEatRb;
     @Bind(R.id.m_stay_rb)
     TVIconView mStayRb;
-   /* @Bind(R.id.m_search_rb)
-    TVIconView mSearchRb;
-    @Bind(R.id.m_traffic_rb)
-    TVIconView mTrafficRb;
-    @Bind(R.id.m_settings_rb)
-    TVIconView mSettingsRb;*/
+    /* @Bind(R.id.m_search_rb)
+     TVIconView mSearchRb;
+     @Bind(R.id.m_traffic_rb)
+     TVIconView mTrafficRb;
+     @Bind(R.id.m_settings_rb)
+     TVIconView mSettingsRb;*/
     @Bind(R.id.m_gallery_cf)
     FeatureCoverFlow mGalleryCf;
 
@@ -85,10 +85,10 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         mGalleryCf.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                switch (keyCode){
+                switch (keyCode) {
                     case KeyEvent.KEYCODE_ENTER:
                     case KeyEvent.KEYCODE_DPAD_CENTER:
-                        if(event.getAction()==KeyEvent.ACTION_UP){
+                        if (event.getAction() == KeyEvent.ACTION_UP) {
                             ItemInfoBean item = beanList.get(mGalleryCf.getScrollPosition());
                             jumpToListByType(item.getType());
                             return true;
@@ -120,7 +120,7 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
                 break;
             case KeyEvent.KEYCODE_DPAD_UP:
                 if (isFocused(mPlayRb) || isFocused(mEatRb)
-                        || isFocused(mStayRb) /*|| isFocused(mTrafficRb) || isFocused(mSettingsRb)||isFocused(mSearchRb)*/ ) {
+                        || isFocused(mStayRb) /*|| isFocused(mTrafficRb) || isFocused(mSettingsRb)||isFocused(mSearchRb)*/) {
                     if (mGalleryCf != null)
                         mGalleryCf.requestFocus();
                 }
@@ -165,19 +165,19 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
 
     private void jumpToListByType(String type) {
         Intent intent;
-        switch (type){
+        switch (type) {
             case Constans.TYPE_PLAY:
-                intent = new Intent(this,ProjectListActivity.class);
-                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_PLAY);
+                intent = new Intent(this, ProjectListActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE, Constans.TYPE_PLAY);
                 break;
             case Constans.TYPE_EAT:
-                intent = new Intent(this,ProjectListActivity.class);
-                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_EAT);
+                intent = new Intent(this, ProjectListActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE, Constans.TYPE_EAT);
                 break;
             case Constans.TYPE_STAY:
             default:
-                intent = new Intent(this,ProjectListActivity.class);
-                intent.putExtra(Constans.ARG_PAGE_TYPE,Constans.TYPE_STAY);
+                intent = new Intent(this, ProjectListActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE, Constans.TYPE_STAY);
                 break;
         }
         pushActivity(intent);

@@ -13,4 +13,16 @@
     <string name="label_home_recommend">推荐</string>
     <string name="label_traffic">路线</string>
     <string name="label_comment">综合评分：</string>
+    <string name="label_expend_all">展开</string>
+    <string name="label_home_return_top">回到顶部</string>
+
+    <string name="keycode_space">62</string> <!-- 空格 -->
+    <string name="keycode_center">66</string> <!-- 回车 -->
+    <string name="keycode_back">4</string> <!-- 返回 -->
+    <string name="keycode_left">21</string> <!-- 左边 -->
+    <string name="keycode_right">22</string> <!-- 右边 -->
+    <string name="keycode_del">67</string>
+    <string name="hint_search_by_py">请输入拼音缩写</string>
+    <string name="label_empty">目前暂无更多数据...</string>
+    <string name="label_search_empty">快去输入搜索信息吧！</string> <!-- 删除 -->
 </resources>

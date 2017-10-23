@@ -2,10 +2,14 @@ package com.wisesoft.traveltv.ui.stay;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android_mobile.core.utiles.BitmapUtils;
@@ -54,6 +58,8 @@ public class ImageDetailActivity extends NActivity {
     Banner mImageDisplayBn;            //图片展示位
     @Bind(R.id.m_content_fl)
     FrameLayout mImgContentFl;
+    @Bind(R.id.m_grade_rb)
+    RatingBar mGradeRb;
 
     private List<ImageBean> mImgList = new ArrayList<>();
     private ItemInfoBean mItemInfo;
@@ -67,6 +73,7 @@ public class ImageDetailActivity extends NActivity {
     @Override
     protected void initComp() {
         ButterKnife.bind(this);
+        restRatingHeight();
         //默认显示三张图片
         mImgList.add(new ImageBean("file:///android_asset/default1.jpg"));
         mImgList.add(new ImageBean("file:///android_asset/default2.jpg"));
@@ -74,11 +81,11 @@ public class ImageDetailActivity extends NActivity {
         //设置图片加载器
         mImageDisplayBn.setImageLoader(new GlideImageLoader());
         //设置图片集合
-       // mImageDisplayBn.setImages(mImgList);
+        // mImageDisplayBn.setImages(mImgList);
         mImageDisplayBn.setBannerAnimation(CubeOutTransformer.class);
         mImageDisplayBn.setDelayTime(5000);
         //banner设置方法全部调用完毕时最后调用
-      //  mImageDisplayBn.start();
+        //  mImageDisplayBn.start();
 
     }
 
@@ -135,6 +142,19 @@ public class ImageDetailActivity extends NActivity {
                         });
             }
         });
+    }
+
+    /**
+     * 重置星星布局高度
+     */
+    private void restRatingHeight() {
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_rate_solid);
+        int startHeight = bmp.getHeight();
+        if (startHeight != 0) {
+            ViewGroup.LayoutParams lp = mGradeRb.getLayoutParams();
+            lp.height = startHeight;
+            mGradeRb.setLayoutParams(lp);
+        }
     }
 
     @Override
