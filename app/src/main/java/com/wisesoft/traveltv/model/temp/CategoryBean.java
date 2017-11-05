@@ -1,6 +1,7 @@
-package com.wisesoft.traveltv.model;
+package com.wisesoft.traveltv.model.temp;
 
 import com.android_mobile.core.listener.ISelectItem;
+import com.wisesoft.traveltv.model.BaseBean;
 
 /**
  * Created by mxh on 2017/8/8.

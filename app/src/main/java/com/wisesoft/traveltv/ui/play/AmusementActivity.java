@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import com.android_mobile.core.manager.image.ImageLoadFactory;
-import com.android_mobile.core.utiles.Lg;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -21,9 +19,9 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ItemListAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
-import com.wisesoft.traveltv.model.DataEngine;
-import com.wisesoft.traveltv.model.FilterBean;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.DataEngine;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.ui.view.weight.pop.TVFilterView;
 
 import java.util.ArrayList;
@@ -104,7 +102,7 @@ public class AmusementActivity extends NActivity implements View.OnClickListener
         });
         mFilterTfv.setOnItemClickListener(new com.wisesoft.traveltv.ui.view.weight.pop.OnItemClickListener() {
             @Override
-            public void OnItemClick(View v, FilterBean parentFilter, FilterBean childFilter) {
+            public void OnItemClick(View v, InitDataBean parentFilter, InitDataBean childFilter) {
                 //toast("点击了 " + parentFilter.getName() + ":" + childFilter.getName());
             }
         });

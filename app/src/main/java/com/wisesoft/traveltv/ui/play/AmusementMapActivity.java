@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.android_mobile.core.utiles.Lg;
 import com.bumptech.glide.Glide;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVImageView;
 

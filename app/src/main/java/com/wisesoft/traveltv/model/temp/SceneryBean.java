@@ -1,4 +1,6 @@
-package com.wisesoft.traveltv.model;
+package com.wisesoft.traveltv.model.temp;
+
+import com.wisesoft.traveltv.model.BaseBean;
 
 /**
  * Created by mxh on 2017/9/21.

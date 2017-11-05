@@ -3,10 +3,8 @@ package com.wisesoft.traveltv.ui.traffic;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android_mobile.core.utiles.BitmapUtils;
@@ -14,15 +12,13 @@ import com.android_mobile.core.utiles.Lg;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
-import com.owen.tvrecyclerview.TwoWayLayoutManager;
-import com.owen.tvrecyclerview.widget.GridLayoutManager;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.TrafficAdapter;
-import com.wisesoft.traveltv.model.DataEngine;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.DataEngine;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
 import java.util.List;

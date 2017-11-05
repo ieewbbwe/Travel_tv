@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.android_mobile.core.manager.SharedPrefManager;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.helper.InitDataCacheManager;
 import com.wisesoft.traveltv.ui.HomeActivity;
 
 import java.util.concurrent.Callable;
@@ -68,14 +69,15 @@ public class LoadingActivity extends NActivity {
     }
 
     private void updateInitData() {
-        if (!SharedPrefManager.getBoolean(Constans.IS_INIT_DATA, false)) {
+        /*if (!SharedPrefManager.getBoolean(Constans.IS_INIT_DATA, false)) {
             Executors.newCachedThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
                     mDao.initDatabase();
                 }
             });
-        }
+        }*/
+        new InitDataCacheManager(mDao).start();
 
         pushActivity(HomeActivity.class, true);
     }

@@ -8,11 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android_mobile.core.BasicAdapter;
-import com.android_mobile.core.manager.image.GlideCircleTransform;
-import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.bumptech.glide.Glide;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

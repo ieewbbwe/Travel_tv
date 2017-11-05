@@ -10,6 +10,7 @@ public interface Constans {
     /*————缓存信息标签————*/
     /*session缓存*/
     String CACHE_SESSION = "cache_session";
+    String CACHE_INIT_UPDATE_TIME = "cache_init_update_time";
 
     /*————新闻类型——————*/
     /*视频类新闻*/
@@ -22,8 +23,12 @@ public interface Constans {
     String ITEM_BEAN = "item_bean";
 
     String TYPE_PLAY = "play";
+    String TYPE_SCENERY = "scenery";
     String TYPE_EAT = "eat";
+    String TYPE_FOOD = "food";
     String TYPE_STAY = "stay";
+    String TYPE_HOME = "home";
+
     String TYPE_TRAFFIC = "traffic";
     String IS_INIT_DATA = "is_init_data";
 

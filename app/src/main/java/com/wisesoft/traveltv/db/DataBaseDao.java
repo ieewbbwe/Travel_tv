@@ -9,12 +9,14 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.wisesoft.traveltv.constants.Constans;
-import com.wisesoft.traveltv.model.DataEngine;
-import com.wisesoft.traveltv.model.ImageBean;
-import com.wisesoft.traveltv.model.ItemInfoBean;
-import com.wisesoft.traveltv.model.VideoBean;
+import com.wisesoft.traveltv.model.temp.DataEngine;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
+import com.wisesoft.traveltv.model.temp.ImageBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.VideoBean;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -30,6 +32,7 @@ public class DataBaseDao {
     private Dao<VideoBean, Integer> mVideoDao;
     private Dao<ImageBean, Integer> mImageDao;
     private Dao<ItemInfoBean, Integer> mItemDao;
+    private Dao<InitDataBean, Integer> mInitData;
 
     public DataBaseDao(Context context) {
         try {
@@ -37,6 +40,7 @@ public class DataBaseDao {
             mItemDao = mHelper.getDao(ItemInfoBean.class);
             mVideoDao = mHelper.getDao(VideoBean.class);
             mImageDao = mHelper.getDao(ImageBean.class);
+            mInitData = mHelper.getDao(InitDataBean.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -63,6 +67,40 @@ public class DataBaseDao {
             });
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void initDatabase(final List<InitDataBean> dataBeen) {
+        if (CollectionUtils.isEmpty(dataBeen)) {
+            return;
+        }
+        try {
+            TransactionManager.callInTransaction(mHelper.getConnectionSource(), new Callable<Void>() {
+                @Override
+                public Void call() throws Exception {
+                    updateInitData(dataBeen);
+                    //缓存最后更新的时间 做版本增量，在这时间之后若有修改则初始化数据库
+                    SharedPrefManager.putString(Constans.CACHE_INIT_UPDATE_TIME, mInitData.queryBuilder()
+                            .orderBy("update_time", false).queryForFirst().getUpdate_time());
+                    return null;
+                }
+            });
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateInitData(List<InitDataBean> dataBeen) throws SQLException {
+        //暂时不做假删
+        mInitData.deleteBuilder().delete();
+        for (InitDataBean item : dataBeen) {
+            InitDataBean query = mInitData.queryBuilder().where().eq("id", item.getId()).queryForFirst();
+            if (query != null) {
+                query = item;
+                mInitData.update(query);
+            } else {
+                mInitData.create(item);
+            }
         }
     }
 
@@ -136,7 +174,7 @@ public class DataBaseDao {
         try {
             QueryBuilder<ItemInfoBean, Integer> builder = mItemDao.queryBuilder();
             if (!"".equals(type)) {
-                builder.where().eq("type", type);
+                builder.where().eq("type_str", type);
             }
             if (limit > 0) {
                 builder.limit(limit);
@@ -195,7 +233,7 @@ public class DataBaseDao {
 
     public ItemInfoBean getItemInfoByName(String name) {
         try {
-            return mItemDao.queryBuilder().where().like("name", "%"+name+"%").queryForFirst();
+            return mItemDao.queryBuilder().where().like("name", "%" + name + "%").queryForFirst();
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -203,6 +241,52 @@ public class DataBaseDao {
     }
 
     public List<ItemInfoBean> getRecommendInfo(String typePlay) {
-        return getItemInfos(typePlay,5);
+        return getItemInfos(typePlay, 5);
     }
+
+    public List<InitDataBean> getPageFilter(String mPageType) {
+        try {
+            List<InitDataBean> filterAll = new ArrayList<>();
+            InitDataBean filterBean;
+            switch (mPageType) {
+                case Constans.TYPE_EAT:
+                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003005").queryForFirst();
+                    if (filterBean != null) {
+                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003005").query());
+                        filterAll.add(filterBean);
+                    }
+                    break;
+                case Constans.TYPE_PLAY:
+                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003004").queryForFirst();
+                    if (filterBean != null) {
+                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003004").query());
+                        filterAll.add(filterBean);
+                    }
+                    break;
+                case Constans.TYPE_STAY:
+                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003001").queryForFirst();
+                    if (filterBean != null) {
+                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003001").query());
+                        filterAll.add(filterBean);
+                    }
+
+                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003002").queryForFirst();
+                    if (filterBean != null) {
+                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003002").query());
+                        filterAll.add(filterBean);
+                    }
+                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003003").queryForFirst();
+                    if (filterBean != null) {
+                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003003").query());
+                        filterAll.add(filterBean);
+                    }
+                    break;
+            }
+            return filterAll;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

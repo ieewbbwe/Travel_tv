@@ -8,9 +8,10 @@ import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.wisesoft.traveltv.model.ImageBean;
-import com.wisesoft.traveltv.model.ItemInfoBean;
-import com.wisesoft.traveltv.model.VideoBean;
+import com.wisesoft.traveltv.model.temp.ImageBean;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.VideoBean;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, VideoBean.class);
             TableUtils.createTable(connectionSource, ItemInfoBean.class);
             TableUtils.createTable(connectionSource, ImageBean.class);
+            TableUtils.createTable(connectionSource, InitDataBean.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }

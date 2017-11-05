@@ -1,4 +1,4 @@
-package com.wisesoft.traveltv.model;
+package com.wisesoft.traveltv.model.temp;
 
 import android.content.Context;
 
@@ -145,7 +145,7 @@ public class DataEngine {
         return beanList;
     }
 
-    public static List<FilterBean> getFilterData(String type) {
+    public static List<InitDataBean> getFilterData(String type) {
         switch (type) {
             case Constans.TYPE_PLAY:
                 return getPlayFilterData();
@@ -157,8 +157,8 @@ public class DataEngine {
         }
     }
 
-    public static List<FilterBean> getStayFilterData() {
-        List<FilterBean> beanList = new ArrayList<>();
+    public static List<InitDataBean> getStayFilterData() {
+        List<InitDataBean> beanList = new ArrayList<>();
         List<String> filterAreaStr = Arrays.asList(mContext.getResources()
                 .getStringArray(R.array.default_area));
         List<String> filterStatStr = Arrays.asList(mContext.getResources()
@@ -166,28 +166,28 @@ public class DataEngine {
         List<String> filterPriceStr = Arrays.asList(mContext.getResources()
                 .getStringArray(R.array.default_price));
         /*初始化区域筛选类*/
-        FilterBean areaFilter = new FilterBean("001", "区域");
-        List<FilterBean> areaChilds = new ArrayList<>();
-        areaChilds.add(new FilterBean("-1", "全部"));
+        InitDataBean areaFilter = new InitDataBean("001", "区域");
+        List<InitDataBean> areaChilds = new ArrayList<>();
+        areaChilds.add(new InitDataBean("-1", "全部"));
         for (int i = 0; i < filterAreaStr.size(); i++) {
-            areaChilds.add(new FilterBean("" + i, filterAreaStr.get(i)));
+            areaChilds.add(new InitDataBean("" + i, filterAreaStr.get(i)));
         }
         areaFilter.setChildBean(areaChilds);
 
         /*初始化星级筛选类*/
-        FilterBean starFilter = new FilterBean("002", "星级");
-        List<FilterBean> starChilds = new ArrayList<>();
-        starChilds.add(new FilterBean("-1", "全部"));
+        InitDataBean starFilter = new InitDataBean("002", "星级");
+        List<InitDataBean> starChilds = new ArrayList<>();
+        starChilds.add(new InitDataBean("-1", "全部"));
         for (int i = 0; i < filterStatStr.size(); i++) {
-            starChilds.add(new FilterBean("" + i, filterStatStr.get(i)));
+            starChilds.add(new InitDataBean("" + i, filterStatStr.get(i)));
         }
         starFilter.setChildBean(starChilds);
 
-        FilterBean priceFilter = new FilterBean("002", "价格");
-        List<FilterBean> priceChilds = new ArrayList<>();
-        priceChilds.add(new FilterBean("-1", "全部"));
+        InitDataBean priceFilter = new InitDataBean("002", "价格");
+        List<InitDataBean> priceChilds = new ArrayList<>();
+        priceChilds.add(new InitDataBean("-1", "全部"));
         for (int i = 0; i < filterPriceStr.size(); i++) {
-            priceChilds.add(new FilterBean("" + i, filterPriceStr.get(i)));
+            priceChilds.add(new InitDataBean("" + i, filterPriceStr.get(i)));
         }
         priceFilter.setChildBean(priceChilds);
 
@@ -245,14 +245,14 @@ public class DataEngine {
         return itemList;
     }
 
-    public static List<FilterBean> getPlayFilterData() {
-        List<FilterBean> beanList = new ArrayList<>();
+    public static List<InitDataBean> getPlayFilterData() {
+        List<InitDataBean> beanList = new ArrayList<>();
          /*初始化景观筛选类*/
-        FilterBean landScapeFilter = new FilterBean("004", "类型");
-        List<FilterBean> landScapeChilds = new ArrayList<>();
-        landScapeChilds.add(new FilterBean("-1", "全部"));
-        landScapeChilds.add(new FilterBean("0", "自然景观"));
-        landScapeChilds.add(new FilterBean("1", "人文景观"));
+        InitDataBean landScapeFilter = new InitDataBean("004", "类型");
+        List<InitDataBean> landScapeChilds = new ArrayList<>();
+        landScapeChilds.add(new InitDataBean("-1", "全部"));
+        landScapeChilds.add(new InitDataBean("0", "自然景观"));
+        landScapeChilds.add(new InitDataBean("1", "人文景观"));
         landScapeFilter.setChildBean(landScapeChilds);
         beanList.add(landScapeFilter);
         return beanList;
@@ -261,4 +261,5 @@ public class DataEngine {
     public static void searchByPingYin(String py) {
 
     }
+
 }

@@ -13,8 +13,8 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.StaggeredAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
-import com.wisesoft.traveltv.model.FilterBean;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 import com.wisesoft.traveltv.ui.view.weight.pop.OnItemClickListener;
@@ -97,7 +97,7 @@ public class DeliciousActivity extends NActivity {
             public void onClick(View v) {
                 showFilterPop(Constans.TYPE_EAT, new OnItemClickListener() {
                     @Override
-                    public void OnItemClick(View v, FilterBean parentFilter, FilterBean childFilter) {
+                    public void OnItemClick(View v, InitDataBean parentFilter, InitDataBean childFilter) {
                         items = mBaseDao.getItemInfos(Constans.TYPE_EAT);
                         Collections.shuffle(items);
                         mAdapter.setDataList(items);

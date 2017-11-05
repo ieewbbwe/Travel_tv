@@ -9,13 +9,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android_mobile.core.utiles.CollectionUtils;
-import com.android_mobile.core.utiles.Lg;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.FilterAdapter;
-import com.wisesoft.traveltv.model.FilterBean;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class TVFilterView extends LinearLayout {
         mInflater = LayoutInflater.from(context);
     }
 
-    public View newFilterLayout(final FilterBean filterBean, final int i) {
+    public View newFilterLayout(final InitDataBean filterBean, final int i) {
         View mFilterLayout = mInflater.inflate(R.layout.layout_filter_item, null);
         TextView mFilterTitleTv = (TextView) mFilterLayout.findViewById(R.id.m_filter_title_tv);
         TvRecyclerView mFilterRlv = (TvRecyclerView) mFilterLayout.findViewById(R.id.m_filter_rlv);
@@ -64,7 +63,7 @@ public class TVFilterView extends LinearLayout {
                 super.onItemClick(parent, itemView, position);
                 if (onItemClickListener != null) {
                     onItemClickListener.OnItemClick(itemView, filterBean,
-                            (FilterBean) itemView.getTag());
+                            (InitDataBean) itemView.getTag());
                     setSelect(i,position);
                 }
             }
@@ -80,7 +79,7 @@ public class TVFilterView extends LinearLayout {
      *
      * @param parentFilter 父级筛选集合
      */
-    public void setFilterList(List<FilterBean> parentFilter) {
+    public void setFilterList(List<InitDataBean> parentFilter) {
         if(CollectionUtils.isNotEmpty(parentFilter)){
             mInflaterAdapters.clear();
             View v;
@@ -103,10 +102,10 @@ public class TVFilterView extends LinearLayout {
         adapter.setItemSelected(childPos);
     }
 
-   /* public List<FilterBean> getFilterParam() {
-        List<FilterBean> filterParam = new ArrayList<>();
+   /* public List<InitDataBean> getFilterParam() {
+        List<InitDataBean> filterParam = new ArrayList<>();
         for(FilterAdapter adapter:mInflaterAdapters){
-            filterParam.add(new FilterBean());
+            filterParam.add(new InitDataBean());
         }
         return null;
     }*/

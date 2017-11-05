@@ -9,19 +9,19 @@ import android.widget.TextView;
 
 import com.android_mobile.core.BasicAdapter;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.model.FilterBean;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
 
 /**
  * Created by picher on 2017/9/24.
  * Describe：
  */
 
-public class FilterAdapter extends BasicAdapter<FilterBean, FilterAdapter.ViewHolder> {
+public class FilterAdapter extends BasicAdapter<InitDataBean, FilterAdapter.ViewHolder> {
 
     private int selectPos = 0;
     private int preSelectPos = 0;
 
-    private FilterBean parentFilter;
+    private InitDataBean parentFilter;
 
     public FilterAdapter(Context context) {
         super(context);
@@ -29,7 +29,7 @@ public class FilterAdapter extends BasicAdapter<FilterBean, FilterAdapter.ViewHo
 
     @Override
     public void onBindItemHolder(ViewHolder holder, int position) {
-        FilterBean item = mDataList.get(position);
+        InitDataBean item = mDataList.get(position);
         holder.mFiterTv.setText(item.getName());
         holder.itemView.setTag(item);
         int color;
@@ -53,7 +53,7 @@ public class FilterAdapter extends BasicAdapter<FilterBean, FilterAdapter.ViewHo
         notifyItemChanged(preSelectPos);
     }
 
-    public void setParentFilter(FilterBean filterBean) {
+    public void setParentFilter(InitDataBean filterBean) {
         this.parentFilter = filterBean;
     }
 

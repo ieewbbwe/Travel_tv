@@ -4,24 +4,16 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.android_mobile.core.base.BaseActivity;
 import com.tv.boost.widget.focus.FocusBorder;
-import com.tv.boost.widget.tablayout.ValueAnimatorCompat;
-import com.wisesoft.traveltv.constants.Constans;
-import com.wisesoft.traveltv.model.FilterBean;
-import com.wisesoft.traveltv.model.ItemInfoBean;
-import com.wisesoft.traveltv.ui.play.AmusementActivity;
-import com.wisesoft.traveltv.ui.play.AmusementDetailActivity;
 import com.wisesoft.traveltv.ui.view.weight.pop.OnItemClickListener;
 import com.wisesoft.traveltv.ui.view.weight.pop.TVBottomFilterPop;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.android_mobile.core.manager.image.ImageLoadFactory;
-import com.wisesoft.traveltv.model.ImageBean;
+import com.wisesoft.traveltv.model.temp.ImageBean;
 import com.youth.banner.loader.ImageLoader;
 
 /**

@@ -57,13 +57,14 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="24dp"
             android:layout_weight="2.5">
-            <!--空页面-->
-            <include layout="@layout/layout_empty"/>
 
             <com.owen.tvrecyclerview.widget.TvRecyclerView
                 android:id="@+id/m_result_trv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <!--空页面-->
+            <include layout="@layout/layout_empty"/>
         </FrameLayout>
 
     </LinearLayout>

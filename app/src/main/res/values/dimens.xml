@@ -12,7 +12,7 @@
     <dimen name="text_biggest_size">32sp</dimen>
 
     <!--头部信息栏高度-->
-    <dimen name="head_height">86dp</dimen>
+    <dimen name="head_height">94dp</dimen>
     <dimen name="content_padding">36dp</dimen>
     <dimen name="navigation_height">86dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->

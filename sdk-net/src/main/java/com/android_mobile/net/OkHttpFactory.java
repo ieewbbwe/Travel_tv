@@ -1,6 +1,5 @@
 package com.android_mobile.net;
 
-import com.webber.mcorelibspace.demo.net.SslContextFactory;
 
 import java.io.File;
 import java.io.InputStream;

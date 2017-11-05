@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android_mobile.core.manager.image.ImageLoadFactory;
+import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
+import com.android_mobile.net.response.BaseResponse;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -21,18 +22,23 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.StayAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
-import com.wisesoft.traveltv.model.DataEngine;
-import com.wisesoft.traveltv.model.FilterBean;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.net.ApiFactory;
+import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 import com.wisesoft.traveltv.ui.view.TVScrollView;
 import com.wisesoft.traveltv.ui.view.weight.pop.TVFilterView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by mxh on 2017.10.20
@@ -71,10 +77,14 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
     TVScrollView mContentSv;
 
     private StayAdapter mAdapter;
-    private List<ItemInfoBean> items;
+    private List<ItemInfoBean> items = new ArrayList<>();
     private DataBaseDao mBaseDao;
     private List<ItemInfoBean> recommendList;
     private String mPageType;
+
+    private int page = 1;
+    private int limit = 9;
+    private DataBaseDao mDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,11 +127,11 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
         });
         mFilterTfv.setOnItemClickListener(new com.wisesoft.traveltv.ui.view.weight.pop.OnItemClickListener() {
             @Override
-            public void OnItemClick(View v, FilterBean parentFilter, FilterBean childFilter) {
+            public void OnItemClick(View v, InitDataBean parentFilter, InitDataBean childFilter) {
                 //toast("点击了 " + parentFilter.getName() + ":" + childFilter.getName());
-                items = mBaseDao.getItemInfos(Constans.TYPE_STAY, 10);
+               /* items = mBaseDao.getItemInfos(Constans.TYPE_STAY, 10);
                 Collections.shuffle(items);
-                mAdapter.setDataList(items);
+                mAdapter.setDataList(items);*/
 
             }
         });
@@ -143,9 +153,24 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
         mContentSv.setOnScrollChangedListener(new TVScrollView.OnScrollChangedListener() {
             @Override
             public void onScrollChange(int l, int t, int ol, int ot) {
+                Lg.d("picher",""+mListRlv.getLastVisiblePosition());
                 mReturnTop.setVisibility((t >= getScreenHeight() / 2) ? View.VISIBLE : View.GONE);
             }
         });
+
+        mListRlv.setOnLoadMoreListener(new TvRecyclerView.OnLoadMoreListener() {
+            @Override
+            public boolean onLoadMore() {
+                if (hasMore()) {
+                    Lg.d("picher", "加载更多");
+                    //page += page;
+                    //requestData();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         mHead1Cont.setOnClickListener(this);
         mHead2Cont.setOnClickListener(this);
         mRecommendTiv.setOnClickListener(this);
@@ -153,12 +178,21 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
         mSearchTiv.setOnClickListener(this);
     }
 
+    private boolean hasMore() {
+        return items.size() >= limit * page;
+    }
+
     @Override
     protected void initData() {
+        mDao = new DataBaseDao(this);
         mPageType = getIntent().getStringExtra(Constans.ARG_PAGE_TYPE);
         showNowNav(mPageType);
 
-        mBaseDao = new DataBaseDao(this);
+        requestData();
+        requestRecommend();
+        mFilterTfv.setFilterList(mDao.getPageFilter(mPageType));
+
+        /*mBaseDao = new DataBaseDao(this);
         items = mBaseDao.getItemInfos(mPageType, 10);
         items.addAll(mBaseDao.getItemInfos(30));
         Collections.shuffle(items);
@@ -174,7 +208,7 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(recommendList.get(1).getImgUrl(), mHead2Iv);
         mTitle1Tv.setText(recommendList.get(0).getName());
-        mTitle2Tv.setText(recommendList.get(1).getName());
+        mTitle2Tv.setText(recommendList.get(1).getName());*/
     }
 
     private void showNowNav(String mPageType) {
@@ -216,12 +250,83 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
                 //mContentSv.scrollTo(0, 0);
                 break;
             case R.id.m_head1_cont:
-                jumpToDetail(recommendList.get(0));
+                if (recommendList != null) {
+                    jumpToDetail(recommendList.get(0));
+                }
                 break;
             case R.id.m_head2_cont:
-                jumpToDetail(recommendList.get(1));
+                if (recommendList != null && recommendList.size() > 0) {
+                    jumpToDetail(recommendList.get(1));
+                }
                 break;
         }
+    }
+
+    public void requestData() {
+        ApiFactory.getTravelApi().getProductList(mPageType, limit, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        updateUI(response.body().getResponse());
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        toast(message);
+                    }
+                });
+    }
+
+    private void requestRecommend() {
+        ApiFactory.getTravelApi().getRecommend(mPageType, 2, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        updateRecommendUI(response.body().getResponse());
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        toast(message);
+                    }
+                });
+    }
+
+    private void updateRecommendUI(List<ItemInfoBean> response) {
+        recommendList = response;
+        if (CollectionUtils.isNotEmpty(response) && response.size() >= 2) {
+            ImageLoadFactory.getInstance().getImageLoadHandler()
+                    .displayImage(recommendList.get(0).getImgUrl(), mHead1Iv);
+            mTitle1Tv.setText(recommendList.get(0).getName());
+            ImageLoadFactory.getInstance().getImageLoadHandler()
+                    .displayImage(recommendList.get(1).getImgUrl(), mHead2Iv);
+            mTitle2Tv.setText(recommendList.get(1).getName());
+        }
+    }
+
+    private void updateUI(List<ItemInfoBean> response) {
+        items.addAll(response);
+        mAdapter.setDataList(items);
+        mListRlv.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+
+        NApplication.getRefWatcher(this).watch(this);
+
+    }
+
+    public void jumpToDetail(ItemInfoBean itemObject) {
+        Intent intent = new Intent(this, ProjectDetailActivity.class);
+        intent.putExtra(Constans.ITEM_BEAN, itemObject);
+        pushActivity(intent, false);
     }
 
     @Override
@@ -254,21 +359,6 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
             }
         }
         return super.dispatchKeyEvent(event);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-
-        NApplication.getRefWatcher(this).watch(this);
-
-    }
-
-    public void jumpToDetail(ItemInfoBean itemObject) {
-        Intent intent = new Intent(this, ProjectDetailActivity.class);
-        intent.putExtra(Constans.ITEM_BEAN, itemObject);
-        pushActivity(intent, false);
     }
 
 }

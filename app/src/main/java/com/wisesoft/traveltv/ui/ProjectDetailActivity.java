@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -18,6 +17,8 @@ import android.widget.TextView;
 
 import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.android_mobile.core.utiles.BitmapUtils;
+import com.android_mobile.core.utiles.CollectionUtils;
+import com.android_mobile.net.response.BaseResponse;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
@@ -30,8 +31,10 @@ import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ProjectRecommendAdapter;
 import com.wisesoft.traveltv.constants.Constans;
-import com.wisesoft.traveltv.model.DataEngine;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.DataEngine;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.net.ApiFactory;
+import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.ui.play.PlayVideoActivity;
 import com.wisesoft.traveltv.ui.stay.ImageDetailActivity;
 import com.wisesoft.traveltv.ui.view.CheckOverSizeTextView;
@@ -42,6 +45,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -163,9 +167,58 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
     protected void initData() {
         mItemInfoBean = (ItemInfoBean) getIntent().getSerializableExtra(Constans.ITEM_BEAN);
         if (mItemInfoBean != null) {
-            showItemDetail(mItemInfoBean);
-            showRecommendView(mItemInfoBean.getType());
+            updateDetailUI(mItemInfoBean);
+            //showRecommendView(mItemInfoBean.getType());
+            requestDetail();
+            requestRecommend();
         }
+    }
+
+    private void requestRecommend() {
+        ApiFactory.getTravelApi().getProduceRecommend(""+mItemInfoBean.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Response<BaseResponse<List<ItemInfoBean>>>>bindToLifecycle())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        updateRecommendUI(response.body().getResponse());
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        toast(message);
+                    }
+                });
+
+    }
+
+    private void updateRecommendUI(List<ItemInfoBean> response) {
+        if(CollectionUtils.isNotEmpty(response)){
+            mRecommendBeans = response;
+            mAdapter.setDataList(mRecommendBeans);
+        }
+
+    }
+
+    private void requestDetail() {
+        ApiFactory.getTravelApi().getDetail(""+mItemInfoBean.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Response<BaseResponse<List<ItemInfoBean>>>>bindToLifecycle())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        if(CollectionUtils.isNotEmpty(response.body().getResponse())){
+                            updateDetailUI(response.body().getResponse().get(0));
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        toast(message);
+                    }
+                });
     }
 
     public void initBorder() {
@@ -177,7 +230,7 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
                 .build(this);
     }
 
-    private void showItemDetail(@NonNull ItemInfoBean mItemInfoBean) {
+    private void updateDetailUI(@NonNull ItemInfoBean mItemInfoBean) {
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(mItemInfoBean.getImgUrl(), mMainIv);
         mTitleTv.setText(mItemInfoBean.getName());

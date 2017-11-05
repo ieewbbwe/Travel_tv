@@ -91,6 +91,7 @@
                 android:id="@+id/m_filter_tfv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:orientation="vertical" />
 
             <com.wisesoft.traveltv.ui.view.TVScrollView

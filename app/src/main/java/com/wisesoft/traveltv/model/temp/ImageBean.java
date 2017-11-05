@@ -1,7 +1,8 @@
-package com.wisesoft.traveltv.model;
+package com.wisesoft.traveltv.model.temp;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.wisesoft.traveltv.model.BaseBean;
 
 /**
  * Created by picher on 2017/9/20.

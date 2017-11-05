@@ -7,10 +7,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
+import com.android_mobile.net.response.BaseResponse;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.jakewharton.rxbinding.widget.RxTextView;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -20,22 +22,25 @@ import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ItemLinearAdapter;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
-import com.wisesoft.traveltv.model.DataEngine;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.net.ApiFactory;
+import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.ui.view.weight.keyboard.SkbContainer;
 import com.wisesoft.traveltv.ui.view.weight.keyboard.SoftKey;
 import com.wisesoft.traveltv.ui.view.weight.keyboard.SoftKeyBoardListener;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 public class SearchResultActivity extends NActivity {
 
@@ -47,11 +52,17 @@ public class SearchResultActivity extends NActivity {
     EditText mInputEt;
     @Bind(R.id.m_empty_container)
     ViewGroup mEmptyV;
+    @Bind(R.id.m_tip_tv)
+    TextView mTipTv;
 
     private Object mOldSoftKey;
     private ItemLinearAdapter mAdapter;
-    private List<ItemInfoBean> mResultList;
+    private List<ItemInfoBean> mResultList = new ArrayList<>();
     private DataBaseDao mDataBaseDao;
+
+    private int limit = 10;
+    private int page = 1;
+    private String mKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +144,13 @@ public class SearchResultActivity extends NActivity {
                 }).subscribe(new Action1<CharSequence>() {
             @Override
             public void call(CharSequence charSequence) {
-                requestProduct(charSequence.toString());
+                page = 1;
+                mKey = charSequence.toString();
+                mResultList.clear();
+                mEmptyV.setVisibility(View.VISIBLE);
+                mResultTrv.setVisibility(View.GONE);
+                mTipTv.setText("正在查找中，请您稍后");
+                requestProduct(mKey);
             }
         }, new Action1<Throwable>() {
             @Override
@@ -150,6 +167,22 @@ public class SearchResultActivity extends NActivity {
                 pushActivity(intent, false);
             }
         });
+
+        mResultTrv.setOnLoadMoreListener(new TvRecyclerView.OnLoadMoreListener() {
+            @Override
+            public boolean onLoadMore() {
+                if (hasMore()) {
+                    page++;
+                    requestProduct(mKey);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private boolean hasMore() {
+        return mResultList.size() >= limit * page;
     }
 
     @Override
@@ -177,12 +210,42 @@ public class SearchResultActivity extends NActivity {
      */
     private void requestProduct(String py) {
         Lg.d("picher", "searchKey：" + py);
-        if (CollectionUtils.isEmpty(mResultList)) {
+      /*  if (CollectionUtils.isEmpty(mResultList)) {
             mResultList = mDataBaseDao.getItemInfos(20);
         }
         Collections.shuffle(mResultList);
         mAdapter.setDataList(mResultList);
-        mEmptyV.setVisibility(View.GONE);
+        mEmptyV.setVisibility(View.GONE);*/
+
+        ApiFactory.getTravelApi().getSearchList(py, limit, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(this.<Response<BaseResponse<List<ItemInfoBean>>>>bindToLifecycle())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        updateUI(response.body().getResponse());
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        if (page > 1) {
+                            page--;
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(List<ItemInfoBean> response) {
+        if (CollectionUtils.isNotEmpty(response)) {
+            mResultTrv.setVisibility(View.VISIBLE);
+            mResultList.addAll(response);
+            mAdapter.setDataList(mResultList);
+            mResultTrv.setAdapter(mAdapter);
+            mEmptyV.setVisibility(View.GONE);
+        }else{
+            mTipTv.setText("没有找到数据，换一个关键词吧！");
+        }
     }
 
     @Override

@@ -8,12 +8,14 @@ import java.net.HttpURLConnection;
  * Describe：响应基类
  */
 
-public class BaseResponse implements Serializable {
+public class BaseResponse<T> implements Serializable {
 
     /*响应信息*/
     private String message;
     /*响应码*/
     private int statusCode;
+    /*响应体数据*/
+    private T response;
 
     public String getMessage() {
         return message;
@@ -29,6 +31,14 @@ public class BaseResponse implements Serializable {
 
     public void setCode(int code) {
         this.statusCode = code;
+    }
+
+    public T getResponse() {
+        return response;
+    }
+
+    public void setResponse(T response) {
+        this.response = response;
     }
 
     public boolean isSuccess() {

@@ -11,8 +11,8 @@ import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.GalleryAdapter;
 import com.wisesoft.traveltv.constants.Constans;
-import com.wisesoft.traveltv.model.DataEngine;
-import com.wisesoft.traveltv.model.ItemInfoBean;
+import com.wisesoft.traveltv.model.temp.DataEngine;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.ui.view.TVIconView;
 
 import java.util.ArrayList;

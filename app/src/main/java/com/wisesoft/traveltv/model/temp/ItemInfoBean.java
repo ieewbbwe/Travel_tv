@@ -1,9 +1,11 @@
-package com.wisesoft.traveltv.model;
+package com.wisesoft.traveltv.model.temp;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.internal.IItemInfo;
+import com.wisesoft.traveltv.model.BaseBean;
+import com.wisesoft.traveltv.net.UrlMgr;
 
 import java.util.List;
 
@@ -17,9 +19,9 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
-    private String image_url;
+    private String img_f;
     @DatabaseField
-    private String name;
+    private String title;
     @DatabaseField
     private String video_id;
     @DatabaseField
@@ -31,7 +33,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @DatabaseField
     private String introduce;
     @DatabaseField
-    private String type;
+    private String type_str;
     @DatabaseField
     private long view_count;
     //TODO 临时字段
@@ -47,6 +49,12 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @DatabaseField
     private double maxPrice;
 
+    private int like_count;
+    private String open_time_end;
+    private String open_time_start;
+    private List<ItemInfoBean> child;
+    private double price;
+
     private List<ImageBean> images;
     private List<VideoBean> videos;
 
@@ -54,8 +62,40 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         return hotel_id;
     }
 
+    public String getOpen_time_end() {
+        return open_time_end;
+    }
+
+    public List<ItemInfoBean> getChild() {
+        return child;
+    }
+
+    public void setChild(List<ItemInfoBean> child) {
+        this.child = child;
+    }
+
+    public void setOpen_time_end(String open_time_end) {
+        this.open_time_end = open_time_end;
+    }
+
+    public String getOpen_time_start() {
+        return open_time_start;
+    }
+
+    public void setOpen_time_start(String open_time_start) {
+        this.open_time_start = open_time_start;
+    }
+
     public void setHotel_id(String hotel_id) {
         this.hotel_id = hotel_id;
+    }
+
+    public int getLike_count() {
+        return like_count;
+    }
+
+    public void setLike_count(int like_count) {
+        this.like_count = like_count;
     }
 
     public int getId() {
@@ -83,17 +123,17 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     }
 
     public ItemInfoBean(String image_url, String type) {
-        this.image_url = image_url;
-        this.type = type;
+        this.img_f = image_url;
+        this.type_str = type;
     }
 
     public ItemInfoBean(String image_url, String name, double recommend, long create_time, String introduce, String type, long view_count, String address, String phone) {
-        this.image_url = image_url;
-        this.name = name;
+        this.img_f = image_url;
+        this.title = name;
         this.recommend = recommend;
         this.create_time = create_time;
         this.introduce = introduce;
-        this.type = type;
+        this.type_str = type;
         this.view_count = view_count;
         this.address = address;
         this.phone = phone;
@@ -101,13 +141,13 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     public ItemInfoBean(String image_url, String name, double recommend,
                         long create_time, String introduce, String type,
-                        long view_count, String address, String phone,String hotel_id) {
-        this.image_url = image_url;
-        this.name = name;
+                        long view_count, String address, String phone, String hotel_id) {
+        this.img_f = image_url;
+        this.title = name;
         this.recommend = recommend;
         this.create_time = create_time;
         this.introduce = introduce;
-        this.type = type;
+        this.type_str = type;
         this.view_count = view_count;
         this.address = address;
         this.phone = phone;
@@ -138,16 +178,16 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     }
 
     public ItemInfoBean(String imagePath) {
-        this.image_url = imagePath;
+        this.img_f = imagePath;
     }
 
     public void setImagePath(String imagePath) {
-        this.image_url = imagePath;
+        this.img_f = imagePath;
     }
 
     @Override
     public String getImgUrl() {
-        return image_url;
+        return img_f;
     }
 
     @Override
@@ -156,19 +196,19 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     }
 
     public String getName() {
-        return name;
+        return title;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.title = name;
     }
 
     public String getType() {
-        return type;
+        return type_str;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type_str = type;
     }
 
     public long getView_count() {
@@ -201,7 +241,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     public String getIntroduceStr() {
         String str;
-        switch (type) {
+        switch (type_str) {
             case Constans.TYPE_EAT:
                 str = "美食介绍：";
                 break;
@@ -219,7 +259,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @Deprecated
     public String getAnotherStr() {
         String otherInfo = null;
-        if (type.equals(Constans.TYPE_PLAY)) {
+        if (type_str.equals(Constans.TYPE_PLAY)) {
             otherInfo = "门票价格：160元/人     开放时间：08:00 - 17:00";
         } else {
             otherInfo = "人均消费：88元/人     营业时间：08:00 - 17:00";
@@ -228,14 +268,21 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         return otherInfo + "\n" + getAddressStr();
     }
 
-    public String getPriceTimeStr(){
+    public String getPriceTimeStr() {
         String otherInfo = null;
-        if (type.equals(Constans.TYPE_PLAY)) {
-            otherInfo = "门票价格：160元/人  开放时间：08:00 - 17:00";
+        if (type_str.equals(Constans.TYPE_PLAY)) {
+            otherInfo = "门票价格：" + price + "元/人  开放时间：" + open_time_start + " - " + open_time_end;
         } else {
-            otherInfo = "人均消费：88元/人  营业时间：08:00 - 17:00";
+            otherInfo = "人均消费：" + price + "元/人  营业时间：" + open_time_start + " - " + open_time_end;
         }
         return otherInfo;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 }
