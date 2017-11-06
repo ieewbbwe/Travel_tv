@@ -38,9 +38,9 @@ public class Gallery3DActivity extends AppCompatActivity {
     {
         // 图片ID
         int[] images = {
-                R.mipmap.ic_content,
-                R.mipmap.ic_content,
-                R.mipmap.ic_content,
+                R.mipmap.ic_launcher,
+                R.mipmap.ic_launcher,
+                R.mipmap.ic_launcher,
                  };
 
         ImageAdapter adapter = new ImageAdapter(mContext, images);

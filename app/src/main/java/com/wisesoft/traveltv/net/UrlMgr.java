@@ -7,7 +7,7 @@ package com.wisesoft.traveltv.net;
 
 public interface UrlMgr {
 
-    String HOST = " http://192.168.0.100";
+    String HOST = " http://172.16.48.91";
     String PORT = ":8000";
     String API = "/api/v1/";
 

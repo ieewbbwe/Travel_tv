@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.android_mobile.core.utiles.Lg;
-import com.bumptech.glide.Glide;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
@@ -46,7 +45,7 @@ public class AmusementMapActivity extends NActivity implements View.OnClickListe
     @Override
     protected void initComp() {
         ButterKnife.bind(this);
-        Glide.with(this).load(R.mipmap.ic_play_bg).crossFade().into(mContentIv);
+        //Glide.with(this).load(R.mipmap.ic_play_bg).crossFade().into(mContentIv);
     }
 
     @Override
