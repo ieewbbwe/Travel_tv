@@ -8,9 +8,10 @@
     <!--Logo-->
     <ImageView
         android:id="@+id/m_broadcast_logo_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/head_logo_w"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="8dp"
         android:padding="@dimen/content_padding"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_logo1"
@@ -21,11 +22,11 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/m_logo_iv"
         android:layout_toRightOf="@+id/m_broadcast_logo_iv"
         android:background="@drawable/shape_alpha_black"
-        android:layout_marginLeft="@dimen/content_padding"
-        android:layout_marginRight="@dimen/content_padding"
         android:gravity="center"
         android:orientation="horizontal"
         android:padding="16dp">
@@ -73,11 +74,12 @@
     <!--Logo-->
     <ImageView
         android:id="@+id/m_logo_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/head_logo_w"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_marginRight="8dp"
         android:padding="@dimen/content_padding"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_logo2"

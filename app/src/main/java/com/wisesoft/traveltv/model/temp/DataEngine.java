@@ -119,9 +119,9 @@ public class DataEngine {
     public static List<ItemInfoBean> getLandingBanner() {
         List<ItemInfoBean> beanList = new ArrayList<>();
         //beanList = mDao.getHotItemInfos(3);
-        beanList.add(new ItemInfoBean("file:///android_asset/homebg/ic_home_bg_01.png",Constans.TYPE_PLAY));
-        beanList.add(new ItemInfoBean("file:///android_asset/homebg/ic_home_bg_02.png",Constans.TYPE_EAT));
-        beanList.add(new ItemInfoBean("file:///android_asset/homebg/ic_home_bg_03.png",Constans.TYPE_STAY));
+        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_01,Constans.TYPE_PLAY));
+        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_02,Constans.TYPE_EAT));
+        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_03,Constans.TYPE_STAY));
         return beanList;
     }
 

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,10 +19,14 @@ import android.widget.TextView;
 import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.android_mobile.core.utiles.BitmapUtils;
 import com.android_mobile.core.utiles.CollectionUtils;
+import com.android_mobile.core.utiles.Lg;
 import com.android_mobile.net.response.BaseResponse;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -155,7 +160,8 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent = new Intent(mContext, ImageDetailActivity.class);
+                //Intent intent = new Intent(mContext, ImageDetailActivity.class);
+                Intent intent = new Intent(mContext, ProjectDetailActivity.class);
                 intent.putExtra(Constans.ITEM_BEAN, mAdapter.getItemObject(position));
                 pushActivity(intent, false);
             }
@@ -175,7 +181,7 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
     }
 
     private void requestRecommend() {
-        ApiFactory.getTravelApi().getProduceRecommend(""+mItemInfoBean.getId())
+        ApiFactory.getTravelApi().getProduceRecommend("" + mItemInfoBean.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(this.<Response<BaseResponse<List<ItemInfoBean>>>>bindToLifecycle())
@@ -194,7 +200,7 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
     }
 
     private void updateRecommendUI(List<ItemInfoBean> response) {
-        if(CollectionUtils.isNotEmpty(response)){
+        if (CollectionUtils.isNotEmpty(response)) {
             mRecommendBeans = response;
             mAdapter.setDataList(mRecommendBeans);
         }
@@ -202,14 +208,14 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
     }
 
     private void requestDetail() {
-        ApiFactory.getTravelApi().getDetail(""+mItemInfoBean.getId())
+        ApiFactory.getTravelApi().getDetail("" + mItemInfoBean.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(this.<Response<BaseResponse<List<ItemInfoBean>>>>bindToLifecycle())
                 .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
                     @Override
                     public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
-                        if(CollectionUtils.isNotEmpty(response.body().getResponse())){
+                        if (CollectionUtils.isNotEmpty(response.body().getResponse())) {
                             updateDetailUI(response.body().getResponse().get(0));
                         }
                     }
@@ -231,6 +237,7 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
     }
 
     private void updateDetailUI(@NonNull ItemInfoBean mItemInfoBean) {
+        Lg.d("picher", "" + mItemInfoBean.getImgUrl());
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(mItemInfoBean.getImgUrl(), mMainIv);
         mTitleTv.setText(mItemInfoBean.getName());
@@ -239,32 +246,37 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
         mIntroduceTv.setText(mItemInfoBean.getIntroduceStr());
         mAnyInfo.setText(mItemInfoBean.getAddressStr());
         mPriceTimeTv.setText(mItemInfoBean.getPriceTimeStr());
-        //虚化背景
-        Glide.with(this).load(mItemInfoBean.getImgUrl())
-                .asBitmap().into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                Observable.create(new Observable.OnSubscribe<Bitmap>() {
-                    @Override
-                    public void call(Subscriber<? super Bitmap> subscriber) {
-                        mBlueBt = BitmapUtils.blurImageAmeliorate(
-                                BitmapUtils.ratio(resource, getScreenWidth(), getScreenHeight())
-                        );
-                        subscriber.onNext(mBlueBt);
-                    }
-                }).subscribeOn(Schedulers.computation())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Action1<Bitmap>() {
-                            @Override
-                            public void call(Bitmap bitmap) {
-                                mContentLl.setBackground(new BitmapDrawable(mBlueBt));
-                            }
-                        });
-            }
-        });
+       /* try {
+            //虚化背景
+            Glide.with(this).load(mItemInfoBean.getImgUrl())
+                    .asBitmap().into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                    Observable.create(new Observable.OnSubscribe<Bitmap>() {
+                        @Override
+                        public void call(Subscriber<? super Bitmap> subscriber) {
+                            mBlueBt = BitmapUtils.blurImageAmeliorate(
+                                    BitmapUtils.ratio(resource, getScreenWidth(), getScreenHeight())
+                            );
+                            subscriber.onNext(mBlueBt);
+                        }
+                    }).subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<Bitmap>() {
+                                @Override
+                                public void call(Bitmap bitmap) {
+                                    mContentLl.setBackground(new BitmapDrawable(mBlueBt));
+                                }
+                            });
+                }
+            });
+        }catch (OutOfMemoryError e){
+            e.printStackTrace();
+        }*/
+
         //判断介绍超出显示...
         if (mIntroduceTv.isOverSize()) {
-            
+
         }
     }
 
@@ -315,7 +327,7 @@ public class ProjectDetailActivity extends NActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.m_play_tvc:
                 Intent intent;
-                if (mItemInfoBean.getType().equals(Constans.TYPE_STAY)) {
+                if (!TextUtils.isEmpty(mItemInfoBean.getFile_f())) {
                     intent = new Intent(this, PlayVideoActivity.class);
                 } else {
                     intent = new Intent(this, ImageDetailActivity.class);

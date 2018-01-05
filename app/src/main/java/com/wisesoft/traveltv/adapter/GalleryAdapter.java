@@ -53,17 +53,20 @@ public class GalleryAdapter extends BaseAdapter {
         }
         vh = (ViewHolder) convertView.getTag();
         ItemInfoBean item = list.get(position);
-        ImageLoadFactory.getInstance().getImageLoadHandler()
-                .displayImage(item.getImgUrl(), vh.image);
+        if(item != null){
+            ImageLoadFactory.getInstance().getImageLoadHandler()
+                    .displayImage(item.getImgRes(), vh.image);
 
-        if (mItemClickListener != null) {
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemClickListener.onClick(v, position);
-                }
-            });
+            if (mItemClickListener != null) {
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mItemClickListener.onClick(v, position);
+                    }
+                });
+            }
         }
+
         return convertView;
     }
 

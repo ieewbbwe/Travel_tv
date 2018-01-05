@@ -473,8 +473,7 @@ public class FeatureCoverFlow extends EndlessLoopAdapterContainer implements Vie
             }
         }
 
-        if (mTouchState == TOUCH_STATE_RESTING) {
-
+        if (mTouchState == TOUCH_STATE_RESTING && mAdapter != null && mAdapter.getCount() != 0) {
             final int lastCenterItemPosition = (mFirstItemPosition + mLastCenterItemIndex) % mAdapter.getCount();
             if (mLastTouchState != TOUCH_STATE_RESTING || mlastCenterItemPosition != lastCenterItemPosition) {
                 mLastTouchState = TOUCH_STATE_RESTING;

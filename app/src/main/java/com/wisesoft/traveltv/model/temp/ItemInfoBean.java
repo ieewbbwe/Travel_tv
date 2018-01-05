@@ -1,5 +1,7 @@
 package com.wisesoft.traveltv.model.temp;
 
+import android.text.TextUtils;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.wisesoft.traveltv.constants.Constans;
@@ -20,6 +22,8 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     private int id;
     @DatabaseField
     private String img_f;
+    @DatabaseField
+    private String file_f;
     @DatabaseField
     private String title;
     @DatabaseField
@@ -52,11 +56,13 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     private int like_count;
     private String open_time_end;
     private String open_time_start;
-    private List<ItemInfoBean> child;
+    private List<Integer> child;
     private double price;
 
     private List<ImageBean> images;
     private List<VideoBean> videos;
+    private Integer imgRes;
+    private Integer recommend_index;
 
     public String getHotel_id() {
         return hotel_id;
@@ -66,11 +72,19 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         return open_time_end;
     }
 
-    public List<ItemInfoBean> getChild() {
+    public List<Integer> getChild() {
         return child;
     }
 
-    public void setChild(List<ItemInfoBean> child) {
+    public Integer getImgRes() {
+        return imgRes;
+    }
+
+    public void setImgRes(Integer imgRes) {
+        this.imgRes = imgRes;
+    }
+
+    public void setChild(List<Integer> child) {
         this.child = child;
     }
 
@@ -88,6 +102,19 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     public void setHotel_id(String hotel_id) {
         this.hotel_id = hotel_id;
+    }
+
+
+
+    public String getFile_f() {
+        if(!TextUtils.isEmpty(file_f)){
+            return (UrlMgr.HOST+UrlMgr.PORT+file_f).trim();
+        }
+        return "";
+    }
+
+    public void setFile_f(String file_f) {
+        this.file_f = file_f;
     }
 
     public int getLike_count() {
@@ -124,6 +151,11 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     public ItemInfoBean(String image_url, String type) {
         this.img_f = image_url;
+        this.type_str = type;
+    }
+
+    public ItemInfoBean(int imgRes, String type) {
+        this.imgRes = imgRes;
         this.type_str = type;
     }
 
@@ -187,7 +219,10 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     @Override
     public String getImgUrl() {
-        return img_f;
+        if(img_f.startsWith("/upload") || img_f.startsWith("/wzyc")){
+            return (UrlMgr.HOST + UrlMgr.PORT + img_f).trim();
+        }
+        return img_f.trim();
     }
 
     @Override

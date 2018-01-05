@@ -70,9 +70,9 @@ public class ImageDetailActivity extends NActivity {
         ButterKnife.bind(this);
         restRatingHeight();
         //默认显示三张图片
-        mImgList.add(new ImageBean("file:///android_asset/default1.jpg"));
+        /*mImgList.add(new ImageBean("file:///android_asset/default1.jpg"));
         mImgList.add(new ImageBean("file:///android_asset/default2.jpg"));
-        mImgList.add(new ImageBean("file:///android_asset/default3.jpg"));
+        mImgList.add(new ImageBean("file:///android_asset/default3.jpg"));*/
         //设置图片加载器
         mImageDisplayBn.setImageLoader(new GlideImageLoader());
         //设置图片集合

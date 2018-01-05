@@ -92,7 +92,7 @@ public class DataBaseDao {
 
     private void updateInitData(List<InitDataBean> dataBeen) throws SQLException {
         //暂时不做假删
-        mInitData.deleteBuilder().delete();
+        //mInitData.deleteBuilder().delete();
         for (InitDataBean item : dataBeen) {
             InitDataBean query = mInitData.queryBuilder().where().eq("id", item.getId()).queryForFirst();
             if (query != null) {
@@ -252,34 +252,32 @@ public class DataBaseDao {
                 case Constans.TYPE_EAT:
                     filterBean = mInitData.queryBuilder().where().eq("id_core", "003005").queryForFirst();
                     if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003005").query());
+                        List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003005").query();
+                        child.add(0,new InitDataBean("0","全部"));
+                        filterBean.setChildBean(child);
                         filterAll.add(filterBean);
                     }
+                    //addAreaPrice(filterAll);
                     break;
                 case Constans.TYPE_PLAY:
                     filterBean = mInitData.queryBuilder().where().eq("id_core", "003004").queryForFirst();
                     if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003004").query());
+                        List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003004").query();
+                        child.add(0,new InitDataBean("0","全部"));
+                        filterBean.setChildBean(child);
                         filterAll.add(filterBean);
                     }
+                   // addAreaPrice(filterAll);
                     break;
                 case Constans.TYPE_STAY:
                     filterBean = mInitData.queryBuilder().where().eq("id_core", "003001").queryForFirst();
                     if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003001").query());
+                        List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003001").query();
+                        child.add(0,new InitDataBean("0","全部"));
+                        filterBean.setChildBean(child);
                         filterAll.add(filterBean);
                     }
-
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003002").queryForFirst();
-                    if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003002").query());
-                        filterAll.add(filterBean);
-                    }
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003003").queryForFirst();
-                    if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003003").query());
-                        filterAll.add(filterBean);
-                    }
+                    addAreaPrice(filterAll);
                     break;
             }
             return filterAll;
@@ -289,4 +287,34 @@ public class DataBaseDao {
         }
     }
 
+    private void addAreaPrice(List<InitDataBean> filterAll) throws SQLException {
+        InitDataBean filterBean;
+        filterBean = mInitData.queryBuilder().where().eq("id_core", "003002").queryForFirst();
+        if (filterBean != null) {
+            List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003002").query();
+            child.add(0,new InitDataBean("0","全部"));
+            filterBean.setChildBean(child);
+            filterAll.add(filterBean);
+        }
+        filterBean = mInitData.queryBuilder().where().eq("id_core", "003003").queryForFirst();
+        if (filterBean != null) {
+            List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003003").query();
+            child.add(0,new InitDataBean("0","全部"));
+            filterBean.setChildBean(child);
+            filterAll.add(filterBean);
+        }
+    }
+
+    public String getPriceStr(String price_id) {
+        InitDataBean item = null;
+        try {
+            item = mInitData.queryBuilder().where().eq("id",price_id).queryForFirst();
+            if(item != null){
+                return item.getName();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
