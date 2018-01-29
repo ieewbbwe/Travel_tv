@@ -21,12 +21,15 @@ public interface Constans {
     /*————数据标签————*/
     /*新闻跳转标签*/
     String ITEM_BEAN = "item_bean";
+    String ITEM_RECOMMEND_IMG = "item_recommend_img";
 
     String TYPE_PLAY = "play";
     String TYPE_SCENERY = "scenery";
     String TYPE_EAT = "eat";
     String TYPE_FOOD = "food";
     String TYPE_STAY = "stay";
+    String TYPE_FUN = "fun";
+    String TYPE_PAY = "pay";
     String TYPE_HOME = "home";
 
     String TYPE_TRAFFIC = "traffic";
@@ -37,4 +40,16 @@ public interface Constans {
 
     //传递的参数
     String ARG_PAGE_TYPE = "arg_page_type";
+
+    /*----筛选参数-------*/
+    //区域
+    String FILTER_DATABASE_AREA = "003001";
+    //星级
+    String FILTER_DATABASE_STAR = "003002";
+    //价格
+    String FILTER_DATABASE_PRICE = "003003";
+    //景观类型
+    String FILTER_DATABASE_SLIGHT = "003004";
+    //食品类型
+    String FILTER_DATABASE_FOOD_TYPE = "003005";
 }

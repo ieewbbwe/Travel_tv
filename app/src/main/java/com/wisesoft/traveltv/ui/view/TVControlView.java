@@ -51,7 +51,7 @@ public class TVControlView extends LinearLayout {
                 mTextView.setTextColor(colorStateList);
             }
             int padding = typedArray.getDimensionPixelOffset(R.styleable.ControlView_cTextPadding, 0);
-            mTextView.setPadding(padding, padding, padding, padding);
+            mTextView.setPadding(0, padding, 0, 0);
 
             mIconView.setImageResource(typedArray.getResourceId(R.styleable.ControlView_cIcon, 0));
 

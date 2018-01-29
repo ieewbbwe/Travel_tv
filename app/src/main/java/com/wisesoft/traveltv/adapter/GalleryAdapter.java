@@ -1,6 +1,8 @@
 package com.wisesoft.traveltv.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,10 @@ public class GalleryAdapter extends BaseAdapter {
     public GalleryAdapter(List<ItemInfoBean> list, Context context) {
         this.ctx = context;
         this.list = list;
+    }
+
+    public List<ItemInfoBean> getDataList(){
+        return list;
     }
 
     @Override
@@ -54,8 +60,13 @@ public class GalleryAdapter extends BaseAdapter {
         vh = (ViewHolder) convertView.getTag();
         ItemInfoBean item = list.get(position);
         if(item != null){
-            ImageLoadFactory.getInstance().getImageLoadHandler()
-                    .displayImage(item.getImgRes(), vh.image);
+            if(TextUtils.isEmpty(item.getImgUrl())){
+                ImageLoadFactory.getInstance().getImageLoadHandler()
+                        .displayImage(item.getImgRes(), vh.image);
+            }else{
+                ImageLoadFactory.getInstance().getImageLoadHandler()
+                        .displayImage(item.getImgUrl(), vh.image);
+            }
 
             if (mItemClickListener != null) {
                 convertView.setOnClickListener(new View.OnClickListener() {

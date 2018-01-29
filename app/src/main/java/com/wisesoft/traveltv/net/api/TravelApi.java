@@ -1,6 +1,7 @@
 package com.wisesoft.traveltv.net.api;
 
 import com.android_mobile.net.response.BaseResponse;
+import com.wisesoft.traveltv.model.temp.BannerBean;
 import com.wisesoft.traveltv.model.temp.InitDataBean;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.net.UrlMgr;
@@ -40,5 +41,6 @@ public interface TravelApi {
     @GET(UrlMgr.URL_GET_PROJECT_RECOMMEND)
     Observable<Response<BaseResponse<List<ItemInfoBean>>>> getProduceRecommend(@Query("id") String id);//暂时写成List 以后改
 
-
+    @GET(UrlMgr.URL_GET_BANNER)
+    Observable<Response<BaseResponse<List<ItemInfoBean>>>> getBanner();
 }

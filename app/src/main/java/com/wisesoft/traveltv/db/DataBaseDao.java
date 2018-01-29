@@ -247,37 +247,31 @@ public class DataBaseDao {
     public List<InitDataBean> getPageFilter(String mPageType) {
         try {
             List<InitDataBean> filterAll = new ArrayList<>();
-            InitDataBean filterBean;
             switch (mPageType) {
                 case Constans.TYPE_EAT:
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003005").queryForFirst();
-                    if (filterBean != null) {
-                        List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003005").query();
-                        child.add(0,new InitDataBean("0","全部"));
-                        filterBean.setChildBean(child);
-                        filterAll.add(filterBean);
-                    }
-                    //addAreaPrice(filterAll);
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FOOD_TYPE));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
                     break;
                 case Constans.TYPE_PLAY:
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003004").queryForFirst();
-                    if (filterBean != null) {
-                        List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003004").query();
-                        child.add(0,new InitDataBean("0","全部"));
-                        filterBean.setChildBean(child);
-                        filterAll.add(filterBean);
-                    }
-                   // addAreaPrice(filterAll);
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_SLIGHT));
                     break;
                 case Constans.TYPE_STAY:
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003001").queryForFirst();
-                    if (filterBean != null) {
-                        List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003001").query();
-                        child.add(0,new InitDataBean("0","全部"));
-                        filterBean.setChildBean(child);
-                        filterAll.add(filterBean);
-                    }
-                    addAreaPrice(filterAll);
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
+                    break;
+                case Constans.TYPE_PAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
+                    break;
+                case Constans.TYPE_FUN:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
                     break;
             }
             return filterAll;
@@ -285,6 +279,21 @@ public class DataBaseDao {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * 查找筛选参数
+     * @return 地区参数
+     * @throws SQLException
+     */
+    private InitDataBean findFilterData(String filterParentId) throws SQLException {
+        InitDataBean filterBean = mInitData.queryBuilder().where().eq("id_core", filterParentId).queryForFirst();
+        if (filterBean != null) {
+            List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", filterParentId).query();
+            child.add(0,new InitDataBean("","全部"));
+            filterBean.setChildBean(child);
+        }
+        return filterBean;
     }
 
     private void addAreaPrice(List<InitDataBean> filterAll) throws SQLException {

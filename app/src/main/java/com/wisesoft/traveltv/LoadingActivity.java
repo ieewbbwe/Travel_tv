@@ -9,6 +9,7 @@ import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.helper.InitDataCacheManager;
 import com.wisesoft.traveltv.ui.HomeActivity;
+import com.wisesoft.traveltv.ui.change.HomeChangeActivity;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -58,11 +59,12 @@ public class LoadingActivity extends NActivity {
     @Override
     protected void initData() {
         mDao = new DataBaseDao(mContext);
-        //加载一些初始化数据
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
+                //由于没有用户系统 根据当前时间生成一个MD5码唯一标识当前用户
+                //加载一些初始化数据
                 updateInitData();
             }
         }, 1500);
@@ -79,7 +81,7 @@ public class LoadingActivity extends NActivity {
         }*/
         new InitDataCacheManager(mDao).start();
 
-        pushActivity(HomeActivity.class, true);
+        pushActivity(HomeChangeActivity.class, true);
     }
 
     @Override

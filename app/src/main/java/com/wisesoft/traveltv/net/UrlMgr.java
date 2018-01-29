@@ -7,10 +7,11 @@ package com.wisesoft.traveltv.net;
 
 public interface UrlMgr {
 
-    String HOST = "http://api.965927.com";
-    String PORT = ":8008";
+    String HOST = "http://192.168.199.214";
+    String PORT = ":8000";
     String SITE_NAME = "/wzyc";
-    String API = "/wzyc/api/v1/";
+    //String API = "/wzyc/api/v1/";
+    String API = "/api/v1/";
 
     String Service = HOST + PORT + API;
 
@@ -29,4 +30,6 @@ public interface UrlMgr {
     String URL_GET_RECOMMEND = "recommend";
     /*产品二级列表*/
     String URL_GET_PROJECT_RECOMMEND = "projectRecommend";
+    /*首页广告*/
+    String URL_GET_BANNER = "banner";
 }

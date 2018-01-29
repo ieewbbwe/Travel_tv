@@ -3,4 +3,5 @@
     <color name="item_activated_color">#300094ff</color>
     <color name="shadow">#7f000000</color>
     <color name="stroke">#a1a1a1</color>
+    <color name="bg_core">#3A467D</color>
 </resources>

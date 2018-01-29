@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/m_content_sv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--筛选区域-->
+        <com.wisesoft.traveltv.ui.view.weight.pop.TVFilterView
+            android:id="@+id/m_filter_tfv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="@dimen/tv_border_width"
+            android:orientation="vertical" />
+
+        <!--推荐信息-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tv_border_width"
+            android:orientation="vertical"
+            android:paddingLeft="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_result_data"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_small_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="12dp"
+                    android:background="@color/text_color_gray" />
+            </LinearLayout>
+
+            <com.owen.tvrecyclerview.widget.TvRecyclerView
+                android:id="@+id/m_today_recommend_rlv"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="6dp" />
+
+        </LinearLayout>
+
+        <!--本周热门-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tv_border_width"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_hot_recommend"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_small_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="12dp"
+                    android:background="@color/text_color_gray" />
+            </LinearLayout>
+
+            <com.owen.tvrecyclerview.widget.TvRecyclerView
+                android:id="@+id/m_hot_recommend_rlv"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="6dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

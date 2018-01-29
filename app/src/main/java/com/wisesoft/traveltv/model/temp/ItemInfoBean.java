@@ -25,6 +25,8 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @DatabaseField
     private String file_f;
     @DatabaseField
+    private String video_path;
+    @DatabaseField
     private String title;
     @DatabaseField
     private String video_id;
@@ -47,7 +49,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @DatabaseField
     private String address;
     @DatabaseField
-    private String phone;
+    private String tel_num;
     @DatabaseField
     private double minPrice;
     @DatabaseField
@@ -100,6 +102,14 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.open_time_start = open_time_start;
     }
 
+    public String getVideo_path() {
+        return video_path;
+    }
+
+    public void setVideo_path(String video_path) {
+        this.video_path = video_path;
+    }
+
     public void setHotel_id(String hotel_id) {
         this.hotel_id = hotel_id;
     }
@@ -141,12 +151,12 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTel_num() {
+        return tel_num;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTel_num(String tel_num) {
+        this.tel_num = tel_num;
     }
 
     public ItemInfoBean(String image_url, String type) {
@@ -168,7 +178,19 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.type_str = type;
         this.view_count = view_count;
         this.address = address;
-        this.phone = phone;
+        this.tel_num = phone;
+    }
+
+    public ItemInfoBean(int image_url, String name, double recommend, long create_time, String introduce, String type, long view_count, String address, String phone) {
+        this.imgRes = image_url;
+        this.title = name;
+        this.recommend = recommend;
+        this.create_time = create_time;
+        this.introduce = introduce;
+        this.type_str = type;
+        this.view_count = view_count;
+        this.address = address;
+        this.tel_num = phone;
     }
 
     public ItemInfoBean(String image_url, String name, double recommend,
@@ -182,7 +204,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.type_str = type;
         this.view_count = view_count;
         this.address = address;
-        this.phone = phone;
+        this.tel_num = phone;
         this.hotel_id = hotel_id;
     }
 
@@ -213,16 +235,24 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.img_f = imagePath;
     }
 
+    public ItemInfoBean(String img_f, int id) {
+        this.img_f = img_f;
+        this.id = id;
+    }
+
     public void setImagePath(String imagePath) {
         this.img_f = imagePath;
     }
 
     @Override
     public String getImgUrl() {
-        if(img_f.startsWith("/upload") || img_f.startsWith("/wzyc")){
-            return (UrlMgr.HOST + UrlMgr.PORT + img_f).trim();
+        if(!TextUtils.isEmpty(img_f)){
+            if(img_f.startsWith("/upload") || img_f.startsWith("/wzyc") || img_f.startsWith("news")){
+                return (UrlMgr.HOST + UrlMgr.PORT + img_f).trim();
+            }
+            return img_f.trim();
         }
-        return img_f.trim();
+        return "";
     }
 
     @Override
@@ -263,7 +293,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     }
 
     public String getPhoneStr() {
-        return "预约电话：" + phone;
+        return "电话：" + tel_num;
     }
 
     public String getIntroduce() {
@@ -320,4 +350,5 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     public void setPrice(double price) {
         this.price = price;
     }
+
 }

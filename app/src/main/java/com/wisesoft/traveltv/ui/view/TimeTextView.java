@@ -31,10 +31,13 @@ public class TimeTextView extends TextView {
 
     private BehaviorSubject<ActivityEvent> lifecycleSubject = BehaviorSubject.create();
 
-    /*9月8日 星期五*/
-    private String MM_dd_Week = "MM_dd";
+    /*9月8日*/
+    private String MM_dd = "MM_dd";
     /*12:00*/
     private String HH_mm = "HH:mm";
+
+    /*星期一*/
+    private String Week = "wk";
 
     private String mFormat = HH_mm;
     private Calendar mCalendar;
@@ -55,7 +58,7 @@ public class TimeTextView extends TextView {
         ta.recycle();
         init();
         mCalendar = Calendar.getInstance();
-        setTime(MM_dd_Week,mCalendar);
+        setTime(mCalendar);
 
     }
 
@@ -68,17 +71,18 @@ public class TimeTextView extends TextView {
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
-                        Lg.print("TimeTextView", (long) o);
                         mCalendar = Calendar.getInstance();
-                       setTime(MM_dd_Week,mCalendar);
+                       setTime(mCalendar);
                     }
                 });
     }
 
-    private void setTime(String mm_dd_week, Calendar mCalendar) {
-        if (mm_dd_week.equals(mFormat)) {
+    private void setTime(Calendar mCalendar) {
+        if (MM_dd.equals(mFormat)) {
             setText(mCalendar.get(Calendar.MONTH) + 1 + "月"
-                    + mCalendar.get(Calendar.DAY_OF_MONTH) + "日 " + getWeekDay(mCalendar));
+                    + mCalendar.get(Calendar.DAY_OF_MONTH) + "日 ");
+        }else if(Week.equals(mFormat)){
+            setText(getWeekDay(mCalendar));
         }else{
             setText(mCalendar.get(Calendar.HOUR_OF_DAY) + ":" + mCalendar.get(Calendar.MINUTE));
         }

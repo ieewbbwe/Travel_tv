@@ -2,15 +2,22 @@ package com.wisesoft.traveltv.model.temp;
 
 import android.content.Context;
 
+import com.android_mobile.net.response.BaseResponse;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.utils.Utils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import static com.wisesoft.traveltv.utils.Utils.readTextfileFromAssets;
 
 /**
  * Created by mxh on 2017/9/15.
@@ -119,9 +126,9 @@ public class DataEngine {
     public static List<ItemInfoBean> getLandingBanner() {
         List<ItemInfoBean> beanList = new ArrayList<>();
         //beanList = mDao.getHotItemInfos(3);
-        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_01,Constans.TYPE_PLAY));
-        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_02,Constans.TYPE_EAT));
-        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_03,Constans.TYPE_STAY));
+        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_01, Constans.TYPE_PLAY));
+        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_02, Constans.TYPE_EAT));
+        beanList.add(new ItemInfoBean(R.mipmap.ic_home_bg_03, Constans.TYPE_STAY));
         return beanList;
     }
 
@@ -258,8 +265,25 @@ public class DataEngine {
         return beanList;
     }
 
-    public static void searchByPingYin(String py) {
+    public static List<ItemInfoBean> getSomeTestItemInfo(int size) {
+        Random random = new Random();
+        String[] imgs = {"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515254339536&di=e64494a115f921f8028989e4be2260ee&imgtype=0&src=http%3A%2F%2Fb.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fd000baa1cd11728bce0a8de8c1fcc3cec2fd2cd0.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515254368531&di=774aa62901018326025b73b88087e13c&imgtype=0&src=http%3A%2F%2Fd.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fa50f4bfbfbedab6438b9c80afe36afc378311e34.jpg",
+                "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1515254368529&di=8c8b1d6d681ea1ee8de4730df34ca88b&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2Fb8389b504fc2d5624b744a27ee1190ef77c66cf8.jpg"};
 
+        List<ItemInfoBean> itemInfoBeen = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            itemInfoBeen.add(new ItemInfoBean(imgs[random.nextInt(3)], "测试数据" + i, random.nextInt(5), System.currentTimeMillis(), "介绍信息！！！！！"
+                    , Constans.TYPE_EAT, random.nextInt(1000), "听说地址要长！！！！！！", "18772943998"));
+        }
+        return itemInfoBeen;
     }
 
+    public static List<ItemInfoBean> getItemInfoFromLocal(Context context,String fileName){
+        String json  = Utils.readTextfileFromAssets(context,fileName);
+        Gson gson = new Gson();
+        Type jsonType = new TypeToken<List<ItemInfoBean>>() {
+        }.getType();
+        return gson.fromJson(json, jsonType);
+    }
 }

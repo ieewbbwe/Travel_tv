@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:coverflow="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/m_content_sv"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--图片区-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tv_border_width"
+            android:layout_marginRight="@dimen/tv_border_width"
+            android:layout_marginTop="12dp">
+
+            <ImageView
+                android:id="@+id/m_left_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:src="@mipmap/ic_left_icon" />
+
+            <ImageView
+                android:id="@+id/m_right_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="12dp"
+                android:src="@mipmap/ic_right_icon" />
+
+            <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
+                android:id="@+id/m_home_cover"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_toLeftOf="@id/m_right_icon"
+                android:layout_toRightOf="@id/m_left_icon"
+                android:focusable="true"
+                coverflow:coverHeight="230dp"
+                coverflow:coverWidth="320dp"
+                coverflow:maxScaleFactor="1.2"
+                coverflow:reflectionGap="2dp"
+                coverflow:rotationThreshold="0.6"
+                coverflow:scalingThreshold="0.6"
+                coverflow:spacing="0.35" />
+
+        </RelativeLayout>
+
+        <!--推荐信息-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tv_border_width"
+            android:orientation="vertical"
+            android:paddingLeft="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_recommend_today"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_small_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="12dp"
+                    android:background="@color/text_color_gray" />
+            </LinearLayout>
+
+            <com.owen.tvrecyclerview.widget.TvRecyclerView
+                android:id="@+id/m_today_recommend_rlv"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="6dp" />
+
+        </LinearLayout>
+
+        <!--本周热门-->
+        <LinearLayout
+            android:layout_marginBottom="@dimen/tv_border_width"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/tv_border_width"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_hot_recommend"
+                    android:textColor="@color/text_color_gray"
+                    android:textSize="@dimen/text_small_size" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="12dp"
+                    android:background="@color/text_color_gray" />
+            </LinearLayout>
+
+            <com.owen.tvrecyclerview.widget.TvRecyclerView
+                android:id="@+id/m_hot_recommend_rlv"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="6dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>
