@@ -1,6 +1,7 @@
 package com.wisesoft.traveltv.ui.change.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -25,7 +26,11 @@ import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.ui.change.ProjectDetailChangeActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -58,6 +63,7 @@ public class HomeFragment extends NFragement {
 
     private List<ItemInfoBean> mTodayRecommentData = new ArrayList<>();
     private List<ItemInfoBean> mHotRecommentData = new ArrayList<>();
+    private String[] hotTypes = {Constans.TYPE_PLAY,Constans.TYPE_EAT,Constans.TYPE_STAY,Constans.TYPE_PAY,Constans.TYPE_FUN};
 
     @Override
     protected int create() {
@@ -151,6 +157,38 @@ public class HomeFragment extends NFragement {
 
         requestBannerData();
         requestTodayRecommend();
+        requestHotRecommend();
+    }
+
+    public int getWeek(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        return cal.get(Calendar.WEEK_OF_YEAR);
+    }
+
+    private void requestHotRecommend() {
+        int weekNum = getWeek(new Date(System.currentTimeMillis()));
+        String type;
+        if(weekNum >= hotTypes.length){
+            type = hotTypes[weekNum % hotTypes.length];
+        }else{
+            type = hotTypes[weekNum];
+        }
+
+        ApiFactory.getTravelApi().getRecommend(type, 9, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        updateHotRecommendUI(response.body().getResponse());
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        toast(message);
+                    }
+                });
     }
 
     private void requestTodayRecommend() {
@@ -174,6 +212,13 @@ public class HomeFragment extends NFragement {
         mTodayRecommentData.clear();
         mTodayRecommentData.addAll(response);
         mTodayRecommendAdapter.setDataList(mTodayRecommentData);
+
+    }
+
+    private void updateHotRecommendUI(List<ItemInfoBean> response) {
+        mHotRecommentData.clear();
+        mHotRecommentData.addAll(response);
+        mHotRecommendAdapter.setDataList(mHotRecommentData);
 
     }
 
