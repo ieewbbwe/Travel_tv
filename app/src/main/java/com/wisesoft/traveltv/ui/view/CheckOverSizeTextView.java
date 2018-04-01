@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
 
 public class CheckOverSizeTextView extends TextView {
 
-    private boolean isOverSize;
+    private boolean isOverSize = false;
 
     public CheckOverSizeTextView(Context context) {
         this(context,null);
@@ -36,7 +36,7 @@ public class CheckOverSizeTextView extends TextView {
     }
 
     public boolean checkOverLines(){
-        int maxLine = getMaxLines();
+       /* int maxLine = getMaxLines();
         try {
             Field field = getClass().getSuperclass().getDeclaredField("mLayout");
             field.setAccessible(true);
@@ -46,7 +46,8 @@ public class CheckOverSizeTextView extends TextView {
             isOverSize = mLayout.getEllipsisCount(maxLine - 1) > 0;
         } catch (NoSuchFieldException | IllegalAccessException | IllegalArgumentException e) {
             e.printStackTrace();
-        }
+        }*/
+
         return isOverSize;
     }
 

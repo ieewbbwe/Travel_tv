@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Observable;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -174,6 +176,7 @@ public class HomeFragment extends NFragement {
         }else{
             type = hotTypes[weekNum];
         }
+        type = hotTypes[0];
 
         ApiFactory.getTravelApi().getRecommend(type, 9, 1)
                 .subscribeOn(Schedulers.io())

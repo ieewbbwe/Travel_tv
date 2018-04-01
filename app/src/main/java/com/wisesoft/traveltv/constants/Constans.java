@@ -24,12 +24,15 @@ public interface Constans {
     String ITEM_RECOMMEND_IMG = "item_recommend_img";
 
     String TYPE_PLAY = "play";
+    @Deprecated
     String TYPE_SCENERY = "scenery";
     String TYPE_EAT = "eat";
+    @Deprecated
     String TYPE_FOOD = "food";
     String TYPE_STAY = "stay";
     String TYPE_FUN = "fun";
     String TYPE_PAY = "pay";
+    @Deprecated
     String TYPE_HOME = "home";
 
     String TYPE_TRAFFIC = "traffic";
