@@ -22,6 +22,9 @@ import com.wisesoft.traveltv.ui.change.fragment.PayFragment;
 import com.wisesoft.traveltv.ui.change.fragment.PlayFragment;
 import com.wisesoft.traveltv.ui.change.fragment.StayFragment;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 

@@ -1,12 +1,13 @@
 <resources>
     <string name="app_name">玩转宜昌</string>
-    <string name="label_home_search">搜索</string>
+    <string name="label_home_search">快速搜索</string>
     <string name="label_home">首页</string>
+    <string name="label_recommend">热门推荐</string>
     <string name="label_home_play">玩在宜昌</string>
     <string name="label_home_eat">吃在宜昌</string>
     <string name="label_home_stay">住在宜昌</string>
-    <string name="label_home_pay">购物</string>
-    <string name="label_home_fun">娱乐</string>
+    <string name="label_home_pay">购物中心</string>
+    <string name="label_home_fun">娱乐天地</string>
     <string name="label_home_traffic">交通信息</string>
     <string name="label_home_setting">设置</string>
     <string name="label_home_return">返回</string>
@@ -30,5 +31,6 @@
     <string name="label_search_empty">快去输入搜索信息吧！</string>
     <string name="label_recommend_today">今日推荐</string>
     <string name="label_hot_recommend">本周热门</string>
-    <string name="label_result_data">筛选结果</string> <!-- 删除 -->
+    <string name="label_result_data">筛选结果</string>
+    <string name="tab_search">快速搜索</string>
 </resources>

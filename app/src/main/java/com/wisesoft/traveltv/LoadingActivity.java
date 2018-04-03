@@ -10,6 +10,7 @@ import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.helper.InitDataCacheManager;
 import com.wisesoft.traveltv.ui.HomeActivity;
 import com.wisesoft.traveltv.ui.change.HomeChangeActivity;
+import com.wisesoft.traveltv.ui.newdesign.HomeNewDesignActivity;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -81,7 +82,7 @@ public class LoadingActivity extends NActivity {
         }*/
         new InitDataCacheManager(mDao).start();
 
-        pushActivity(HomeChangeActivity.class, true);
+        pushActivity(HomeNewDesignActivity.class, true);
     }
 
     @Override

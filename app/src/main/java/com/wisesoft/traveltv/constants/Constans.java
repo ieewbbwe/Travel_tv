@@ -34,6 +34,9 @@ public interface Constans {
     String TYPE_PAY = "pay";
     @Deprecated
     String TYPE_HOME = "home";
+    String TYPE_SEARCH = "search";
+    String TYPE_RECOMMEND= "recommend";
+
 
     String TYPE_TRAFFIC = "traffic";
     String IS_INIT_DATA = "is_init_data";

@@ -10,7 +10,8 @@ import static android.R.attr.name;
  */
 
 public enum HomeTab {
-    TAB_HOME(R.string.label_home),
+    TAB_SEARCH(R.string.label_home_search),
+    TAB_RECOMMEND(R.string.label_recommend),
     TAB_PLAY(R.string.label_home_play),
     TAB_EAT(R.string.label_home_eat),
     TAB_STAY(R.string.label_home_stay),
