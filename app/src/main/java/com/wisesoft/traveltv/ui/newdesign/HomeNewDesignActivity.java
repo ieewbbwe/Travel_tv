@@ -3,6 +3,9 @@ package com.wisesoft.traveltv.ui.newdesign;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 
 import com.tv.boost.widget.tablayout.TvTabLayout;
 import com.wisesoft.traveltv.NActivity;
@@ -26,6 +29,7 @@ public class HomeNewDesignActivity extends NActivity {
 
     private List<BaseFragment> mBaseFragmnets = new ArrayList<>();
     private List<HomeTab> mTabs = new ArrayList<>();
+    private BaseFragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +48,7 @@ public class HomeNewDesignActivity extends NActivity {
         }
         //初始化ViewPager
         mFragmentManager = getSupportFragmentManager();
-        mPagerAdapter = new ContainerPagerAdapter(mFragmentManager,this);
+        mPagerAdapter = new ContainerPagerAdapter(mFragmentManager, this);
         mPagerAdapter.setData(mBaseFragmnets);
         mPagerAdapter.setTitleData(mTabs);
         mContainerVp.setAdapter(mPagerAdapter);
@@ -54,12 +58,61 @@ public class HomeNewDesignActivity extends NActivity {
 
     @Override
     protected void initListener() {
+        mContainerVp.addOnPageChangeListener(new OnSimplePageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                mCurrentFragment = mBaseFragmnets.get(position);
+            }
+        });
 
+        mMainTab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.d("picher", "Tab获取焦点:" + hasFocus);
+            }
+        });
     }
 
     @Override
     protected void initData() {
+        //默认位置 热门推荐
+        mContainerVp.setCurrentItem(1);
+    }
 
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getAction() != KeyEvent.ACTION_UP) { //不响应抬起事件 防止回掉两次
+            switch (event.getKeyCode()) {
+                case KeyEvent.KEYCODE_DPAD_DOWN:
+                    if (mMainTab != null && mCurrentFragment != null) {
+                        if (mMainTab.hasFocus() && !mCurrentFragment.hasFocus()) {
+                            mCurrentFragment.requestFocus();
+                            return true;
+                        }
+                    }
+                    break;
+                case KeyEvent.KEYCODE_DPAD_UP:
+                    break;
+                case KeyEvent.KEYCODE_DPAD_LEFT:
+                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                    break;
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return mBaseFragmnets.get(mContainerVp.getCurrentItem()).onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return mBaseFragmnets.get(mContainerVp.getCurrentItem()).onKeyUp(keyCode, event);
+    }
+
+    public void requestFocus() {
+        mMainTab.requestFocus();
     }
 
     @Override

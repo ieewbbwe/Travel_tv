@@ -8,12 +8,14 @@ import com.google.gson.reflect.TypeToken;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.model.KeyBoardItemBean;
 import com.wisesoft.traveltv.utils.Utils;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -28,6 +30,7 @@ public class DataEngine {
 
     public static Context mContext;
     private static DataBaseDao mDao;
+    private static List<KeyBoardItemBean> keyBoardItemBeans;
 
     public static void init(Context applicationCtx) {
         mContext = applicationCtx;
@@ -285,5 +288,23 @@ public class DataEngine {
         Type jsonType = new TypeToken<List<ItemInfoBean>>() {
         }.getType();
         return gson.fromJson(json, jsonType);
+    }
+
+    public static List<KeyBoardItemBean> getKeyBrodData() {
+        if(keyBoardItemBeans == null){
+            keyBoardItemBeans = new ArrayList<>();
+            KeyBoardItemBean itemBean;
+            //创建A~Z
+            for (int i = 65; i < 91; i++) {
+                itemBean = new KeyBoardItemBean((char) i);
+                keyBoardItemBeans.add(itemBean);
+            }
+            //创建0~9
+            for (int i = 48; i < 58; i++) {
+                itemBean = new KeyBoardItemBean((char) i);
+                keyBoardItemBeans.add(itemBean);
+            }
+        }
+        return keyBoardItemBeans;
     }
 }

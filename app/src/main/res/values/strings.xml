@@ -33,4 +33,5 @@
     <string name="label_hot_recommend">本周热门</string>
     <string name="label_result_data">筛选结果</string>
     <string name="tab_search">快速搜索</string>
+    <string name="button_clear">清除</string>
 </resources>

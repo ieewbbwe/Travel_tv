@@ -30,7 +30,6 @@ import com.wisesoft.traveltv.ui.view.weight.keyboard.SoftKey;
 import com.wisesoft.traveltv.ui.view.weight.keyboard.SoftKeyBoardListener;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -48,7 +47,7 @@ public class SearchResultActivity extends NActivity {
     TvRecyclerView mResultTrv;
     @Bind(R.id.m_keyboard_kb)
     SkbContainer mKeyboardKb;
-    @Bind(R.id.m_input_tv)
+    @Bind(R.id.m_input_et)
     EditText mInputEt;
     @Bind(R.id.m_empty_container)
     ViewGroup mEmptyV;

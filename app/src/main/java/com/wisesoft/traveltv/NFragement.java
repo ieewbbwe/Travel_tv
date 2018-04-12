@@ -45,4 +45,8 @@ public abstract class NFragement extends BaseFragment {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return false;
     }
+
+    public boolean onKeyUp(int keyCodem, KeyEvent event){
+        return false;
+    }
 }

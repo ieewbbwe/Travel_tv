@@ -244,6 +244,35 @@ public class DataBaseDao {
         return getItemInfos(typePlay, 5);
     }
 
+    public List<InitDataBean> getNewDisginFilter(String mPageType){
+        try {
+            List<InitDataBean> filterAll = new ArrayList<>();
+            switch (mPageType){
+                case Constans.TYPE_PLAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    break;
+                case Constans.TYPE_EAT:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FOOD_TYPE));
+                    break;
+                case Constans.TYPE_STAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    break;
+                case Constans.TYPE_PAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PAY_TYPE));
+                    break;
+                case Constans.TYPE_FUN:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FUN_TYPE));
+                    break;
+            }
+
+            return filterAll;
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //旧版本获取筛选数据
     public List<InitDataBean> getPageFilter(String mPageType) {
         try {
             List<InitDataBean> filterAll = new ArrayList<>();

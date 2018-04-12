@@ -4,4 +4,7 @@
     <color name="shadow">#7f000000</color>
     <color name="stroke">#a1a1a1</color>
     <color name="bg_core">#3A467D</color>
+    <color name="search_button_focused">#518FDC</color>
+    <color name="search_button_press">#699fe2</color>
+    <color name="search_button_normal">#969696</color>
 </resources>

@@ -12,10 +12,13 @@ import android.graphics.Paint.FontMetricsInt;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.android_mobile.core.utiles.Lg;
 
@@ -68,6 +71,34 @@ public class SoftKeyboardView extends View {
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        // 获取宽-测量规则的模式和大小
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+
+        // 获取高-测量规则的模式和大小
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+
+        // 设置wrap_content的默认宽 / 高值
+        // 默认宽/高的设定并无固定依据,根据需要灵活设置
+        // 类似TextView,ImageView等针对wrap_content均在onMeasure()对设置默认宽 / 高值有特殊处理,具体读者可以自行查看
+        int mWidth = 400;
+        int mHeight = 320;
+
+        // 当布局参数设置为wrap_content时，设置默认值
+        if (getLayoutParams().width == ViewGroup.LayoutParams.WRAP_CONTENT && getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(mWidth, mHeight);
+            // 宽 / 高任意一个布局参数为= wrap_content时，都设置默认值
+        } else if (getLayoutParams().width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(mWidth, heightSize);
+        } else if (getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+            setMeasuredDimension(widthSize, mHeight);
+        }
+    }
+
+     @Override
     protected void onDraw(Canvas rootCanvas) {
         if (mSoftKeyboard == null)
             return;
@@ -141,7 +172,7 @@ public class SoftKeyboardView extends View {
             return;
         }
         // 绘制按键背景.
-        drawSoftKeyBg(canvas, softKey);
+        //drawSoftKeyBg(canvas, softKey);
         // 绘制选中状态.
         if (isDrawState) {
             if (softKey.isKeySelected()) {
@@ -479,6 +510,7 @@ public class SoftKeyboardView extends View {
             default:
                 break;
         }
+        Log.d("picher","是否为空（是否找到?）:"+(selectKey == null));
         // 刷新移动的位置.
         if (softKey != null) {
             SoftKey oldsoftkey = mSoftKeyboard.getSelectSoftKey();

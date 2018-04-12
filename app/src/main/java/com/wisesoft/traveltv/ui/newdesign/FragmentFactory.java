@@ -4,12 +4,7 @@ import android.os.Bundle;
 
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.ui.change.HomeTab;
-import com.wisesoft.traveltv.ui.change.fragment.EatFragment;
-import com.wisesoft.traveltv.ui.change.fragment.FunFragment;
-import com.wisesoft.traveltv.ui.change.fragment.HomeFragment;
-import com.wisesoft.traveltv.ui.change.fragment.PayFragment;
-import com.wisesoft.traveltv.ui.change.fragment.PlayFragment;
-import com.wisesoft.traveltv.ui.change.fragment.StayFragment;
+import com.wisesoft.traveltv.ui.newdesign.page.PlayFragment;
 import com.wisesoft.traveltv.ui.newdesign.page.SearchFragment;
 
 /**
@@ -26,10 +21,12 @@ public class FragmentFactory {
         baseFragment.setArguments(bundle);
         switch (homeTab.getNameRes()){
             case R.string.label_home_search:
+                baseFragment = new SearchFragment();
                 break;
             case R.string.label_recommend:
                 break;
             case R.string.label_home_play:
+                baseFragment = new PlayFragment();
                 break;
             case R.string.label_home_eat:
                 break;

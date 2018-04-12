@@ -7,72 +7,74 @@
     key_press_res="@drawable/softkey_bg_press2"
     key_select_res="@drawable/softkey_bg_select2"
     key_text_color="#b8bbbf"
-    key_text_size="@dimen/w_35"
+    key_text_size="@dimen/w_40"
     key_top_padding="@dimen/h_10"
-    key_height="@dimen/h_85"
-    key_width="@dimen/w_85"
+    key_height="@dimen/h_68"
+    key_width="@dimen/h_68"
     start_pos_x="0"
     start_pos_y="0"
     left_right_move="false"
     top_bottom_move="false" >
 
-    <!-- 第一行 -->
+    <!--&lt;!&ndash; 第一行 &ndash;&gt;
     <row>
-         <!-- 删除 -->
+         &lt;!&ndash; 删除 &ndash;&gt;
         <key
             key_code="@string/keycode_del"
             key_icon="@mipmap/delete" />
-        <!-- 删除 -->
+        &lt;!&ndash; 删除 &ndash;&gt;
         <key
             key_left_padding="@dimen/w_295"
             key_code="@string/keycode_del"
             key_icon="@mipmap/delete" />
-    </row>
+    </row>-->
     
     <!-- 第二行 -->
     <row>
         <keys
-            labels="A|B|C|D|E"
+            labels="A|B|C|D|E|F"
             splitter="|" />
     </row>
 	
     <!-- 第三行 -->
     <row>
         <keys
-            labels="F|G|H|I|J"
+            labels="G|H|I|J|K|L"
             splitter="|" />
     </row>
     <!-- 第四行 -->
     <row>
         <keys
-            labels="K|L|M|N|O"
+            labels="M|N|O|P|Q|R"
             splitter="|" />
     </row>
     <!-- 第五行 -->
     <row>
         <keys
-            labels="P|Q|R|S|D"
+            labels="S|T|U|V|W|X"
             splitter="|" />
     </row>
 
     <!-- 第六行 -->
     <row>
         <keys
-            labels="U|V|W|X|Y"
+            labels="Y|Z|0|1|2|3"
             splitter="|" />
     </row>
     
     <row>
-        <key
+        <keys
+            labels="4|5|6|7|8|9"
+            splitter="|" />
+        <!--<key
             key_label="Z" />
-      <!--  &lt;!&ndash; 123数字切换 &ndash;&gt;
+        &lt;!&ndash; 123数字切换 &ndash;&gt;
         <key
             key_code="250"
-            key_icon="@drawable/quit_skb" />-->
-         <!-- 删除 -->
+            key_icon="@drawable/quit_skb" />
         <key
             key_code="@string/keycode_del"
-            key_icon="@mipmap/delete" />
+            key_icon="@mipmap/delete" />-->
     </row>
     
 </Keyboard>

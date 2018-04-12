@@ -76,6 +76,10 @@ public abstract class BaseFragment extends NFragement implements ListPageInterfa
                 });
     }
 
+    public abstract boolean hasFocus();
+
+    public abstract void requestFocus();
+
     public interface NetWorkListener{
         void onResponse(BaseResponse baseResponse);
     }
