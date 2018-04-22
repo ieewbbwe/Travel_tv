@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tv.boost.R;
 
 
@@ -301,6 +302,12 @@ public class CommonViewHolder {
     public CommonViewHolder setOnClickListener(int viewId, View.OnClickListener listener) {
         View view = getView(viewId);
         view.setOnClickListener(listener);
+        return this;
+    }
+
+    public CommonViewHolder showImage(int viewId, String url) {
+        ImageView imageView = getView(viewId);
+        Glide.with(mContext).load(url).into(imageView);
         return this;
     }
 

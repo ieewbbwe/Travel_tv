@@ -2,24 +2,24 @@ package com.wisesoft.traveltv.model.temp;
 
 import android.content.Context;
 
-import com.android_mobile.net.response.BaseResponse;
+import com.android_mobile.core.utiles.Lg;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.model.FilterItemModel;
+import com.wisesoft.traveltv.model.HeaderItemModel;
 import com.wisesoft.traveltv.model.KeyBoardItemBean;
+import com.wisesoft.traveltv.ui.change.HomeTab;
 import com.wisesoft.traveltv.utils.Utils;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
-
-import static com.wisesoft.traveltv.utils.Utils.readTextfileFromAssets;
 
 /**
  * Created by mxh on 2017/9/15.
@@ -282,8 +282,8 @@ public class DataEngine {
         return itemInfoBeen;
     }
 
-    public static List<ItemInfoBean> getItemInfoFromLocal(Context context,String fileName){
-        String json  = Utils.readTextfileFromAssets(context,fileName);
+    public static List<ItemInfoBean> getItemInfoFromLocal(Context context, String fileName) {
+        String json = Utils.readTextfileFromAssets(context, fileName);
         Gson gson = new Gson();
         Type jsonType = new TypeToken<List<ItemInfoBean>>() {
         }.getType();
@@ -291,7 +291,7 @@ public class DataEngine {
     }
 
     public static List<KeyBoardItemBean> getKeyBrodData() {
-        if(keyBoardItemBeans == null){
+        if (keyBoardItemBeans == null) {
             keyBoardItemBeans = new ArrayList<>();
             KeyBoardItemBean itemBean;
             //创建A~Z
@@ -306,5 +306,40 @@ public class DataEngine {
             }
         }
         return keyBoardItemBeans;
+    }
+
+    public static List<FilterItemModel> getTestFilterData(int size, HomeTab homeTab) {
+        List<FilterItemModel> itemModels = new ArrayList<>();
+        FilterItemModel itemModel;
+        InitDataBean dataBean;
+        for (int i = 0; i < size; i++) {
+            dataBean = new InitDataBean("001", "测试筛选数据" + i);
+            itemModel = new FilterItemModel(dataBean, homeTab);
+            itemModels.add(itemModel);
+        }
+        return itemModels;
+    }
+
+    public static List<ItemInfoBean> getTestListData(int size) {
+        List<ItemInfoBean> itemInfoBeans = new ArrayList<>();
+        ItemInfoBean infoBean;
+        for (int i = 0; i < size; i++) {
+            infoBean = getTestItemData();
+            itemInfoBeans.add(infoBean);
+        }
+        return itemInfoBeans;
+    }
+
+    private static ItemInfoBean getTestItemData() {
+        return new ItemInfoBean("测试列表数据", new Random(5000).nextInt());
+    }
+
+    public static List<HeaderItemModel> getTestHeaderData(int size, HomeTab homeTab) {
+        List<HeaderItemModel> itemModels = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            itemModels.add(new HeaderItemModel(getTestItemData(), homeTab));
+        }
+        Lg.d("picher","HeaderSize:"+itemModels.size());
+        return itemModels;
     }
 }

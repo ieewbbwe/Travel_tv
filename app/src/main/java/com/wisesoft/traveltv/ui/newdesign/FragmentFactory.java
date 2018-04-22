@@ -16,9 +16,6 @@ public class FragmentFactory {
 
     public static BaseFragment create(HomeTab homeTab){
         BaseFragment baseFragment = new SearchFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(BaseFragment.ARG_HOME_TAB,homeTab);
-        baseFragment.setArguments(bundle);
         switch (homeTab.getNameRes()){
             case R.string.label_home_search:
                 baseFragment = new SearchFragment();
@@ -37,6 +34,9 @@ public class FragmentFactory {
             case R.string.label_home_fun:
                 break;
         }
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(BaseFragment.ARG_HOME_TAB, homeTab);
+        baseFragment.setArguments(bundle);
 
         return baseFragment;
     }

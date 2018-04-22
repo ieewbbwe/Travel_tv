@@ -1,17 +1,44 @@
 package com.wisesoft.traveltv.ui.newdesign.page;
 
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.android_mobile.core.utiles.Lg;
+import com.android_mobile.net.response.BaseResponse;
+import com.github.jdsjlzx.interfaces.OnItemClickListener;
+import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
+import com.owen.tvrecyclerview.widget.SpacingItemDecoration;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
+import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
+import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.R;
+import com.wisesoft.traveltv.adapter.FilterNewDesignAdapter;
+import com.wisesoft.traveltv.adapter.ListGridAdapter;
+import com.wisesoft.traveltv.adapter.ListNewDesignAdapter;
+import com.wisesoft.traveltv.manager.ProductManager;
+import com.wisesoft.traveltv.model.FilterItemModel;
+import com.wisesoft.traveltv.model.temp.DataEngine;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.net.ApiFactory;
+import com.wisesoft.traveltv.net.OnSimpleCallBack;
+import com.wisesoft.traveltv.ui.change.HomeTab;
 import com.wisesoft.traveltv.ui.newdesign.BaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by picher on 2018/4/12.
@@ -26,10 +53,26 @@ public abstract class BaseListFragment extends BaseFragment {
     TvRecyclerView mFilterTrv;
     @Bind(R.id.m_list_trv)
     TvRecyclerView mListTrv;
+    @Bind(R.id.m_app_bar_abl)
+    AppBarLayout mAppbarAbl;
+    @Bind(R.id.m_container_cdl)
+    CoordinatorLayout mContainerCdl;
+
     private View mHeaderView;
+    private FilterNewDesignAdapter mFilterAdapter;
+    private V7GridLayoutManager mFilterManager;
+    private V7GridLayoutManager mListLayoutManager;
+    //private ListNewDesignAdapter mListNewDesignAdapter;
+    protected HomeTab mHomeTab;
+    private ListGridAdapter mListAdapter;
 
     //獲取頭部佈局
     public abstract int getHeaderLayout();
+    public abstract void initHeader();
+    public abstract void updateRecommendUI(List<ItemInfoBean> itemInfoBeans);
+
+    private List<ItemInfoBean> mListData = new ArrayList<>();
+    private List<FilterItemModel> mFilterData = new ArrayList<>();
 
     @Override
     protected int create() {
@@ -38,38 +81,109 @@ public abstract class BaseListFragment extends BaseFragment {
 
     @Override
     protected void initComp() {
+        if(getArguments() != null){
+            mHomeTab = (HomeTab) getArguments().getSerializable(ARG_HOME_TAB);
+        }
+
         ButterKnife.bind(this, v);
         //初始化头部布局
         mHeaderView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(),null);
         mHeaderContainer.addView(mHeaderView);
         //初始化筛选布局
-
+        mFilterManager = new V7GridLayoutManager(getActivity(),2, LinearLayoutManager.HORIZONTAL,false);
+        mFilterTrv.setLayoutManager(mFilterManager);
+        mFilterAdapter = new FilterNewDesignAdapter(getActivity());
+        mFilterTrv.setAdapter(mFilterAdapter);
+        mFilterTrv.setSpacingWithMargins(16,24);
         //初始化列表布局
+        mListLayoutManager = new V7GridLayoutManager(getActivity(),6);
+        mListTrv.setLayoutManager(mListLayoutManager);
+        //mListNewDesignAdapter = new ListNewDesignAdapter(getActivity());
+        mListAdapter = new ListGridAdapter(getActivity());
+        mListTrv.setAdapter(mListAdapter);
+        mListTrv.setSpacingWithMargins(16,16);
+
+        //初始化每个类别的header
+        initHeader();
     }
 
     @Override
     protected void initListener() {
+        mFilterTrv.setOnItemListener(new SimpleOnItemListener() {
+
+            @Override
+            public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
+                onMoveFocusBorder(itemView, 1f, 8);
+            }
+        });
+
+        mListTrv.setOnItemListener(new SimpleOnItemListener() {
+
+            @Override
+            public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
+                onMoveFocusBorder(itemView, 1.1f, 8);
+            }
+
+            @Override
+            public void onItemClick(TvRecyclerView parent, View itemView, int position) {
+                super.onItemClick(parent, itemView, position);
+                Lg.d("picher","点击列表："+position);
+            }
+        });
+
+        mFilterAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Lg.d("picher","点击筛选："+position);
+            }
+        });
 
     }
 
     @Override
     protected void initData() {
+        /*——————測試數據—————*/
+        mFilterData.addAll(DataEngine.getTestFilterData(10,mHomeTab));
+        mListData.addAll(DataEngine.getTestListData(20));
+        mFilterAdapter.setDataList(mFilterData);
+        mListAdapter.setDatas(mListData);
 
     }
 
-    @Override
-    public boolean hasFocus() {
-        return false;
+    protected void onMoveFocusBorder(View focusedView, float scale, float roundRadius) {
+        if (null != getFocusBorder()) {
+            getFocusBorder().onFocus(focusedView, FocusBorder.OptionsFactory.get(scale, scale, roundRadius));
+        }
     }
 
-    @Override
-    public void requestFocus() {
+    /**
+     * 获取推荐数据
+     */
+    public void getRecommendData(){
+        ApiFactory.getTravelApi().getRecommend(ProductManager.Companion.getInstance().getPageType(mHomeTab), 5, 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        updateRecommendUI(response.body().getResponse());
+                    }
 
+                    @Override
+                    public void onFailed(int code, String message) {
+                        toast(message);
+                    }
+                });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void requestFocus() {
+
     }
 }

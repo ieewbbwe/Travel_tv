@@ -159,6 +159,8 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.tel_num = tel_num;
     }
 
+
+
     public ItemInfoBean(String image_url, String type) {
         this.img_f = image_url;
         this.type_str = type;
@@ -233,6 +235,11 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     public ItemInfoBean(String imagePath) {
         this.img_f = imagePath;
+    }
+
+    public ItemInfoBean(String title,long view_count) {
+        this.title = title;
+        this.view_count = view_count;
     }
 
     public ItemInfoBean(String img_f, int id) {

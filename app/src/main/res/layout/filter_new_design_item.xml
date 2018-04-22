@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/m_filter_new_item_root_fl"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minWidth="200dp"
+    android:padding="8dp">
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/m_filter_new_item_tv"
+        android:layout_width="wrap_content"
+        android:maxLines="1"
+        android:textColor="@color/white"
+        android:ellipsize="end"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="@dimen/text_small_size"
+        tools:text="宜昌市" />
+</FrameLayout>

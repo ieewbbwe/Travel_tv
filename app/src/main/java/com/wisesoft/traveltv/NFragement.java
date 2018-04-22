@@ -49,4 +49,13 @@ public abstract class NFragement extends BaseFragment {
     public boolean onKeyUp(int keyCodem, KeyEvent event){
         return false;
     }
+
+    /**
+     * 父类拦截事件
+     * @param keyEvent
+     * @return
+     */
+    public boolean dispatchFragmentKeyEvent(KeyEvent keyEvent){
+        return false;
+    }
 }

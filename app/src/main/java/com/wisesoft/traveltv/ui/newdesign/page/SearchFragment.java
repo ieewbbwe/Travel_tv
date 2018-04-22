@@ -240,11 +240,6 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
-    public boolean hasFocus() {
-        return ((ViewGroup) v).getFocusedChild() != null;
-    }
-
-    @Override
     public void requestFocus() {
         mKeyBoardRv.requestFocus();
     }

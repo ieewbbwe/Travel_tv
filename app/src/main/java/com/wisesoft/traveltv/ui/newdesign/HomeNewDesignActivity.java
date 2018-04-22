@@ -98,7 +98,7 @@ public class HomeNewDesignActivity extends NActivity {
                     break;
             }
         }
-        return super.dispatchKeyEvent(event);
+        return mBaseFragmnets.get(mContainerVp.getCurrentItem()).dispatchFragmentKeyEvent(event) || super.dispatchKeyEvent(event);
     }
 
     @Override

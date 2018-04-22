@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/m_container_cdl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/content_padding"
+    android:paddingRight="@dimen/content_padding">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/m_app_bar_abl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:focusable="true">
         <!--头部布局-容器-->
         <FrameLayout
             android:id="@+id/m_header_container"
@@ -14,11 +20,15 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|snap" />
 
-        <!--悬浮筛选菜单栏-->
+        <!--悬浮筛选筛选栏-->
         <com.owen.tvrecyclerview.widget.TvRecyclerView
             android:id="@+id/m_filter_trv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@android:color/transparent"
+            android:focusable="true" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -27,6 +37,8 @@
         android:id="@+id/m_list_trv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:focusable="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:tv_selectedItemIsCentered="true" />
 
 </android.support.design.widget.CoordinatorLayout>

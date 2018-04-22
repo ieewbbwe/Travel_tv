@@ -2,6 +2,7 @@ package com.wisesoft.traveltv.ui.newdesign;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.net.response.BaseResponse;
@@ -76,7 +77,9 @@ public abstract class BaseFragment extends NFragement implements ListPageInterfa
                 });
     }
 
-    public abstract boolean hasFocus();
+    public boolean hasFocus() {
+        return ((ViewGroup) v).getFocusedChild() != null;
+    }
 
     public abstract void requestFocus();
 

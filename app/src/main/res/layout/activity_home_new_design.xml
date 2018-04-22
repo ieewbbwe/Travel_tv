@@ -7,8 +7,8 @@
     android:background="@mipmap/ic_home_bg"
     tools:context="com.wisesoft.traveltv.ui.newdesign.HomeNewDesignActivity">
 
-    <!-- &lt;!&ndash;head&ndash;&gt;
-     <include layout="@layout/layout_head_change" />-->
+    <!--head-->
+    <include layout="@layout/layout_head_change" />
 
     <com.tv.boost.widget.tablayout.TvTabLayout
         android:id="@+id/m_main_tab"
@@ -32,6 +32,7 @@
         android:id="@+id/m_container_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/m_main_tab" />
+        android:layout_below="@+id/m_main_tab"
+        android:layout_marginTop="6dp" />
 
 </RelativeLayout>
