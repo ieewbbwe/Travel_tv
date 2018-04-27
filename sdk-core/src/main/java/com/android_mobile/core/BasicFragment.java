@@ -23,6 +23,7 @@ public abstract class BasicFragment extends RxFragment implements IBasicCoreMeth
     private NavigationBar mNavigationBar;
     protected View v;
     protected BasicActivity activity;
+    protected boolean isInit;
 
     protected abstract int create();
 

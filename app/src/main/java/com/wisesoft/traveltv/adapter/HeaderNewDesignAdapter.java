@@ -70,7 +70,7 @@ public class HeaderNewDesignAdapter extends BasicAdapter<HeaderItemModel,Recycle
     public class PlayHeaderHolder extends RecyclerView.ViewHolder{
         ImageView mItemIv;
         TextView mTitleTv;
-        public PlayHeaderHolder(View itemView) {
+        PlayHeaderHolder(View itemView) {
             super(itemView);
             mItemIv = (ImageView) itemView.findViewById(R.id.m_item_iv);
             mTitleTv = (TextView) itemView.findViewById(R.id.m_title_tv);

@@ -25,7 +25,7 @@ import rx.schedulers.Schedulers;
  * Describe：新UI的页面基类
  */
 
-public abstract class BaseFragment extends NFragement implements ListPageInterface{
+public abstract class BaseNewDesignFragment extends NFragement implements ListPageInterface{
 
     public static final String ARG_HOME_TAB = "arg_home_tab";
 

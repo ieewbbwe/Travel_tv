@@ -2,8 +2,6 @@ package com.wisesoft.traveltv.ui.newdesign;
 
 import com.wisesoft.traveltv.net.request.ItemRequestModel;
 
-import rx.Subscriber;
-
 /**
  * Created by picher on 2018/4/3.
  * Describe：
@@ -11,5 +9,5 @@ import rx.Subscriber;
 
 public interface ListPageInterface {
 
-    void requestData(ItemRequestModel requestModel,BaseFragment.NetWorkListener dataSubscriber);
+    void requestData(ItemRequestModel requestModel,BaseNewDesignFragment.NetWorkListener dataSubscriber);
 }

@@ -3,7 +3,10 @@ package com.wisesoft.traveltv.ui.newdesign.page;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
+import com.android_mobile.core.utiles.Utiles;
+import com.owen.tvrecyclerview.TwoWayLayoutManager;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.wisesoft.traveltv.R;
@@ -17,11 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by picher on 2018/4/12.
- * Describe：
+ * Created by picher on 2018/4/27.
+ * Describe：带有header的通用List
  */
 
-public class PlayFragment extends BaseListFragment {
+public class ListHeaderFragment extends BaseListFragment {
 
     private TvRecyclerView mPlayHeaderRv;
     private ListHeaderSpannableAdapter mHeaderAdapter;
@@ -30,7 +33,7 @@ public class PlayFragment extends BaseListFragment {
 
     @Override
     public int getHeaderLayout() {
-        return R.layout.play_fragment_header_recycle;
+        return R.layout.list_header_fragment_header_recycle;
     }
 
     @Override
@@ -40,9 +43,8 @@ public class PlayFragment extends BaseListFragment {
         mPlayHeaderLayout = new CustomerGridlayoutManager(getActivity());
         mPlayHeaderRv.setLayoutManager(mPlayHeaderLayout);
         mPlayHeaderRv.setSpacingWithMargins(12,12);
+        adjustHeaderParamByType();
 
-       /* ------测试数据--------*/
-        mHeaderItem.addAll(DataEngine.getTestHeaderData(5, mHomeTab));
         mHeaderAdapter.setDatas(mHeaderItem);
         mPlayHeaderRv.setAdapter(mHeaderAdapter);
 
@@ -62,28 +64,50 @@ public class PlayFragment extends BaseListFragment {
         });
     }
 
-    @Override
-    public boolean dispatchFragmentKeyEvent(KeyEvent event) {
-        if (event.getAction() != KeyEvent.ACTION_UP) { //不响应抬起事件 防止回掉两次
-            switch (event.getKeyCode()) {
-                case KeyEvent.KEYCODE_DPAD_DOWN:
-                    /*if (mHeaderContainer.hasFocus()) {
-                        mFilterTrv.requestFocus();
-                        mAppbarAbl.setExpanded(false);
-                    }*/
+    /**
+     * 根据Type不同设置不同的Header
+     */
+    private void adjustHeaderParamByType() {
+        int columns = 1, rows = 1, heightDp = 0,headerSize = 1;
+        TwoWayLayoutManager.Orientation orientation = TwoWayLayoutManager.Orientation.VERTICAL;
+        List<HeaderItemModel> itemModels;
+        if(mHomeTab != null){
+            switch (mHomeTab){
+                case TAB_PLAY:
+                    columns = 3;
+                    rows = 2;
+                    headerSize = 5;
+                    heightDp = 500;
                     break;
-                case KeyEvent.KEYCODE_DPAD_UP:
-                    /*if (mListTrv.hasFocus() && !mListTrv.canScrollVertically(-1)) {
-                        mFilterTrv.requestFocus();
-                        mAppbarAbl.setExpanded(true);
-                    }*/
+                case TAB_EAT:
+                    columns = 6;
+                    rows = 2;
+                    headerSize = 9;
+                    heightDp = 500;
                     break;
-                case KeyEvent.KEYCODE_DPAD_LEFT:
-                case KeyEvent.KEYCODE_DPAD_RIGHT:
+                case TAB_STAY:
+                    columns = 6;
+                    rows = 2;
+                    headerSize = 7;
+                    heightDp = 500;
+                    break;
+                case TAB_PAY:
+                case TAB_FUN:
+                    columns = 3;
+                    rows = 1;
+                    headerSize = 3;
+                    heightDp = 250;
                     break;
             }
         }
-        return super.dispatchFragmentKeyEvent(event);
+        mPlayHeaderLayout.setNumColumns(columns);
+        mPlayHeaderLayout.setNumRows(rows);
+        mPlayHeaderLayout.setOrientation(orientation);
+        mPlayHeaderRv.getLayoutParams().height = Utiles.dip2px(getContext(),heightDp);
+
+         /* ------测试数据--------*/
+        itemModels = DataEngine.getTestHeaderData(headerSize, mHomeTab);
+        mHeaderItem.addAll(itemModels);
     }
 
     @Override

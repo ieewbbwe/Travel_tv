@@ -1,35 +1,31 @@
 package com.wisesoft.traveltv.ui.newdesign.page;
 
-import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 import com.android_mobile.core.utiles.Lg;
 import com.android_mobile.net.response.BaseResponse;
-import com.github.jdsjlzx.interfaces.OnItemClickListener;
-import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
-import com.owen.tvrecyclerview.widget.SpacingItemDecoration;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
+import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.adapter.FilterNewDesignAdapter;
+import com.wisesoft.traveltv.adapter.FilterSpannerAdapter;
 import com.wisesoft.traveltv.adapter.ListGridAdapter;
-import com.wisesoft.traveltv.adapter.ListNewDesignAdapter;
 import com.wisesoft.traveltv.manager.ProductManager;
 import com.wisesoft.traveltv.model.FilterItemModel;
 import com.wisesoft.traveltv.model.temp.DataEngine;
-import com.wisesoft.traveltv.model.temp.InitDataBean;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.ui.change.HomeTab;
-import com.wisesoft.traveltv.ui.newdesign.BaseFragment;
+import com.wisesoft.traveltv.ui.newdesign.BaseNewDesignFragment;
+import com.wisesoft.traveltv.ui.view.CustomerAppbarLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +41,7 @@ import rx.schedulers.Schedulers;
  * Describe：新设计的列表基类
  */
 
-public abstract class BaseListFragment extends BaseFragment {
+public abstract class BaseListFragment extends BaseNewDesignFragment implements View.OnFocusChangeListener {
 
     @Bind(R.id.m_header_container)
     FrameLayout mHeaderContainer;
@@ -54,12 +50,12 @@ public abstract class BaseListFragment extends BaseFragment {
     @Bind(R.id.m_list_trv)
     TvRecyclerView mListTrv;
     @Bind(R.id.m_app_bar_abl)
-    AppBarLayout mAppbarAbl;
+    CustomerAppbarLayout mAppbarAbl;
     @Bind(R.id.m_container_cdl)
     CoordinatorLayout mContainerCdl;
 
     private View mHeaderView;
-    private FilterNewDesignAdapter mFilterAdapter;
+    private FilterSpannerAdapter mFilterAdapter;
     private V7GridLayoutManager mFilterManager;
     private V7GridLayoutManager mListLayoutManager;
     //private ListNewDesignAdapter mListNewDesignAdapter;
@@ -92,7 +88,7 @@ public abstract class BaseListFragment extends BaseFragment {
         //初始化筛选布局
         mFilterManager = new V7GridLayoutManager(getActivity(),2, LinearLayoutManager.HORIZONTAL,false);
         mFilterTrv.setLayoutManager(mFilterManager);
-        mFilterAdapter = new FilterNewDesignAdapter(getActivity());
+        mFilterAdapter = new FilterSpannerAdapter(getActivity());
         mFilterTrv.setAdapter(mFilterAdapter);
         mFilterTrv.setSpacingWithMargins(16,24);
         //初始化列表布局
@@ -109,35 +105,64 @@ public abstract class BaseListFragment extends BaseFragment {
 
     @Override
     protected void initListener() {
-        mFilterTrv.setOnItemListener(new SimpleOnItemListener() {
+        mListAdapter.setOnItemListener(new CommonRecyclerViewAdapter.OnItemListener() {
+            @Override
+            public void onItemSelected(View itemView, int position) {
+                //onMoveFocusBorder(itemView, 1.1f, 8);
+                /*if(mAppbarAbl.isExpened()){
+                    mAppbarAbl.setExpanded(false);
+                }*/
+            }
 
             @Override
-            public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
+            public void onItemClick(View itemView, int position) {
+                Lg.d("picher","点击列表："+position);
+
+            }
+        });
+
+        mFilterAdapter.setOnItemListener(new CommonRecyclerViewAdapter.OnItemListener() {
+            @Override
+            public void onItemSelected(View itemView, int position) {
                 onMoveFocusBorder(itemView, 1f, 8);
             }
-        });
-
-        mListTrv.setOnItemListener(new SimpleOnItemListener() {
 
             @Override
-            public void onItemSelected(TvRecyclerView parent, View itemView, int position) {
-                onMoveFocusBorder(itemView, 1.1f, 8);
-            }
-
-            @Override
-            public void onItemClick(TvRecyclerView parent, View itemView, int position) {
-                super.onItemClick(parent, itemView, position);
-                Lg.d("picher","点击列表："+position);
-            }
-        });
-
-        mFilterAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View itemView, int position) {
                 Lg.d("picher","点击筛选："+position);
             }
         });
 
+        mListTrv.setOnFocusChangeListener(this);
+        mFilterTrv.setOnFocusChangeListener(this);
+
+        //由于FocusChange 回掉问题 暂时使用全局监听器来完成逻辑
+        getActivity().getWindow().getDecorView().getViewTreeObserver().addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
+            @Override
+            public void onGlobalFocusChanged(View oldFocus, View newFocus) {
+                if(newFocus != null){
+                    if(newFocus.getParent() instanceof ViewGroup){
+                        getFocusBorder().setVisible(false);
+                        switch (((ViewGroup)newFocus.getParent()).getId()){
+                            case R.id.m_header_rv:
+                                if(!mAppbarAbl.isExpened()){
+                                    mAppbarAbl.setExpanded(true);
+                                }
+                                break;
+                            case R.id.m_filter_trv:
+                                getFocusBorder().setVisible(true);
+                                break;
+                            case R.id.m_list_trv:
+                                if(mAppbarAbl.isExpened()){
+                                    mAppbarAbl.setExpanded(false);
+                                }
+                                break;
+                        }
+
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -148,6 +173,27 @@ public abstract class BaseListFragment extends BaseFragment {
         mFilterAdapter.setDataList(mFilterData);
         mListAdapter.setDatas(mListData);
 
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        //TODO Focus 焦点没有回掉 故注释此方法 以后调查
+       /* Lg.d("picher","焦点发生变化：header："+mHeaderContainer.hasFocus()+"->>filter："+mFilterTrv.hasFocus()+"->>list："+mListTrv.hasFocus());
+        switch (v.getId()){
+            case R.id.m_list_trv:
+                if(hasFocus){
+                    mFilterTrv.clearFocus();
+                    mAppbarAbl.setExpanded(false);
+                }
+                break;
+            case R.id.m_filter_trv:
+                if(hasFocus){
+                    mListTrv.clearFocus();
+                    mHeaderContainer.clearFocus();
+                }
+                getFocusBorder().setVisible(hasFocus);
+                break;
+        }*/
     }
 
     protected void onMoveFocusBorder(View focusedView, float scale, float roundRadius) {
@@ -186,4 +232,5 @@ public abstract class BaseListFragment extends BaseFragment {
     public void requestFocus() {
 
     }
+
 }

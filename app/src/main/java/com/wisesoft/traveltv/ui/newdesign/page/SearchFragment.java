@@ -3,7 +3,6 @@ package com.wisesoft.traveltv.ui.newdesign.page;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -28,7 +27,7 @@ import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.ui.ProjectDetailActivity;
-import com.wisesoft.traveltv.ui.newdesign.BaseFragment;
+import com.wisesoft.traveltv.ui.newdesign.BaseNewDesignFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +43,7 @@ import rx.schedulers.Schedulers;
  * Describe：
  */
 
-public class SearchFragment extends BaseFragment implements View.OnClickListener {
+public class SearchFragment extends BaseNewDesignFragment implements View.OnClickListener {
 
     @Bind(R.id.m_input_et)
     EditText mInputEt;

@@ -27,9 +27,9 @@ public class HomeNewDesignActivity extends NActivity {
     private FragmentManager mFragmentManager;
     private ContainerPagerAdapter mPagerAdapter;
 
-    private List<BaseFragment> mBaseFragmnets = new ArrayList<>();
+    private List<BaseNewDesignFragment> mBaseFragmnets = new ArrayList<>();
     private List<HomeTab> mTabs = new ArrayList<>();
-    private BaseFragment mCurrentFragment;
+    private BaseNewDesignFragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,10 @@ public class HomeNewDesignActivity extends NActivity {
         mPagerAdapter.setData(mBaseFragmnets);
         mPagerAdapter.setTitleData(mTabs);
         mContainerVp.setAdapter(mPagerAdapter);
+        mContainerVp.setCurrentItem(1);
         mMainTab.setupWithViewPager(mContainerVp);
+
+        mContainerVp.setOffscreenPageLimit(8);
 
     }
 
@@ -62,6 +65,7 @@ public class HomeNewDesignActivity extends NActivity {
             @Override
             public void onPageSelected(int position) {
                 mCurrentFragment = mBaseFragmnets.get(position);
+                Log.d("picher", "onPageChange:" + position);
             }
         });
 

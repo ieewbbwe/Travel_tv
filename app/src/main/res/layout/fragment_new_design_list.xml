@@ -4,10 +4,10 @@
     android:id="@+id/m_container_cdl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/content_padding"
-    android:paddingRight="@dimen/content_padding">
+    android:paddingLeft="@dimen/new_design_content_padding"
+    android:paddingRight="@dimen/new_design_content_padding">
 
-    <android.support.design.widget.AppBarLayout
+    <com.wisesoft.traveltv.ui.view.CustomerAppbarLayout
         android:id="@+id/m_app_bar_abl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,6 +18,7 @@
             android:id="@+id/m_header_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
             app:layout_scrollFlags="scroll|snap" />
 
         <!--悬浮筛选筛选栏-->
@@ -27,10 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp"
-            android:background="@android:color/transparent"
             android:focusable="true" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.wisesoft.traveltv.ui.view.CustomerAppbarLayout>
 
     <!--列表-->
     <com.owen.tvrecyclerview.widget.TvRecyclerView

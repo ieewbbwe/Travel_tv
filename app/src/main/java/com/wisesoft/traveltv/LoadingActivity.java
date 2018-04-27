@@ -68,7 +68,7 @@ public class LoadingActivity extends NActivity {
                 //加载一些初始化数据
                 updateInitData();
             }
-        }, 1500);
+        }, 200);
     }
 
     private void updateInitData() {

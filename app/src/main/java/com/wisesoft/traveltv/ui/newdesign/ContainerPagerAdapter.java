@@ -16,7 +16,7 @@ import java.util.List;
 
 public class ContainerPagerAdapter extends FragmentPagerAdapter {
     private Context ctx;
-    private List<BaseFragment> baseFragmnets;
+    private List<BaseNewDesignFragment> baseFragmnets;
     private List<HomeTab> titleData;
 
     public ContainerPagerAdapter(FragmentManager fm, Context context) {
@@ -24,7 +24,7 @@ public class ContainerPagerAdapter extends FragmentPagerAdapter {
         this.ctx = context;
     }
 
-    public void setData(List<BaseFragment> fragmnets) {
+    public void setData(List<BaseNewDesignFragment> fragmnets) {
         this.baseFragmnets = fragmnets;
     }
 
