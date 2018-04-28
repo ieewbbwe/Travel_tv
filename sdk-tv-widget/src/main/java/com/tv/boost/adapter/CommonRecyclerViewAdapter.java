@@ -19,7 +19,7 @@ public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<
         void onItemClick(View itemView, int position);
     }
     
-    private Context mContext;
+    protected Context mContext;
     private LayoutInflater mInflater;
     private OnItemListener mOnItemListener;
     private List<T> mDatas = new ArrayList<>();

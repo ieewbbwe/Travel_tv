@@ -9,7 +9,7 @@ import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ListHeaderSpannableAdapter;
 import com.wisesoft.traveltv.layoutManager.CustomerGridlayoutManager;
-import com.wisesoft.traveltv.model.HeaderItemModel;
+import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.temp.DataEngine;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
@@ -26,7 +26,7 @@ public class PlayFragment extends BaseListFragment {
     private TvRecyclerView mPlayHeaderRv;
     private ListHeaderSpannableAdapter mHeaderAdapter;
     private CustomerGridlayoutManager mPlayHeaderLayout;
-    private List<HeaderItemModel> mHeaderItem = new ArrayList<>();
+    private List<ItemTypeModel> mHeaderItem = new ArrayList<>();
 
     @Override
     public int getHeaderLayout() {

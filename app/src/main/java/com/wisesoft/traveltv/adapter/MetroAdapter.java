@@ -1,19 +1,16 @@
 package com.wisesoft.traveltv.adapter;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 
 import com.owen.tvrecyclerview.widget.MetroGridLayoutManager;
-import com.owen.tvrecyclerview.widget.MetroTitleItemDecoration;
 import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.tv.boost.adapter.CommonRecyclerViewHolder;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.model.HeaderItemModel;
+import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
-public class MetroAdapter extends CommonRecyclerViewAdapter<HeaderItemModel>{
+public class MetroAdapter extends CommonRecyclerViewAdapter<ItemTypeModel>{
     public MetroAdapter(Context context) {
         super(context);
     }
@@ -24,7 +21,7 @@ public class MetroAdapter extends CommonRecyclerViewAdapter<HeaderItemModel>{
     }
 
     @Override
-    public void onBindItemHolder(CommonRecyclerViewHolder helper, HeaderItemModel item, int position) {
+    public void onBindItemHolder(CommonRecyclerViewHolder helper, ItemTypeModel item, int position) {
         ItemInfoBean itemInfo = item.getFilterData();
         helper.getHolder()
                 .setText(R.id.m_title_tv,itemInfo.getName())

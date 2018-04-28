@@ -9,10 +9,9 @@ import com.owen.tvrecyclerview.widget.SpannableGridLayoutManager;
 import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.tv.boost.adapter.CommonRecyclerViewHolder;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.model.HeaderItemModel;
-import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.model.ItemTypeModel;
 
-public class PlayHeaderSpannableAdapter extends CommonRecyclerViewAdapter<HeaderItemModel> {
+public class PlayHeaderSpannableAdapter extends CommonRecyclerViewAdapter<ItemTypeModel> {
     private RecyclerView mRecyclerView;
 
     public PlayHeaderSpannableAdapter(Context context, RecyclerView recyclerView) {
@@ -26,7 +25,7 @@ public class PlayHeaderSpannableAdapter extends CommonRecyclerViewAdapter<Header
     }
 
     @Override
-    public void onBindItemHolder(CommonRecyclerViewHolder helper, HeaderItemModel item, int position) {
+    public void onBindItemHolder(CommonRecyclerViewHolder helper, ItemTypeModel item, int position) {
        /* helper.getHolder()
                 .setText(R.id.title, String.valueOf(position))
                 .showImage(R.id.image, item.imgUrl);*/

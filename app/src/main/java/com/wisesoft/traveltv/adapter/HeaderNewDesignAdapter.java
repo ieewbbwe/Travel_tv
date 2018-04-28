@@ -10,24 +10,21 @@ import android.widget.TextView;
 import com.android_mobile.core.BasicAdapter;
 import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.model.FilterItemModel;
-import com.wisesoft.traveltv.model.HeaderItemModel;
+import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
-
-import butterknife.Bind;
 
 /**
  * Created by picher on 2018/4/22.
  * Describe：
  */
 
-public class HeaderNewDesignAdapter extends BasicAdapter<HeaderItemModel,RecyclerView.ViewHolder> {
+public class HeaderNewDesignAdapter extends BasicAdapter<ItemTypeModel,RecyclerView.ViewHolder> {
 
     private static final int HEADER_LAYOUT_TYPE_PLAY = 1;
 
     @Override
     public int getItemViewType(int position) {
-        HeaderItemModel itemModel = mDataList.get(position);
+        ItemTypeModel itemModel = mDataList.get(position);
         switch (itemModel.getType()) {
             case TAB_SEARCH:
             case TAB_RECOMMEND:

@@ -1,9 +1,7 @@
 package com.wisesoft.traveltv.ui.newdesign.page;
 
-import android.view.KeyEvent;
 import android.view.View;
 
-import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.android_mobile.core.utiles.Utiles;
 import com.owen.tvrecyclerview.TwoWayLayoutManager;
@@ -12,7 +10,7 @@ import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ListHeaderSpannableAdapter;
 import com.wisesoft.traveltv.layoutManager.CustomerGridlayoutManager;
-import com.wisesoft.traveltv.model.HeaderItemModel;
+import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.temp.DataEngine;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
@@ -29,7 +27,7 @@ public class ListHeaderFragment extends BaseListFragment {
     private TvRecyclerView mPlayHeaderRv;
     private ListHeaderSpannableAdapter mHeaderAdapter;
     private CustomerGridlayoutManager mPlayHeaderLayout;
-    private List<HeaderItemModel> mHeaderItem = new ArrayList<>();
+    private List<ItemTypeModel> mHeaderItem = new ArrayList<>();
 
     @Override
     public int getHeaderLayout() {
@@ -70,7 +68,7 @@ public class ListHeaderFragment extends BaseListFragment {
     private void adjustHeaderParamByType() {
         int columns = 1, rows = 1, heightDp = 0,headerSize = 1;
         TwoWayLayoutManager.Orientation orientation = TwoWayLayoutManager.Orientation.VERTICAL;
-        List<HeaderItemModel> itemModels;
+        List<ItemTypeModel> itemModels;
         if(mHomeTab != null){
             switch (mHomeTab){
                 case TAB_PLAY:

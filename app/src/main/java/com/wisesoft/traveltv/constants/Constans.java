@@ -1,5 +1,7 @@
 package com.wisesoft.traveltv.constants;
 
+import com.wisesoft.traveltv.ui.change.HomeTab;
+
 /**
  * Created by mxh on 2017/8/10.
  * Describe：常量类
@@ -62,4 +64,14 @@ public interface Constans {
     String FILTER_DATABASE_PAY_TYPE = "003006";
     //娛樂類型
     String FILTER_DATABASE_FUN_TYPE = "003007";
+
+    /*常量*/
+    //本周热门
+    String HOT_PAGE_TYPE_WEEK = "hot_page_type_week";
+    String HOT_PAGE_TYPE_TODAY = "hot_page_type_today";
+    String HOT_PAGE_TYPE_PLAY = "hot_page_type_play";
+    String HOT_PAGE_TYPE_EAT = "hot_page_type_eat";
+    String HOT_PAGE_TYPE_STAY = "hot_page_type_stay";
+    String HOT_PAGE_TYPE_PAY = "hot_page_type_pay";
+    String HOT_PAGE_TYPE_FUN = "hot_page_type_fun";
 }

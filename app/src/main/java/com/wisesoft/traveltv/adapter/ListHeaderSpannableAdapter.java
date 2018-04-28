@@ -4,16 +4,14 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.android_mobile.core.utiles.Lg;
 import com.owen.tvrecyclerview.widget.SpannableGridLayoutManager;
 import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.tv.boost.adapter.CommonRecyclerViewHolder;
-import com.tv.boost.adapter.CommonRecyclerViewNormalAdapter;
 import com.wisesoft.traveltv.R;
-import com.wisesoft.traveltv.model.HeaderItemModel;
+import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
-public class ListHeaderSpannableAdapter extends CommonRecyclerViewAdapter<HeaderItemModel> {
+public class ListHeaderSpannableAdapter extends CommonRecyclerViewAdapter<ItemTypeModel> {
     private RecyclerView mRecyclerView;
     
     public ListHeaderSpannableAdapter(Context context, RecyclerView recyclerView) {
@@ -27,7 +25,7 @@ public class ListHeaderSpannableAdapter extends CommonRecyclerViewAdapter<Header
     }
 
     @Override
-    public void onBindItemHolder(CommonRecyclerViewHolder helper, HeaderItemModel item, int position) {
+    public void onBindItemHolder(CommonRecyclerViewHolder helper, ItemTypeModel item, int position) {
         ItemInfoBean itemInfo = item.getFilterData();
         helper.getHolder()
                 .setText(R.id.m_title_tv,itemInfo.getName())

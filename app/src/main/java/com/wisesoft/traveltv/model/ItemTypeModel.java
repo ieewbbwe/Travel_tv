@@ -6,18 +6,18 @@ import com.wisesoft.traveltv.ui.change.HomeTab;
 
 /**
  * Created by picher on 2018/4/22.
- * Describe：
+ * Describe：帶類型的item信息封裝
  */
 
-public class HeaderItemModel {
+public class ItemTypeModel {
 
     private ItemInfoBean filterData;
     private HomeTab type;//页面类型
 
-    public HeaderItemModel() {
+    public ItemTypeModel() {
     }
 
-    public HeaderItemModel(ItemInfoBean filterData, HomeTab type) {
+    public ItemTypeModel(ItemInfoBean filterData, HomeTab type) {
         this.filterData = filterData;
         this.type = type;
     }

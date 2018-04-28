@@ -8,8 +8,10 @@ import com.google.gson.reflect.TypeToken;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.manager.ProductManager;
 import com.wisesoft.traveltv.model.FilterItemModel;
-import com.wisesoft.traveltv.model.HeaderItemModel;
+import com.wisesoft.traveltv.model.ItemTypeModel;
+import com.wisesoft.traveltv.model.HotListItemModel;
 import com.wisesoft.traveltv.model.KeyBoardItemBean;
 import com.wisesoft.traveltv.ui.change.HomeTab;
 import com.wisesoft.traveltv.utils.Utils;
@@ -334,12 +336,24 @@ public class DataEngine {
         return new ItemInfoBean("测试列表数据", new Random(5000).nextInt());
     }
 
-    public static List<HeaderItemModel> getTestHeaderData(int size, HomeTab homeTab) {
-        List<HeaderItemModel> itemModels = new ArrayList<>();
+    public static List<ItemTypeModel> getTestHeaderData(int size, HomeTab homeTab) {
+        List<ItemTypeModel> itemModels = new ArrayList<>();
         for (int i = 0; i < size; i++) {
-            itemModels.add(new HeaderItemModel(getTestItemData(), homeTab));
+            itemModels.add(new ItemTypeModel(getTestItemData(), homeTab));
         }
         Lg.d("picher","HeaderSize:"+itemModels.size());
         return itemModels;
+    }
+
+    public static List<HotListItemModel> getTestHotList() {
+        List<HotListItemModel> hotListModels = new ArrayList<>();
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_WEEK,2,6,8,400));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_TODAY,1,6,8,300));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_PLAY,1,6,8,300));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_EAT,1,6,8,300));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_STAY,1,6,8,300));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_PAY,1,6,8,300));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_FUN,1,6,8,300));
+        return hotListModels;
     }
 }
