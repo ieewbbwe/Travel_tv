@@ -113,7 +113,7 @@ public class FilterSpannerAdapter extends BasicAdapter<FilterItemModel,RecyclerV
             dw.setColor(Color.parseColor("#29B590"));
             ((NormalViewHolder) holder).mRootFl.setBackground(dw);
             //设置信息
-            ((NormalViewHolder) holder).mFilterTv.setText(itemModel.getFilterData().getName());
+            ((NormalViewHolder) holder).mFilterTv.setText(itemModel.getFilterData() != null ? itemModel.getFilterData().getName():"");
         }
     }
 

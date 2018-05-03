@@ -1,14 +1,11 @@
 package com.wisesoft.traveltv.ui.newdesign.page;
 
-import com.owen.tvrecyclerview.widget.MetroTitleItemDecoration;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
-import com.wisesoft.traveltv.NFragement;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.HotListAdapter;
 import com.wisesoft.traveltv.model.temp.DataEngine;
 import com.wisesoft.traveltv.ui.newdesign.BaseNewDesignFragment;
-import com.wisesoft.traveltv.ui.newdesign.TitleItemDecoration;
 
 /**
  * Created by picher on 2018/4/27.

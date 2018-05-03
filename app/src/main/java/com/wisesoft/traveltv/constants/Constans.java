@@ -58,7 +58,7 @@ public interface Constans {
     String FILTER_DATABASE_PRICE = "003003";
     //景观类型
     String FILTER_DATABASE_SLIGHT = "003004";
-    //食品类型
+    //酒家类型
     String FILTER_DATABASE_FOOD_TYPE = "003005";
     //购物类型
     String FILTER_DATABASE_PAY_TYPE = "003006";

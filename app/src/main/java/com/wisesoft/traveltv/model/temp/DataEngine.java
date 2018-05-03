@@ -347,13 +347,13 @@ public class DataEngine {
 
     public static List<HotListItemModel> getTestHotList() {
         List<HotListItemModel> hotListModels = new ArrayList<>();
-        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_WEEK,2,6,8,400));
-        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_TODAY,1,6,8,300));
-        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_PLAY,1,6,8,300));
-        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_EAT,1,6,8,300));
-        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_STAY,1,6,8,300));
-        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_PAY,1,6,8,300));
-        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_FUN,1,6,8,300));
+        hotListModels.add(new HotListItemModel(getTestListData(7), Constans.HOT_PAGE_TYPE_WEEK,2,5,7,500));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_TODAY,1,6,8,400));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_PLAY,1,6,8,400));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_EAT,1,6,8,400));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_STAY,1,6,8,400));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_PAY,1,6,8,400));
+        hotListModels.add(new HotListItemModel(getTestListData(8), Constans.HOT_PAGE_TYPE_FUN,1,6,8,400));
         return hotListModels;
     }
 }

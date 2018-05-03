@@ -32,13 +32,23 @@
 
     </com.wisesoft.traveltv.ui.view.CustomerAppbarLayout>
 
-    <!--列表-->
-    <com.owen.tvrecyclerview.widget.TvRecyclerView
-        android:id="@+id/m_list_trv"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:focusable="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:tv_selectedItemIsCentered="true" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <!--列表-->
+        <com.owen.tvrecyclerview.widget.TvRecyclerView
+            android:padding="18dp"
+            android:id="@+id/m_list_trv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            app:tv_selectedItemIsCentered="true" />
+
+        <!--空页面-->
+        <include layout="@layout/layout_empty" />
+
+    </FrameLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,10 +1,15 @@
 package com.wisesoft.traveltv.manager;
 
 import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.model.FilterItemModel;
+import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.SpannableItemModel;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.ui.change.HomeTab;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -65,6 +70,26 @@ public class ConvertManager {
             spannableItemModel.setColSpan(colSpan);
             spannableItemModel.setRowSpan(rowSpan);
             itemModels.add(spannableItemModel);
+        }
+        return itemModels;
+    }
+
+    public List<ItemTypeModel> convertItemToHeader(List<ItemInfoBean> itemInfoBeans, HomeTab homeTab) {
+        List<ItemTypeModel> itemTypeModels = new ArrayList<>();
+        ItemTypeModel itemTypeModel;
+        for(ItemInfoBean item:itemInfoBeans){
+            itemTypeModel = new ItemTypeModel(item,homeTab);
+            itemTypeModels.add(itemTypeModel);
+        }
+        return itemTypeModels;
+    }
+
+    public List<FilterItemModel> convertItemToFilterModel(List<InitDataBean> newDisginFilter,HomeTab homeTab) {
+        List<FilterItemModel> itemModels = new ArrayList<>();
+        FilterItemModel itemModel;
+        for(InitDataBean item : newDisginFilter){
+            itemModel = new FilterItemModel(item,homeTab);
+            itemModels.add(itemModel);
         }
         return itemModels;
     }

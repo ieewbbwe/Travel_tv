@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.internal.OnWorkListener;
 import com.wisesoft.traveltv.model.temp.DataEngine;
 import com.wisesoft.traveltv.model.temp.InitDataBean;
 import com.wisesoft.traveltv.model.temp.ImageBean;
@@ -71,7 +72,14 @@ public class DataBaseDao {
     }
 
     public void initDatabase(final List<InitDataBean> dataBeen) {
+        initDatabase(dataBeen,null);
+    }
+
+    public void initDatabase(final List<InitDataBean> dataBeen, OnWorkListener onWorkListener) {
         if (CollectionUtils.isEmpty(dataBeen)) {
+            if(onWorkListener != null){
+                onWorkListener.onComplete();
+            }
             return;
         }
         try {
@@ -85,6 +93,9 @@ public class DataBaseDao {
                     return null;
                 }
             });
+            if(onWorkListener != null){
+                onWorkListener.onComplete();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -244,24 +255,24 @@ public class DataBaseDao {
         return getItemInfos(typePlay, 5);
     }
 
-    public List<InitDataBean> getNewDisginFilter(String mPageType){
+    public List<InitDataBean> getNewDesignFilter(String mPageType){
         try {
             List<InitDataBean> filterAll = new ArrayList<>();
             switch (mPageType){
                 case Constans.TYPE_PLAY:
-                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));//区域
                     break;
                 case Constans.TYPE_EAT:
-                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FOOD_TYPE));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FOOD_TYPE));//酒店类型
                     break;
                 case Constans.TYPE_STAY:
-                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));//星级
                     break;
                 case Constans.TYPE_PAY:
-                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PAY_TYPE));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PAY_TYPE));//购物类型
                     break;
                 case Constans.TYPE_FUN:
-                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FUN_TYPE));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FUN_TYPE));//娱乐类型
                     break;
             }
 

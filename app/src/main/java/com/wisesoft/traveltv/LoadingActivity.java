@@ -8,6 +8,7 @@ import com.android_mobile.core.manager.SharedPrefManager;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.helper.InitDataCacheManager;
+import com.wisesoft.traveltv.internal.OnWorkListener;
 import com.wisesoft.traveltv.ui.HomeActivity;
 import com.wisesoft.traveltv.ui.change.HomeChangeActivity;
 import com.wisesoft.traveltv.ui.newdesign.HomeNewDesignActivity;
@@ -68,21 +69,16 @@ public class LoadingActivity extends NActivity {
                 //加载一些初始化数据
                 updateInitData();
             }
-        }, 200);
+        }, 1500);
     }
 
     private void updateInitData() {
-        /*if (!SharedPrefManager.getBoolean(Constans.IS_INIT_DATA, false)) {
-            Executors.newCachedThreadPool().execute(new Runnable() {
-                @Override
-                public void run() {
-                    mDao.initDatabase();
-                }
-            });
-        }*/
-        new InitDataCacheManager(mDao).start();
-
-        pushActivity(HomeNewDesignActivity.class, true);
+        new InitDataCacheManager(mDao).start(new OnWorkListener() {
+            @Override
+            public void onComplete() {
+                pushActivity(HomeNewDesignActivity.class, true);
+            }
+        });
     }
 
     @Override

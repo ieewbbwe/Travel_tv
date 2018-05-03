@@ -2,12 +2,14 @@ package com.wisesoft.traveltv.ui.newdesign.page;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
+import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.android_mobile.net.response.BaseResponse;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -17,12 +19,15 @@ import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.FilterSpannerAdapter;
 import com.wisesoft.traveltv.adapter.ListGridAdapter;
+import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.manager.ConvertManager;
 import com.wisesoft.traveltv.manager.ProductManager;
 import com.wisesoft.traveltv.model.FilterItemModel;
-import com.wisesoft.traveltv.model.temp.DataEngine;
+import com.wisesoft.traveltv.model.temp.InitDataBean;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.net.OnSimpleCallBack;
+import com.wisesoft.traveltv.net.request.ItemRequestModel;
 import com.wisesoft.traveltv.ui.change.HomeTab;
 import com.wisesoft.traveltv.ui.newdesign.BaseNewDesignFragment;
 import com.wisesoft.traveltv.ui.view.CustomerAppbarLayout;
@@ -43,6 +48,7 @@ import rx.schedulers.Schedulers;
 
 public abstract class BaseListFragment extends BaseNewDesignFragment implements View.OnFocusChangeListener {
 
+    protected static int HEADER_SIZE = 5;
     @Bind(R.id.m_header_container)
     FrameLayout mHeaderContainer;
     @Bind(R.id.m_filter_trv)
@@ -53,6 +59,8 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     CustomerAppbarLayout mAppbarAbl;
     @Bind(R.id.m_container_cdl)
     CoordinatorLayout mContainerCdl;
+    @Bind(R.id.m_empty_container)
+    View mEmptyV;
 
     private View mHeaderView;
     private FilterSpannerAdapter mFilterAdapter;
@@ -61,6 +69,12 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     //private ListNewDesignAdapter mListNewDesignAdapter;
     protected HomeTab mHomeTab;
     private ListGridAdapter mListAdapter;
+    private DataBaseDao mDao;
+
+    private int page = 1;
+    private int limit = 9;
+    private boolean isLoading;
+    private ItemRequestModel itemRequestModel;
 
     //獲取頭部佈局
     public abstract int getHeaderLayout();
@@ -80,6 +94,8 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         if(getArguments() != null){
             mHomeTab = (HomeTab) getArguments().getSerializable(ARG_HOME_TAB);
         }
+        mDao = new DataBaseDao(activity);
+        itemRequestModel = new ItemRequestModel();
 
         ButterKnife.bind(this, v);
         //初始化头部布局
@@ -96,6 +112,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         mListTrv.setLayoutManager(mListLayoutManager);
         //mListNewDesignAdapter = new ListNewDesignAdapter(getActivity());
         mListAdapter = new ListGridAdapter(getActivity());
+        mListAdapter.setDatas(mListData);
         mListTrv.setAdapter(mListAdapter);
         mListTrv.setSpacingWithMargins(16,16);
 
@@ -129,7 +146,20 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
 
             @Override
             public void onItemClick(View itemView, int position) {
+                //InitDataBean dataBean = mFilterAdapter.getDataList().get(position).getFilterData();
                 Lg.d("picher","点击筛选："+position);
+            }
+        });
+
+        mListTrv.setOnLoadMoreListener(new TvRecyclerView.OnLoadMoreListener() {
+            @Override
+            public boolean onLoadMore() {
+                if (hasMore()) {
+                    Lg.d("picher","加载更多！");
+                    requestMore();
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -168,11 +198,29 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     @Override
     protected void initData() {
         /*——————測試數據—————*/
-        mFilterData.addAll(DataEngine.getTestFilterData(10,mHomeTab));
+        /*mFilterData.addAll(DataEngine.getTestFilterData(10,mHomeTab));
         mListData.addAll(DataEngine.getTestListData(20));
         mFilterAdapter.setDataList(mFilterData);
-        mListAdapter.setDatas(mListData);
+        mListAdapter.setDatas(mListData);*/
+        //设置筛选栏数据
+        if(mDao != null  && mHomeTab != null){
+            mFilterData.clear();
+            List<InitDataBean> dataBeans = mDao.getNewDesignFilter(ProductManager.Companion.getInstance().getPageType(mHomeTab));
+            if(!CollectionUtils.isEmpty(dataBeans) && dataBeans.get(0) != null &&!CollectionUtils.isEmpty(dataBeans.get(0).getChildBean())){
+                mFilterData.addAll(ConvertManager.getInstance()
+                        .convertItemToFilterModel(dataBeans.get(0).getChildBean(),mHomeTab));
+            }
+            mFilterAdapter.setDataList(mFilterData);
+        }
+    }
+    private void requestMore() {
+        page++;
+        isLoading = true;
+        getListData();
+    }
 
+    private boolean hasMore() {
+        return mListData.size() >= limit * page;
     }
 
     @Override
@@ -206,7 +254,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
      * 获取推荐数据
      */
     public void getRecommendData(){
-        ApiFactory.getTravelApi().getRecommend(ProductManager.Companion.getInstance().getPageType(mHomeTab), 5, 1)
+        ApiFactory.getTravelApi().getRecommend(ProductManager.Companion.getInstance().getPageType(mHomeTab), HEADER_SIZE, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
@@ -220,6 +268,46 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
                         toast(message);
                     }
                 });
+    }
+
+    /**
+     * 获取列表数据
+     */
+    public void getListData() {
+        ApiFactory.getTravelApi().getProductList(ProductManager.Companion.getInstance().getPageType(mHomeTab),
+                itemRequestModel.getArea(), itemRequestModel.getStar(), itemRequestModel.getSight(),
+                itemRequestModel.getFood_type(), itemRequestModel.getP_h(), itemRequestModel.getP_low(), limit, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        isLoading = false;
+                        if (CollectionUtils.isNotEmpty(response.body().getResponse())) {
+                            updateListUI(response.body().getResponse());
+                        } else {
+                            if(page == 1){
+                                mEmptyV.setVisibility(View.VISIBLE);
+                            }
+                            toast("没有更多的数据了");
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        if (isLoading) {
+                            isLoading = false;
+                            page--;
+                        }
+                        toast(message);
+                    }
+                });
+    }
+
+    public void updateListUI(List<ItemInfoBean> itemInfoBeans) {
+        Lg.d("picher",mHomeTab+"列表數："+itemInfoBeans.size());
+        mListData.addAll(itemInfoBeans);
+        mListAdapter.notifyDataSetChanged();
     }
 
     @Override

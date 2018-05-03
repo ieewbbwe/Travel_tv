@@ -1,7 +1,9 @@
 package com.wisesoft.traveltv.ui.newdesign.page;
 
+import android.util.Log;
 import android.view.View;
 
+import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.android_mobile.core.utiles.Utiles;
 import com.owen.tvrecyclerview.TwoWayLayoutManager;
@@ -10,6 +12,7 @@ import com.tv.boost.adapter.CommonRecyclerViewAdapter;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.ListHeaderSpannableAdapter;
 import com.wisesoft.traveltv.layoutManager.CustomerGridlayoutManager;
+import com.wisesoft.traveltv.manager.ConvertManager;
 import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.temp.DataEngine;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
@@ -40,14 +43,16 @@ public class ListHeaderFragment extends BaseListFragment {
         mHeaderAdapter = new ListHeaderSpannableAdapter(getActivity(),mPlayHeaderRv);
         mPlayHeaderLayout = new CustomerGridlayoutManager(getActivity());
         mPlayHeaderRv.setLayoutManager(mPlayHeaderLayout);
-        mPlayHeaderRv.setSpacingWithMargins(12,12);
+        mPlayHeaderRv.setSpacingWithMargins(18,18);
         adjustHeaderParamByType();
 
         mHeaderAdapter.setDatas(mHeaderItem);
         mPlayHeaderRv.setAdapter(mHeaderAdapter);
 
         //获取真实数据
-        //getRecommendData();
+        getRecommendData();
+        //获取列表数据
+        getListData();
 
         mHeaderAdapter.setOnItemListener(new CommonRecyclerViewAdapter.OnItemListener() {
             @Override
@@ -66,7 +71,7 @@ public class ListHeaderFragment extends BaseListFragment {
      * 根据Type不同设置不同的Header
      */
     private void adjustHeaderParamByType() {
-        int columns = 1, rows = 1, heightDp = 0,headerSize = 1;
+        int columns = 1, rows = 1, heightDp = 0;
         TwoWayLayoutManager.Orientation orientation = TwoWayLayoutManager.Orientation.VERTICAL;
         List<ItemTypeModel> itemModels;
         if(mHomeTab != null){
@@ -74,26 +79,26 @@ public class ListHeaderFragment extends BaseListFragment {
                 case TAB_PLAY:
                     columns = 3;
                     rows = 2;
-                    headerSize = 5;
+                    HEADER_SIZE = 5;
                     heightDp = 500;
                     break;
                 case TAB_EAT:
                     columns = 6;
                     rows = 2;
-                    headerSize = 9;
+                    HEADER_SIZE = 9;
                     heightDp = 500;
                     break;
                 case TAB_STAY:
                     columns = 6;
                     rows = 2;
-                    headerSize = 7;
+                    HEADER_SIZE = 7;
                     heightDp = 500;
                     break;
                 case TAB_PAY:
                 case TAB_FUN:
                     columns = 3;
                     rows = 1;
-                    headerSize = 3;
+                    HEADER_SIZE = 3;
                     heightDp = 250;
                     break;
             }
@@ -104,8 +109,8 @@ public class ListHeaderFragment extends BaseListFragment {
         mPlayHeaderRv.getLayoutParams().height = Utiles.dip2px(getContext(),heightDp);
 
          /* ------测试数据--------*/
-        itemModels = DataEngine.getTestHeaderData(headerSize, mHomeTab);
-        mHeaderItem.addAll(itemModels);
+        /*itemModels = DataEngine.getTestHeaderData(HEADER_SIZE, mHomeTab);
+        mHeaderItem.addAll(itemModels);*/
     }
 
     @Override
@@ -115,6 +120,13 @@ public class ListHeaderFragment extends BaseListFragment {
 
     @Override
     public void updateRecommendUI(List<ItemInfoBean> itemInfoBeans) {
-
+        mHeaderItem.clear();
+        //如果没有数据 暂时使用默认数据
+        if(CollectionUtils.isEmpty(itemInfoBeans)){
+            itemInfoBeans = DataEngine.getItemInfoFromLocal(activity, "item_json.json").subList(0, HEADER_SIZE);
+        }
+        mHeaderItem.addAll(ConvertManager.getInstance().convertItemToHeader(itemInfoBeans, mHomeTab));
+        mHeaderAdapter.notifyDataSetChanged();
     }
+
 }
