@@ -32,6 +32,8 @@ public class LoadingActivity extends NActivity {
     @Bind(R.id.m_loading_iv)
     ImageView mLoadingIv;
     private DataBaseDao mDao;
+    private InitDataCacheManager initDataCacheManager;
+    int errorCode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +75,23 @@ public class LoadingActivity extends NActivity {
     }
 
     private void updateInitData() {
-        new InitDataCacheManager(mDao).start(new OnWorkListener() {
+        initDataCacheManager = new InitDataCacheManager(mDao);
+        initDataCacheManager.start(new OnWorkListener() {
             @Override
             public void onComplete() {
                 pushActivity(HomeNewDesignActivity.class, true);
+            }
+
+            @Override
+            public void onError() {
+                if(errorCode <= 3){
+                    toast("网络错误，尝试重新加载...");
+                    errorCode ++;
+                    initDataCacheManager.start(this);
+                }else{
+                    toast("请稍后再试！");
+                    System.exit(0);
+                }
             }
         });
     }

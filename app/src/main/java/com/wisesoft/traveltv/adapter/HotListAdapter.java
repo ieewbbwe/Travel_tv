@@ -18,6 +18,7 @@ import com.wisesoft.traveltv.internal.ITitleAdapter;
 import com.wisesoft.traveltv.layoutManager.CustomerGridlayoutManager;
 import com.wisesoft.traveltv.manager.ConvertManager;
 import com.wisesoft.traveltv.model.HotListItemModel;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
 /**
  * Created by picher on 2018/4/28.
@@ -26,9 +27,18 @@ import com.wisesoft.traveltv.model.HotListItemModel;
 
 public class HotListAdapter extends CommonRecyclerViewAdapter<HotListItemModel> implements ITitleAdapter {
     private V7LinearLayoutManager mLinearManager;
+    private OnItemClickListener onItemClickListener;
 
     public HotListAdapter(Context context) {
         super(context);
+    }
+
+    public interface OnItemClickListener{
+        void onItemClick(ItemInfoBean infoBean);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        onItemClickListener = listener;
     }
 
     @Override
@@ -40,7 +50,7 @@ public class HotListAdapter extends CommonRecyclerViewAdapter<HotListItemModel> 
     public void onBindItemHolder(CommonRecyclerViewHolder helper, HotListItemModel item, int position) {
         helper.getHolder().setText(R.id.m_hot_list_item_tv,switchByType(item.getType()));
         TvRecyclerView mHotListTrv = helper.getHolder().getView(R.id.m_hot_list_item_trv);
-        SpannableAdapter spannableAdapter = new SpannableAdapter(mContext, mHotListTrv);
+        final SpannableAdapter spannableAdapter = new SpannableAdapter(mContext, mHotListTrv);
         //将HotItem转换为有具体宽高比的itemModel
         spannableAdapter.setDatas(ConvertManager.getInstance().convertItemToSpannable(item.getItemInfoBeans(), item.getType()));
         CustomerGridlayoutManager mLinearManager = new CustomerGridlayoutManager(mContext);
@@ -52,6 +62,20 @@ public class HotListAdapter extends CommonRecyclerViewAdapter<HotListItemModel> 
         mLinearManager.setNumColumns(item.getColumnSize());
         mLinearManager.setOrientation(TwoWayLayoutManager.Orientation.HORIZONTAL);
         mHotListTrv.getLayoutParams().height = Utiles.dip2px(mContext, item.getHeight());
+        //设置点击事件
+        spannableAdapter.setOnItemListener(new OnItemListener() {
+            @Override
+            public void onItemSelected(View itemView, int position) {
+
+            }
+
+            @Override
+            public void onItemClick(View itemView, int position) {
+                if(onItemClickListener != null){
+                    onItemClickListener.onItemClick(spannableAdapter.getItem(position).getItemInfoBean());
+                }
+            }
+        });
     }
 
     private String switchByType(String type) {

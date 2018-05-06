@@ -2,6 +2,7 @@ package com.wisesoft.traveltv.manager;
 
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.model.FilterItemModel;
+import com.wisesoft.traveltv.model.HotListItemModel;
 import com.wisesoft.traveltv.model.ItemTypeModel;
 import com.wisesoft.traveltv.model.SpannableItemModel;
 import com.wisesoft.traveltv.model.temp.InitDataBean;
@@ -9,7 +10,6 @@ import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.ui.change.HomeTab;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -77,20 +77,41 @@ public class ConvertManager {
     public List<ItemTypeModel> convertItemToHeader(List<ItemInfoBean> itemInfoBeans, HomeTab homeTab) {
         List<ItemTypeModel> itemTypeModels = new ArrayList<>();
         ItemTypeModel itemTypeModel;
-        for(ItemInfoBean item:itemInfoBeans){
-            itemTypeModel = new ItemTypeModel(item,homeTab);
+        for (ItemInfoBean item : itemInfoBeans) {
+            itemTypeModel = new ItemTypeModel(item, homeTab);
             itemTypeModels.add(itemTypeModel);
         }
         return itemTypeModels;
     }
 
-    public List<FilterItemModel> convertItemToFilterModel(List<InitDataBean> newDisginFilter,HomeTab homeTab) {
+    public List<FilterItemModel> convertItemToFilterModel(List<InitDataBean> newDisginFilter, HomeTab homeTab) {
         List<FilterItemModel> itemModels = new ArrayList<>();
         FilterItemModel itemModel;
-        for(InitDataBean item : newDisginFilter){
-            itemModel = new FilterItemModel(item,homeTab);
+        for (InitDataBean item : newDisginFilter) {
+            itemModel = new FilterItemModel(item, homeTab);
             itemModels.add(itemModel);
         }
         return itemModels;
+    }
+
+    public HotListItemModel convertItemToHotItem(List<ItemInfoBean> itemInfoBeans, String type) {
+        HotListItemModel hotListItemModel;
+        int rowSize = 0,columnSize = 0,itemSize = 0,height = 0;
+        switch (type) {
+            case Constans.HOT_PAGE_TYPE_WEEK:
+                rowSize = 2;columnSize = 5;itemSize = 7;height = 400;
+                break;
+            case Constans.HOT_PAGE_TYPE_TODAY:
+            case Constans.HOT_PAGE_TYPE_PLAY:
+            case Constans.HOT_PAGE_TYPE_EAT:
+            case Constans.HOT_PAGE_TYPE_STAY:
+            case Constans.HOT_PAGE_TYPE_PAY:
+            case Constans.HOT_PAGE_TYPE_FUN:
+                rowSize = 1;columnSize = 6;itemSize = 8;height = 300;
+                break;
+
+        }
+        hotListItemModel = new HotListItemModel(itemInfoBeans, type, rowSize, columnSize, itemSize, height);
+        return hotListItemModel;
     }
 }

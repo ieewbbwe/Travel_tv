@@ -8,4 +8,6 @@ package com.wisesoft.traveltv.internal;
 public interface OnWorkListener {
 
     void onComplete();
+
+    void onError();
 }

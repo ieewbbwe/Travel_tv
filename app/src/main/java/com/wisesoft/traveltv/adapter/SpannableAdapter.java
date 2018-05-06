@@ -42,7 +42,7 @@ public class SpannableAdapter extends CommonRecyclerViewAdapter<SpannableItemMod
     @Override
     public void onBindItemHolder(CommonRecyclerViewHolder helper, SpannableItemModel item, int position) {
         helper.getHolder()
-                .setText(R.id.m_title_tv, String.valueOf(position))
+                .setText(R.id.m_title_tv, item.getItemInfoBean().getName())
                 .showImage(R.id.m_item_iv, item.getItemInfoBean().getImgUrl());
 
         final View itemView = helper.itemView;

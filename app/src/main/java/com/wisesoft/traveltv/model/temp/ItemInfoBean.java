@@ -9,6 +9,7 @@ import com.wisesoft.traveltv.internal.IItemInfo;
 import com.wisesoft.traveltv.model.BaseBean;
 import com.wisesoft.traveltv.net.UrlMgr;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
  * Describe：条目信息对象
  */
 @DatabaseTable(tableName = "tb_item_info")
-public class ItemInfoBean extends BaseBean implements IItemInfo {
+public class ItemInfoBean extends BaseBean implements IItemInfo,Serializable {
 
     @DatabaseField(generatedId = true)
     private int id;
@@ -115,10 +116,9 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     }
 
 
-
     public String getFile_f() {
-        if(!TextUtils.isEmpty(file_f)){
-            return (UrlMgr.HOST+UrlMgr.PORT+file_f).trim();
+        if (!TextUtils.isEmpty(file_f)) {
+            return (UrlMgr.HOST + UrlMgr.PORT + file_f).trim();
         }
         return "";
     }
@@ -158,7 +158,6 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     public void setTel_num(String tel_num) {
         this.tel_num = tel_num;
     }
-
 
 
     public ItemInfoBean(String image_url, String type) {
@@ -237,7 +236,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.img_f = imagePath;
     }
 
-    public ItemInfoBean(String title,long view_count) {
+    public ItemInfoBean(String title, long view_count) {
         this.title = title;
         this.view_count = view_count;
     }
@@ -253,8 +252,8 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
 
     @Override
     public String getImgUrl() {
-        if(!TextUtils.isEmpty(img_f)){
-            if(img_f.startsWith("/upload") || img_f.startsWith("/wzyc") || img_f.startsWith("news")){
+        if (!TextUtils.isEmpty(img_f)) {
+            if (img_f.startsWith("/upload") || img_f.startsWith("/wzyc") || img_f.startsWith("news")) {
                 return (UrlMgr.HOST + UrlMgr.PORT + img_f).trim();
             }
             return img_f.trim();
@@ -320,8 +319,11 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
             case Constans.TYPE_STAY:
                 str = "酒店介绍：";
                 break;
-            default:
+            case Constans.TYPE_PLAY:
                 str = "景点介绍：";
+                break;
+            default:
+                str = "商品介绍：";
                 break;
         }
         return str + "\n " + introduce;

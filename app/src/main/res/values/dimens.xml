@@ -29,4 +29,5 @@
     <dimen name="head_logo_h">100dp</dimen>
     <dimen name="tv_border_width">32dp</dimen>
     <dimen name="play_header_height">500dp</dimen>
+    <dimen name="detail_control_button_size">140dp</dimen>
 </resources>

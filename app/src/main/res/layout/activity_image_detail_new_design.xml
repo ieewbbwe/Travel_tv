@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wisesoft.traveltv.ui.stay.ImageDetailActivity">
+
+    <!-- <com.youth.banner.Banner
+         android:focusable="false"
+         android:id="@+id/m_image_display_bn"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"/>-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/m_image_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false" />
+
+    <TextView
+        android:id="@+id/m_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dp"
+        android:paddingTop="80dp"
+        android:layout_marginBottom="8dp"
+        android:text="清江画廊"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_biggest_size"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_below="@+id/m_title_tv"
+        android:background="#64000000">
+
+        <com.owen.tvrecyclerview.widget.TvRecyclerView
+            android:id="@+id/m_indicator_trv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="16dp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

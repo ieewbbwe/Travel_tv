@@ -62,7 +62,7 @@ public class ListHeaderFragment extends BaseListFragment {
 
             @Override
             public void onItemClick(View itemView, int position) {
-                Lg.d("picher","点击头部："+position);
+                jumpToDetail(mHeaderAdapter.getItem(position).getFilterData());
             }
         });
     }

@@ -30,6 +30,13 @@ public interface TravelApi {
     getProductList(@Query("type") String type,@Query("area") String area,@Query("star") String star,
                    @Query("sight") String sight,@Query("food_type") String food,@Query("price_low") double p_low, @Query("price_heigh") double p_h,
                    @Query("limit") int limit, @Query("page") int page);
+
+    @GET(UrlMgr.URL_GET_LIST)
+    Observable<Response<BaseResponse<List<ItemInfoBean>>>>
+    getProductList(@Query("type") String type,@Query("area") String area,@Query("star") String star,@Query("pay_type") String pay_type,
+                   @Query("fun_type") String fun_type, @Query("sight") String sight,@Query("food_type") String food,@Query("price_low") double p_low,
+                   @Query("price_heigh") double p_h, @Query("limit") int limit, @Query("page") int page);
+
     @GET(UrlMgr.URL_GET_RECOMMEND)
     Observable<Response<BaseResponse<List<ItemInfoBean>>>> getRecommend(@Query("type") String type, @Query("limit") int limit, @Query("page") int page);
 

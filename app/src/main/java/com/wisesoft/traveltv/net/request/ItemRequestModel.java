@@ -15,7 +15,28 @@ public class ItemRequestModel {
     private float p_h;//最高价
     private float p_low;//最低价
 
+    //购物类型
+    private String pay_type;
+    //娱乐类型
+    private String fun_type;
+
     public ItemRequestModel() {
+    }
+
+    public String getPay_type() {
+        return pay_type;
+    }
+
+    public void setPay_type(String pay_type) {
+        this.pay_type = pay_type;
+    }
+
+    public String getFun_type() {
+        return fun_type;
+    }
+
+    public void setFun_type(String fun_type) {
+        this.fun_type = fun_type;
     }
 
     public void setArea(String area) {

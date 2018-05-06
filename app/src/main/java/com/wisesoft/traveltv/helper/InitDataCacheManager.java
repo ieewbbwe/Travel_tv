@@ -48,7 +48,9 @@ public class InitDataCacheManager {
 
                     @Override
                     public void onFailed(int code, String message) {
-
+                        if(onWorkListener != null){
+                            onWorkListener.onError();
+                        }
                     }
                 });
     }

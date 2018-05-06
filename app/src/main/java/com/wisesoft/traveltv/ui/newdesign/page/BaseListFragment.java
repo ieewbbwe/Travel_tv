@@ -2,7 +2,7 @@ package com.wisesoft.traveltv.ui.newdesign.page;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +19,7 @@ import com.tv.boost.widget.focus.FocusBorder;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.adapter.FilterSpannerAdapter;
 import com.wisesoft.traveltv.adapter.ListGridAdapter;
+import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.manager.ConvertManager;
 import com.wisesoft.traveltv.manager.ProductManager;
@@ -78,7 +79,9 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
 
     //獲取頭部佈局
     public abstract int getHeaderLayout();
+
     public abstract void initHeader();
+
     public abstract void updateRecommendUI(List<ItemInfoBean> itemInfoBeans);
 
     private List<ItemInfoBean> mListData = new ArrayList<>();
@@ -91,7 +94,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
 
     @Override
     protected void initComp() {
-        if(getArguments() != null){
+        if (getArguments() != null) {
             mHomeTab = (HomeTab) getArguments().getSerializable(ARG_HOME_TAB);
         }
         mDao = new DataBaseDao(activity);
@@ -99,22 +102,22 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
 
         ButterKnife.bind(this, v);
         //初始化头部布局
-        mHeaderView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(),null);
+        mHeaderView = LayoutInflater.from(getActivity()).inflate(getHeaderLayout(), null);
         mHeaderContainer.addView(mHeaderView);
         //初始化筛选布局
-        mFilterManager = new V7GridLayoutManager(getActivity(),2, LinearLayoutManager.HORIZONTAL,false);
+        mFilterManager = new V7GridLayoutManager(getActivity(), 2, LinearLayoutManager.HORIZONTAL, false);
         mFilterTrv.setLayoutManager(mFilterManager);
         mFilterAdapter = new FilterSpannerAdapter(getActivity());
         mFilterTrv.setAdapter(mFilterAdapter);
-        mFilterTrv.setSpacingWithMargins(16,24);
+        mFilterTrv.setSpacingWithMargins(16, 24);
         //初始化列表布局
-        mListLayoutManager = new V7GridLayoutManager(getActivity(),6);
+        mListLayoutManager = new V7GridLayoutManager(getActivity(), 6);
         mListTrv.setLayoutManager(mListLayoutManager);
         //mListNewDesignAdapter = new ListNewDesignAdapter(getActivity());
         mListAdapter = new ListGridAdapter(getActivity());
         mListAdapter.setDatas(mListData);
         mListTrv.setAdapter(mListAdapter);
-        mListTrv.setSpacingWithMargins(16,16);
+        mListTrv.setSpacingWithMargins(16, 16);
 
         //初始化每个类别的header
         initHeader();
@@ -125,16 +128,11 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         mListAdapter.setOnItemListener(new CommonRecyclerViewAdapter.OnItemListener() {
             @Override
             public void onItemSelected(View itemView, int position) {
-                //onMoveFocusBorder(itemView, 1.1f, 8);
-                /*if(mAppbarAbl.isExpened()){
-                    mAppbarAbl.setExpanded(false);
-                }*/
             }
 
             @Override
             public void onItemClick(View itemView, int position) {
-                Lg.d("picher","点击列表："+position);
-
+                jumpToDetail(mListAdapter.getItem(position));
             }
         });
 
@@ -146,8 +144,9 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
 
             @Override
             public void onItemClick(View itemView, int position) {
-                //InitDataBean dataBean = mFilterAdapter.getDataList().get(position).getFilterData();
-                Lg.d("picher","点击筛选："+position);
+                InitDataBean dataBean = mFilterAdapter.getDataList().get(position).getFilterData();
+                setRequestData(dataBean);
+                refresh();
             }
         });
 
@@ -155,7 +154,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
             @Override
             public boolean onLoadMore() {
                 if (hasMore()) {
-                    Lg.d("picher","加载更多！");
+                    Lg.d("picher", "加载更多！");
                     requestMore();
                     return true;
                 }
@@ -170,12 +169,12 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         getActivity().getWindow().getDecorView().getViewTreeObserver().addOnGlobalFocusChangeListener(new ViewTreeObserver.OnGlobalFocusChangeListener() {
             @Override
             public void onGlobalFocusChanged(View oldFocus, View newFocus) {
-                if(newFocus != null){
-                    if(newFocus.getParent() instanceof ViewGroup){
+                if (newFocus != null) {
+                    if (newFocus.getParent() instanceof ViewGroup) {
                         getFocusBorder().setVisible(false);
-                        switch (((ViewGroup)newFocus.getParent()).getId()){
+                        switch (((ViewGroup) newFocus.getParent()).getId()) {
                             case R.id.m_header_rv:
-                                if(!mAppbarAbl.isExpened()){
+                                if (!mAppbarAbl.isExpened()) {
                                     mAppbarAbl.setExpanded(true);
                                 }
                                 break;
@@ -183,7 +182,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
                                 getFocusBorder().setVisible(true);
                                 break;
                             case R.id.m_list_trv:
-                                if(mAppbarAbl.isExpened()){
+                                if (mAppbarAbl.isExpened()) {
                                     mAppbarAbl.setExpanded(false);
                                 }
                                 break;
@@ -195,6 +194,15 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         });
     }
 
+    private void refresh() {
+        page = 1;
+        mListData.clear();
+        mEmptyV.setVisibility(View.GONE);
+        mListTrv.setHasMoreData(true);
+        mListTrv.setLoadingMore(false);
+        getListData();
+    }
+
     @Override
     protected void initData() {
         /*——————測試數據—————*/
@@ -203,16 +211,75 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         mFilterAdapter.setDataList(mFilterData);
         mListAdapter.setDatas(mListData);*/
         //设置筛选栏数据
-        if(mDao != null  && mHomeTab != null){
+        if (mDao != null && mHomeTab != null) {
             mFilterData.clear();
             List<InitDataBean> dataBeans = mDao.getNewDesignFilter(ProductManager.Companion.getInstance().getPageType(mHomeTab));
-            if(!CollectionUtils.isEmpty(dataBeans) && dataBeans.get(0) != null &&!CollectionUtils.isEmpty(dataBeans.get(0).getChildBean())){
+            if (!CollectionUtils.isEmpty(dataBeans) && dataBeans.get(0) != null && !CollectionUtils.isEmpty(dataBeans.get(0).getChildBean())) {
                 mFilterData.addAll(ConvertManager.getInstance()
-                        .convertItemToFilterModel(dataBeans.get(0).getChildBean(),mHomeTab));
+                        .convertItemToFilterModel(dataBeans.get(0).getChildBean(), mHomeTab));
             }
             mFilterAdapter.setDataList(mFilterData);
         }
     }
+
+    private void setRequestData(InitDataBean childFilter) {
+        if (itemRequestModel != null) {
+            if("全部".equals(childFilter.getName())){
+                itemRequestModel = new ItemRequestModel();
+                return;
+            }
+            switch (childFilter.getParent_id()) {
+                case Constans.FILTER_DATABASE_AREA:
+                    itemRequestModel.setArea(childFilter.getCode());
+                    break;
+                case Constans.FILTER_DATABASE_STAR:
+                    itemRequestModel.setStar(childFilter.getCode());
+                    break;
+                case Constans.FILTER_DATABASE_PRICE:
+                    if (childFilter.getCode().equals("")) {
+                        itemRequestModel.setP_h(0);
+                        itemRequestModel.setP_low(0);
+                    } else {
+                        String[] ps;
+                        float p_low = 0, p_h = 0;
+                        String price = childFilter.getName();
+                        if (!TextUtils.isEmpty(price)) {
+                            if (price.contains("~")) {
+                                ps = price.split("~");
+                                p_low = Float.valueOf(ps[0]);
+                                p_h = Float.valueOf(ps[1].split("元")[0]);
+                            } else if (price.contains("元以上")) {
+                                ps = price.split("元以上");
+                                p_low = Float.valueOf(ps[0]);
+                                p_h = 0f;
+                            } else if (price.contains("元以下")) {
+                                ps = price.split("元以下");
+                                p_low = 0f;
+                                p_h = Float.valueOf(ps[0]);
+                            }
+                        }
+                        itemRequestModel.setP_low(p_low);
+                        itemRequestModel.setP_h(p_h);
+                    }
+                    break;
+                case Constans.FILTER_DATABASE_SLIGHT:
+                    itemRequestModel.setSight(childFilter.getCode());
+                    break;
+                case Constans.FILTER_DATABASE_FOOD_TYPE:
+                    itemRequestModel.setFood_type(childFilter.getCode());
+                    break;
+                //购物类型
+                case Constans.FILTER_DATABASE_PAY_TYPE:
+                    itemRequestModel.setPay_type(childFilter.getCode());
+                    break;
+                //娛樂類型
+                case Constans.FILTER_DATABASE_FUN_TYPE:
+                    itemRequestModel.setFun_type(childFilter.getCode());
+                    break;
+            }
+        }
+    }
+
     private void requestMore() {
         page++;
         isLoading = true;
@@ -253,7 +320,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     /**
      * 获取推荐数据
      */
-    public void getRecommendData(){
+    public void getRecommendData() {
         ApiFactory.getTravelApi().getRecommend(ProductManager.Companion.getInstance().getPageType(mHomeTab), HEADER_SIZE, 1)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -275,8 +342,8 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
      */
     public void getListData() {
         ApiFactory.getTravelApi().getProductList(ProductManager.Companion.getInstance().getPageType(mHomeTab),
-                itemRequestModel.getArea(), itemRequestModel.getStar(), itemRequestModel.getSight(),
-                itemRequestModel.getFood_type(), itemRequestModel.getP_h(), itemRequestModel.getP_low(), limit, page)
+                itemRequestModel.getArea(), itemRequestModel.getStar(),itemRequestModel.getPay_type(),itemRequestModel.getFun_type(),
+                itemRequestModel.getSight(), itemRequestModel.getFood_type(), itemRequestModel.getP_h(), itemRequestModel.getP_low(), limit, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
@@ -286,7 +353,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
                         if (CollectionUtils.isNotEmpty(response.body().getResponse())) {
                             updateListUI(response.body().getResponse());
                         } else {
-                            if(page == 1){
+                            if (page == 1) {
                                 mEmptyV.setVisibility(View.VISIBLE);
                             }
                             toast("没有更多的数据了");
@@ -305,7 +372,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     }
 
     public void updateListUI(List<ItemInfoBean> itemInfoBeans) {
-        Lg.d("picher",mHomeTab+"列表數："+itemInfoBeans.size());
+        Lg.d("picher", mHomeTab + "列表數：" + itemInfoBeans.size());
         mListData.addAll(itemInfoBeans);
         mListAdapter.notifyDataSetChanged();
     }

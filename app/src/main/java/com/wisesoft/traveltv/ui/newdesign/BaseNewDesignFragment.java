@@ -1,5 +1,6 @@
 package com.wisesoft.traveltv.ui.newdesign;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,12 +8,15 @@ import android.view.ViewGroup;
 import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.net.response.BaseResponse;
 import com.wisesoft.traveltv.NFragement;
+import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.internal.OnItemInfoLoadListener;
 import com.wisesoft.traveltv.manager.ProductManager;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.net.request.ItemRequestModel;
 import com.wisesoft.traveltv.ui.change.HomeTab;
+import com.wisesoft.traveltv.ui.change.ProjectDetailChangeActivity;
 
 import java.util.List;
 
@@ -77,6 +81,12 @@ public abstract class BaseNewDesignFragment extends NFragement implements ListPa
                 });
     }
 
+    public void jumpToDetail(ItemInfoBean itemInfoBean) {
+        Intent intent = new Intent(activity, ProjectDetailNewDesignActivity.class);
+        intent.putExtra(Constans.ITEM_BEAN, itemInfoBean);
+        pushActivity(intent, false);
+    }
+
     public boolean hasFocus() {
         return ((ViewGroup) v).getFocusedChild() != null;
     }
@@ -85,5 +95,27 @@ public abstract class BaseNewDesignFragment extends NFragement implements ListPa
 
     public interface NetWorkListener{
         void onResponse(BaseResponse baseResponse);
+    }
+
+    /**
+     * 获取推荐数据
+     */
+    public void getRecommendData(String type, int size,int page, final OnItemInfoLoadListener listener){
+        ApiFactory.getTravelApi().getRecommend(type, size, page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
+                    @Override
+                    public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
+                        if(listener != null){
+                            listener.onLoadSucceed(response.body().getResponse());
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int code, String message) {
+                        toast(message);
+                    }
+                });
     }
 }
