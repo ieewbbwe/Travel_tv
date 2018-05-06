@@ -100,7 +100,7 @@ public class ImageDetailNewDesignActivity extends NActivity {
         mItemInfo = (ItemInfoBean) intent.getSerializableExtra(Constans.ITEM_BEAN);
         mImgList = (List<ItemInfoBean>) intent.getSerializableExtra(Constans.ITEM_RECOMMEND_IMG);
 
-        if (null != mItemInfo) {
+        if (!CollectionUtils.isEmpty(mImgList)) {
             showItemInfo(mItemInfo);
         }
     }

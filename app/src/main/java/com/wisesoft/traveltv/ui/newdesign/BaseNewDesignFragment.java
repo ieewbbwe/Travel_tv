@@ -16,7 +16,6 @@ import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.net.OnSimpleCallBack;
 import com.wisesoft.traveltv.net.request.ItemRequestModel;
 import com.wisesoft.traveltv.ui.change.HomeTab;
-import com.wisesoft.traveltv.ui.change.ProjectDetailChangeActivity;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ import rx.schedulers.Schedulers;
  * Describe：新UI的页面基类
  */
 
-public abstract class BaseNewDesignFragment extends NFragement implements ListPageInterface{
+public abstract class BaseNewDesignFragment extends NFragement implements ListPageInterface {
 
     public static final String ARG_HOME_TAB = "arg_home_tab";
 
@@ -46,12 +45,12 @@ public abstract class BaseNewDesignFragment extends NFragement implements ListPa
         mPageType = ProductManager.Companion.getInstance().getPageType(tab);
     }
 
-    public String getPageTitle(){
-        if(tab != null){
+    public String getPageTitle() {
+        if (tab != null) {
             return getResources().getString(tab.getNameRes());
         }
-         return "";
-     }
+        return "";
+    }
 
     @Override
     public void requestData(ItemRequestModel itemRequestModel, final NetWorkListener listener) {
@@ -88,26 +87,26 @@ public abstract class BaseNewDesignFragment extends NFragement implements ListPa
     }
 
     public boolean hasFocus() {
-        return ((ViewGroup) v).getFocusedChild() != null;
+        return v != null && ((ViewGroup) v).getFocusedChild() != null;
     }
 
     public abstract void requestFocus();
 
-    public interface NetWorkListener{
+    public interface NetWorkListener {
         void onResponse(BaseResponse baseResponse);
     }
 
     /**
      * 获取推荐数据
      */
-    public void getRecommendData(String type, int size,int page, final OnItemInfoLoadListener listener){
+    public void getRecommendData(String type, int size, int page, final OnItemInfoLoadListener listener) {
         ApiFactory.getTravelApi().getRecommend(type, size, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
                     @Override
                     public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
-                        if(listener != null){
+                        if (listener != null) {
                             listener.onLoadSucceed(response.body().getResponse());
                         }
                     }
