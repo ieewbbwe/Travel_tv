@@ -1,5 +1,6 @@
 package com.wisesoft.traveltv.ui.view.weight.keyboard;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.RectF;
 import android.os.Handler;
@@ -273,12 +274,10 @@ public class SkbContainer extends RelativeLayout implements SoftKeyBoardable {
 	 * 根据 上，下，左，右 来绘制按键位置.
 	 */
 	private boolean actionForKeyEvent(int direction) {
-		if (mSoftKeyboardView != null) {
-			return mSoftKeyboardView.moveToNextKey(direction);
-		}
-		return true;
+		return mSoftKeyboardView == null || mSoftKeyboardView.moveToNextKey(direction);
 	}
 
+	@SuppressLint("HandlerLeak")
 	Handler longPressHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			SoftKey downSKey = (SoftKey) msg.obj;

@@ -8,7 +8,10 @@ import com.android_mobile.core.manager.SharedPrefManager;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.helper.InitDataCacheManager;
+import com.wisesoft.traveltv.internal.OnWorkListener;
 import com.wisesoft.traveltv.ui.HomeActivity;
+import com.wisesoft.traveltv.ui.change.HomeChangeActivity;
+import com.wisesoft.traveltv.ui.newdesign.HomeNewDesignActivity;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
@@ -29,6 +32,8 @@ public class LoadingActivity extends NActivity {
     @Bind(R.id.m_loading_iv)
     ImageView mLoadingIv;
     private DataBaseDao mDao;
+    private InitDataCacheManager initDataCacheManager;
+    int errorCode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,28 +63,37 @@ public class LoadingActivity extends NActivity {
     @Override
     protected void initData() {
         mDao = new DataBaseDao(mContext);
-        //加载一些初始化数据
         new Handler().postDelayed(new Runnable() {
 
             @Override
             public void run() {
+                //由于没有用户系统 根据当前时间生成一个MD5码唯一标识当前用户
+                //加载一些初始化数据
                 updateInitData();
             }
         }, 1500);
     }
 
     private void updateInitData() {
-        /*if (!SharedPrefManager.getBoolean(Constans.IS_INIT_DATA, false)) {
-            Executors.newCachedThreadPool().execute(new Runnable() {
-                @Override
-                public void run() {
-                    mDao.initDatabase();
-                }
-            });
-        }*/
-        new InitDataCacheManager(mDao).start();
+        initDataCacheManager = new InitDataCacheManager(mDao);
+        initDataCacheManager.start(new OnWorkListener() {
+            @Override
+            public void onComplete() {
+                pushActivity(HomeNewDesignActivity.class, true);
+            }
 
-        pushActivity(HomeActivity.class, true);
+            @Override
+            public void onError() {
+                if(errorCode <= 3){
+                    toast("网络错误，尝试重新加载...");
+                    errorCode ++;
+                    initDataCacheManager.start(this);
+                }else{
+                    toast("请稍后再试！");
+                    System.exit(0);
+                }
+            }
+        });
     }
 
     @Override

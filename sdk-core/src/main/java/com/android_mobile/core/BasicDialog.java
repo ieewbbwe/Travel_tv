@@ -20,7 +20,7 @@ public abstract class BasicDialog extends AppCompatDialog {
 
     public abstract void onViewCreated(View v);
 
-    private View mContentView;
+    protected View mContentView;
     private Window mWindow;
 
     public BasicDialog(Context context) {

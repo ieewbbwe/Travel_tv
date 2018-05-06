@@ -62,6 +62,7 @@ public abstract class BasicAdapter<T, M extends RecyclerView.ViewHolder> extends
 
     public void addAll(Collection<T> list) {
         int lastIndex = this.mDataList.size();
+        mDataList.addAll(list);
         if (this.mDataList.addAll(list)) {
             notifyItemRangeInserted(lastIndex, list.size());
         }

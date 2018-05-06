@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Recycler;
 import android.support.v7.widget.RecyclerView.State;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.MarginLayoutParams;
@@ -165,12 +166,12 @@ public class SpannableGridLayoutManager extends GridLayoutManager {
         }
     }
 
-    private int getChildWidth(int colSpan) {
+    public int getChildWidth(int colSpan) {
 //        return (int)(getLanes().getLaneSize() * colSpan);
         return (int)(getLanes().getLaneSize()) * colSpan;
     }
 
-    private int getChildHeight(int rowSpan) {
+    public int getChildHeight(int rowSpan) {
 //        return (int)(getLanes().getLaneSize() * rowSpan);
         return (int)(getLanes().getLaneSize()) * rowSpan;
     }

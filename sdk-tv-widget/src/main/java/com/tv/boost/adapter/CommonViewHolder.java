@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tv.boost.R;
+import com.tv.boost.widget.CornersTransform;
 
 
 /**
@@ -301,6 +303,17 @@ public class CommonViewHolder {
     public CommonViewHolder setOnClickListener(int viewId, View.OnClickListener listener) {
         View view = getView(viewId);
         view.setOnClickListener(listener);
+        return this;
+    }
+
+    public CommonViewHolder showImage(int viewId, String url) {
+        ImageView imageView = getView(viewId);
+        Glide.with(mContext)
+                .load(url)
+                .crossFade()
+                .transform(new CornersTransform(mContext))
+                .error(R.mipmap.ic_img_item_default)
+                .placeholder(R.mipmap.ic_img_item_default).into(imageView);
         return this;
     }
 

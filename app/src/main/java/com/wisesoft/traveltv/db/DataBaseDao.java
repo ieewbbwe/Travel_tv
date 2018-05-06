@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.misc.TransactionManager;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.internal.OnWorkListener;
 import com.wisesoft.traveltv.model.temp.DataEngine;
 import com.wisesoft.traveltv.model.temp.InitDataBean;
 import com.wisesoft.traveltv.model.temp.ImageBean;
@@ -71,7 +72,14 @@ public class DataBaseDao {
     }
 
     public void initDatabase(final List<InitDataBean> dataBeen) {
+        initDatabase(dataBeen,null);
+    }
+
+    public void initDatabase(final List<InitDataBean> dataBeen, OnWorkListener onWorkListener) {
         if (CollectionUtils.isEmpty(dataBeen)) {
+            if(onWorkListener != null){
+                onWorkListener.onComplete();
+            }
             return;
         }
         try {
@@ -85,6 +93,9 @@ public class DataBaseDao {
                     return null;
                 }
             });
+            if(onWorkListener != null){
+                onWorkListener.onComplete();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -92,7 +103,7 @@ public class DataBaseDao {
 
     private void updateInitData(List<InitDataBean> dataBeen) throws SQLException {
         //暂时不做假删
-        mInitData.deleteBuilder().delete();
+        //mInitData.deleteBuilder().delete();
         for (InitDataBean item : dataBeen) {
             InitDataBean query = mInitData.queryBuilder().where().eq("id", item.getId()).queryForFirst();
             if (query != null) {
@@ -244,42 +255,63 @@ public class DataBaseDao {
         return getItemInfos(typePlay, 5);
     }
 
+    public List<InitDataBean> getNewDesignFilter(String mPageType){
+        try {
+            List<InitDataBean> filterAll = new ArrayList<>();
+            switch (mPageType){
+                case Constans.TYPE_PLAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));//区域
+                    break;
+                case Constans.TYPE_EAT:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FOOD_TYPE));//酒店类型
+                    break;
+                case Constans.TYPE_STAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));//星级
+                    break;
+                case Constans.TYPE_PAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PAY_TYPE));//购物类型
+                    break;
+                case Constans.TYPE_FUN:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FUN_TYPE));//娱乐类型
+                    break;
+            }
+
+            return filterAll;
+        }catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //旧版本获取筛选数据
     public List<InitDataBean> getPageFilter(String mPageType) {
         try {
             List<InitDataBean> filterAll = new ArrayList<>();
-            InitDataBean filterBean;
             switch (mPageType) {
                 case Constans.TYPE_EAT:
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003005").queryForFirst();
-                    if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003005").query());
-                        filterAll.add(filterBean);
-                    }
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_FOOD_TYPE));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
                     break;
                 case Constans.TYPE_PLAY:
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003004").queryForFirst();
-                    if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003004").query());
-                        filterAll.add(filterBean);
-                    }
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_SLIGHT));
                     break;
                 case Constans.TYPE_STAY:
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003001").queryForFirst();
-                    if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003001").query());
-                        filterAll.add(filterBean);
-                    }
-
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003002").queryForFirst();
-                    if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003002").query());
-                        filterAll.add(filterBean);
-                    }
-                    filterBean = mInitData.queryBuilder().where().eq("id_core", "003003").queryForFirst();
-                    if (filterBean != null) {
-                        filterBean.setChildBean(mInitData.queryBuilder().where().eq("parent_id", "003003").query());
-                        filterAll.add(filterBean);
-                    }
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
+                    break;
+                case Constans.TYPE_PAY:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
+                    break;
+                case Constans.TYPE_FUN:
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_AREA));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_STAR));
+                    filterAll.add(findFilterData(Constans.FILTER_DATABASE_PRICE));
                     break;
             }
             return filterAll;
@@ -289,4 +321,49 @@ public class DataBaseDao {
         }
     }
 
+    /**
+     * 查找筛选参数
+     * @return 地区参数
+     * @throws SQLException
+     */
+    private InitDataBean findFilterData(String filterParentId) throws SQLException {
+        InitDataBean filterBean = mInitData.queryBuilder().where().eq("id_core", filterParentId).queryForFirst();
+        if (filterBean != null) {
+            List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", filterParentId).query();
+            child.add(0,new InitDataBean("","全部"));
+            filterBean.setChildBean(child);
+        }
+        return filterBean;
+    }
+
+    private void addAreaPrice(List<InitDataBean> filterAll) throws SQLException {
+        InitDataBean filterBean;
+        filterBean = mInitData.queryBuilder().where().eq("id_core", "003002").queryForFirst();
+        if (filterBean != null) {
+            List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003002").query();
+            child.add(0,new InitDataBean("0","全部"));
+            filterBean.setChildBean(child);
+            filterAll.add(filterBean);
+        }
+        filterBean = mInitData.queryBuilder().where().eq("id_core", "003003").queryForFirst();
+        if (filterBean != null) {
+            List<InitDataBean> child = mInitData.queryBuilder().where().eq("parent_id", "003003").query();
+            child.add(0,new InitDataBean("0","全部"));
+            filterBean.setChildBean(child);
+            filterAll.add(filterBean);
+        }
+    }
+
+    public String getPriceStr(String price_id) {
+        InitDataBean item = null;
+        try {
+            item = mInitData.queryBuilder().where().eq("id",price_id).queryForFirst();
+            if(item != null){
+                return item.getName();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

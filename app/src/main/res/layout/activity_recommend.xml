@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_recommend"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_home_bg"
+    android:orientation="vertical"
+    tools:context="com.wisesoft.traveltv.ui.RecommendActivity">
+
+    <include
+        style="@style/head_style"
+        layout="@layout/layout_head" />
+
+    <!--content-->
+    <com.owen.tvrecyclerview.widget.TvRecyclerView
+        android:id="@+id/m_project_recommend_rlv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/content_padding"
+        android:paddingLeft="@dimen/content_padding"
+        android:paddingRight="@dimen/content_padding"
+        android:paddingTop="16dp" />
+
+    <!-- &lt;!&ndash;content&ndash;&gt;
+     <it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow
+         android:id="@+id/m_gallery_cf"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:layout_below="@+id/m_head_rl"
+         android:focusable="true"
+         app:coverHeight="@dimen/home_gallery_height"
+         app:coverWidth="@dimen/home_gallery_weight"
+         app:maxScaleFactor="1.5"
+         app:reflectionGap="4dp"
+         app:rotationThreshold="0.5"
+         app:scalingThreshold="0.5"
+         app:spacing="0.6"/>-->
+
+</LinearLayout>

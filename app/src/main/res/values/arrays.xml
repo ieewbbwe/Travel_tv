@@ -182,4 +182,15 @@
         <item>501~1000元</item>
         <item>1000元以上</item>
     </string-array>
+
+
+    <!--测试数据组-->
+    <string-array name="test_data_name">
+
+    </string-array>
+
+    <string-array name="test_data_image_url">
+
+    </string-array>
+
 </resources>

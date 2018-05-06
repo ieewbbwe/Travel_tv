@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <com.owen.tvrecyclerview.widget.TvRecyclerView
+        android:id="@+id/m_header_rv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/play_header_height"
+        android:orientation="vertical"
+        android:padding="12dp"
+        app:tv_numColumns="3"
+        app:tv_numRows="2" />
+</LinearLayout>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_home_bg"
+    tools:context="com.wisesoft.traveltv.ui.newdesign.HomeNewDesignActivity">
+
+    <!--head-->
+   <!-- <include layout="@layout/layout_head_change" />-->
+
+    <com.tv.boost.widget.tablayout.TvTabLayout
+        android:id="@+id/m_main_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/m_head_rl"
+        android:layout_marginTop="16dp"
+        android:focusable="true"
+        app:tabGravity="center"
+        app:tabIndicatorBackgroundColor="@color/bg_core"
+        app:tabIndicatorBackgroundHeight="1px"
+        app:tabIndicatorHeight="8dp"
+        app:tabIndicatorResId="@color/bg_core"
+        app:tabMinWidth="160dp"
+        app:tabPaddingBottom="12px"
+        app:tabScrollMode="fixed"
+        app:tabTexSize="22px"
+        app:tabTextColor="@drawable/selector_tab_font_color" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/m_container_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/m_main_tab"
+        android:layout_marginTop="6dp" />
+
+</RelativeLayout>

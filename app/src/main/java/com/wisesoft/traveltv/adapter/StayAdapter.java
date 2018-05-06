@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.android_mobile.core.BasicAdapter;
 import com.android_mobile.core.manager.image.ImageLoadFactory;
+import com.android_mobile.core.utiles.Lg;
 import com.wisesoft.traveltv.R;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
@@ -31,6 +32,7 @@ public class StayAdapter extends BasicAdapter<ItemInfoBean, StayAdapter.ViewHold
         ItemInfoBean item = mDataList.get(position);
         ImageLoadFactory.getInstance().getImageLoadHandler()
                 .displayImage(item.getImgUrl(), holder.mRecommendIv);
+        Lg.d("picher",""+item.getImgUrl());
         holder.mTitleTv.setText(item.getName());
     }
 

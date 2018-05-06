@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/play_header_height"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal">
+
+    <!--左边大图-->
+    <com.wisesoft.traveltv.ui.view.TVHeaderItemView
+        android:id="@+id/m_top_1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:elevation="10dp"
+        android:focusable="true" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="horizontal">
+        <!--左边-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.wisesoft.traveltv.ui.view.TVHeaderItemView
+                android:id="@+id/m_top_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:elevation="10dp"
+                android:focusable="true" />
+
+            <com.wisesoft.traveltv.ui.view.TVHeaderItemView
+                android:id="@+id/m_top_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:elevation="10dp" />
+        </LinearLayout>
+        <!--右边-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <com.wisesoft.traveltv.ui.view.TVHeaderItemView
+                android:id="@+id/m_top_4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                android:layout_weight="1"
+                android:elevation="10dp" />
+
+            <com.wisesoft.traveltv.ui.view.TVHeaderItemView
+                android:id="@+id/m_top_5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:elevation="10dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -2,11 +2,14 @@ package com.wisesoft.traveltv.ui.play;
 
 import android.os.Bundle;
 
+import com.android_mobile.core.utiles.Lg;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoView;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
+import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
 
 public class PlayVideoActivity extends NActivity {
 
@@ -21,10 +24,15 @@ public class PlayVideoActivity extends NActivity {
 
     @Override
     protected void initComp() {
-        String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
+        //String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
         mVideoV = (StandardGSYVideoPlayer) findViewById(R.id.m_video_gsy);
-        mVideoV.setUp(url,false,"");
-        mVideoV.startPlayLogic();
+        Object obj = getIntent().getExtras().get(Constans.ITEM_BEAN);
+        if (obj != null && obj instanceof ItemInfoBean) {
+            String mUrl = ((ItemInfoBean) obj).getFile_f();
+            Lg.d("picher", "url+" + mUrl);
+            mVideoV.setUp(mUrl, false, "");
+            mVideoV.startPlayLogic();
+        }
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,9 @@ import android.widget.PopupWindow;
 
 import com.android_mobile.core.base.BaseActivity;
 import com.tv.boost.widget.focus.FocusBorder;
+import com.wisesoft.traveltv.constants.Constans;
+import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.ui.ProjectDetailActivity;
 import com.wisesoft.traveltv.ui.view.weight.pop.OnItemClickListener;
 import com.wisesoft.traveltv.ui.view.weight.pop.TVBottomFilterPop;
 
@@ -113,6 +117,12 @@ public abstract class NActivity extends BaseActivity {
         public void onAnimationRepeat(Animator animation) {
 
         }
+    }
+
+    public void jumpToDetail(ItemInfoBean itemObject) {
+        Intent intent = new Intent(this, ProjectDetailActivity.class);
+        intent.putExtra(Constans.ITEM_BEAN, itemObject);
+        pushActivity(intent, false);
     }
 
 }

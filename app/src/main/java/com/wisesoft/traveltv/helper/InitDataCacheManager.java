@@ -7,6 +7,7 @@ import com.android_mobile.core.manager.SharedPrefManager;
 import com.android_mobile.net.response.BaseResponse;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
+import com.wisesoft.traveltv.internal.OnWorkListener;
 import com.wisesoft.traveltv.model.temp.InitDataBean;
 import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.net.OnSimpleCallBack;
@@ -29,7 +30,7 @@ public class InitDataCacheManager {
         this.mDao = baseDao;
     }
 
-    public void start(){
+    public void start(final OnWorkListener onWorkListener){
         if(mDao == null){
             throw  new IllegalArgumentException("dao is not be null");
         }
@@ -41,13 +42,15 @@ public class InitDataCacheManager {
                     @Override
                     public void onResponse(Response<BaseResponse<List<InitDataBean>>> response) {
                         if(response.code() == 200){
-                            mDao.initDatabase(response.body().getResponse());
+                            mDao.initDatabase(response.body().getResponse(),onWorkListener);
                         }
                     }
 
                     @Override
                     public void onFailed(int code, String message) {
-
+                        if(onWorkListener != null){
+                            onWorkListener.onError();
+                        }
                     }
                 });
     }

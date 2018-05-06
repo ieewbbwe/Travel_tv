@@ -19,10 +19,11 @@ import com.trello.rxlifecycle.components.support.RxFragment;
 
 public abstract class BasicFragment extends RxFragment implements IBasicCoreMethod {
 
-    private View v;
-    private BasicActivity activity;
     private Application application;
     private NavigationBar mNavigationBar;
+    protected View v;
+    protected BasicActivity activity;
+    protected boolean isInit;
 
     protected abstract int create();
 

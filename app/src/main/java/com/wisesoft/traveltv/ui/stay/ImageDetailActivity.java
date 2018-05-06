@@ -58,6 +58,7 @@ public class ImageDetailActivity extends NActivity {
 
     private List<ImageBean> mImgList = new ArrayList<>();
     private ItemInfoBean mItemInfo;
+    private String[] mImages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +71,9 @@ public class ImageDetailActivity extends NActivity {
         ButterKnife.bind(this);
         restRatingHeight();
         //默认显示三张图片
-        mImgList.add(new ImageBean("file:///android_asset/default1.jpg"));
+        /*mImgList.add(new ImageBean("file:///android_asset/default1.jpg"));
         mImgList.add(new ImageBean("file:///android_asset/default2.jpg"));
-        mImgList.add(new ImageBean("file:///android_asset/default3.jpg"));
+        mImgList.add(new ImageBean("file:///android_asset/default3.jpg"));*/
         //设置图片加载器
         mImageDisplayBn.setImageLoader(new GlideImageLoader());
         //设置图片集合
@@ -98,6 +99,8 @@ public class ImageDetailActivity extends NActivity {
     protected void initData() {
         Intent intent = getIntent();
         mItemInfo = (ItemInfoBean) intent.getSerializableExtra(Constans.ITEM_BEAN);
+        mImages = intent.getStringArrayExtra(Constans.ITEM_RECOMMEND_IMG);
+
         if (null != mItemInfo) {
             showItemInfo(mItemInfo);
         }
@@ -110,12 +113,15 @@ public class ImageDetailActivity extends NActivity {
         //mPhoneTv.setText(mItemInfo.getPhoneStr());
         //mImgList = mItemInfo.getImageList();
         mImgList.add(0,new ImageBean(mItemInfo.getImgUrl()));
+        for(String url:mImages){
+            mImgList.add(new ImageBean(url));
+        }
         if (CollectionUtils.isNotEmpty(mImgList)) {
             mImageDisplayBn.update(mImgList);
             mImageDisplayBn.start();
         }
 
-        //虚化背景
+    /*    //虚化背景
         Glide.with(this).load(mItemInfo.getImgUrl())
                 .asBitmap().into(new SimpleTarget<Bitmap>() {
             @Override
@@ -136,7 +142,7 @@ public class ImageDetailActivity extends NActivity {
                             }
                         });
             }
-        });
+        });*/
     }
 
     /**

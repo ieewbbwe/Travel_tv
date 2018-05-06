@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -70,18 +71,16 @@ dependencies {
     //dcompile 'com.tv.boost:tv-recyclerview:1.1.0'
     //Banner sdk
     compile 'com.youth.banner:banner:1.4.10'
-
     // apt command comes from the android-apt plugin
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.dagger:dagger:2.2'
     apt 'com.google.dagger:dagger-compiler:2.2'
     provided 'javax.annotation:jsr250-api:1.0'
-
     //内存泄露分析
     compile 'com.squareup.leakcanary:leakcanary-android:1.3'
     //视屏播放控件
     compile 'com.shuyu:GSYVideoPlayer:2.0.8'
     //拼英转换
-
-
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "com.android.support:cardview-v7:$rootProject.ext.appcompatV7Version"
 }

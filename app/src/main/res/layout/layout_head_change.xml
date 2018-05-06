@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mxh="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/m_head_rl"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/head_height_change"
+    android:orientation="vertical">
+    <!--Logo-->
+    <ImageView
+        android:id="@+id/m_broadcast_logo_iv"
+        android:layout_width="@dimen/head_logo_w"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/tv_border_width"
+        android:src="@mipmap/ic_logo1"
+        android:visibility="visible" />
+    <!--Time-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/m_logo_iv"
+        android:layout_toRightOf="@+id/m_broadcast_logo_iv"
+        android:background="@drawable/shape_alpha_black"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp">
+
+        <com.wisesoft.traveltv.ui.view.TimeTextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/time"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="32dp"
+            android:text="1月6号"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_small_size"
+            mxh:gFormat="MM_dd" />
+
+        <com.wisesoft.traveltv.ui.view.TimeTextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_toLeftOf="@+id/week"
+            android:layout_toRightOf="@+id/day"
+            android:gravity="center"
+            android:text="12:00"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_biggest_size"
+            android:textStyle="bold"
+            mxh:gFormat="HH:mm" />
+
+        <com.wisesoft.traveltv.ui.view.TimeTextView
+            android:id="@+id/week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/time"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="32dp"
+            android:text="星期一"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/text_small_size"
+            mxh:gFormat="wk" />
+
+    </RelativeLayout>
+    <!--Logo-->
+    <View
+        android:id="@+id/m_logo_iv"
+        android:layout_width="@dimen/head_logo_w"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>

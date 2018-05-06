@@ -13,7 +13,10 @@
 
     <!--头部信息栏高度-->
     <dimen name="head_height">94dp</dimen>
+    <dimen name="head_height_change">52dp</dimen>
     <dimen name="content_padding">36dp</dimen>
+    <!--最新UI 下 TV padding-->
+    <dimen name="new_design_content_padding">42dp</dimen>
     <dimen name="navigation_height">86dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
@@ -22,4 +25,9 @@
     <dimen name="home_gallery_height">280dp</dimen>
     <dimen name="home_gallery_weight">540dp</dimen>
     <dimen name="recommend_height">180dp</dimen>
+    <dimen name="head_logo_w">300dp</dimen>
+    <dimen name="head_logo_h">100dp</dimen>
+    <dimen name="tv_border_width">32dp</dimen>
+    <dimen name="play_header_height">500dp</dimen>
+    <dimen name="detail_control_button_size">140dp</dimen>
 </resources>

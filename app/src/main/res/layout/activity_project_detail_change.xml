@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.wisesoft.traveltv.ui.play.AmusementDetailActivity">
+
+    <FrameLayout
+        android:id="@+id/contentfl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/ic_home_bg">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/shadow"
+            android:orientation="vertical">
+
+            <include
+                style="@style/head_style"
+                layout="@layout/layout_head_change" />
+
+            <com.tv.boost.widget.TvVerticalScrollView
+                android:id="@+id/m_content_sv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/content_padding"
+                android:paddingBottom="24dp"
+                android:paddingRight="@dimen/content_padding">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="16dp">
+
+                    <RelativeLayout
+                        android:id="@+id/top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp">
+
+                        <ImageView
+                            android:id="@+id/m_main_iv"
+                            android:layout_width="550dp"
+                            android:layout_height="340dp"
+                            android:padding="1dp"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_img_item_default" />
+
+                        <!--详情信息-->
+                        <LinearLayout
+                            android:id="@+id/m_info_ll"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="24dp"
+                            android:layout_toRightOf="@+id/m_main_iv"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:gravity="center_vertical"
+                                android:layout_width="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/m_title_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="8dp"
+                                    android:text="三峡大坝"
+                                    android:textColor="@color/text_color"
+                                    android:textSize="@dimen/text_big_size" />
+
+                                <!--评分-->
+                                <RelativeLayout
+                                    android:layout_marginLeft="8dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/m_evaluate_tv"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginBottom="8dp"
+                                        android:text="@string/label_comment"
+                                        android:textColor="@color/text_color"
+                                        android:textSize="@dimen/text_small_size" />
+
+                                    <RatingBar
+                                        android:id="@+id/m_grade_rb"
+                                        style="@style/RatingStyle"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_toRightOf="@id/m_evaluate_tv"
+                                        android:isIndicator="true"
+                                        android:rating="4.5" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/bottom_control"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="8dp"
+                                android:layout_toRightOf="@+id/m_main_iv"
+                                android:orientation="horizontal">
+
+                                <com.wisesoft.traveltv.ui.view.TVControlView
+                                    android:id="@+id/m_play_tvc"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/shape_gary_bg"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    app:cIcon="@mipmap/ic_play"
+                                    app:cText="@string/label_play"
+                                    app:cTextColor="@color/white"
+                                    app:cTextPadding="6dp"
+                                    app:cTextSize="@dimen/text_normal_size" />
+
+                                <com.wisesoft.traveltv.ui.view.TVControlView
+                                    android:id="@+id/m_comment_tvc"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:background="@drawable/shape_gary_bg"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    app:cIcon="@mipmap/ic_like"
+                                    app:cText="@string/label_like"
+                                    app:cTextColor="@color/white"
+                                    app:cTextPadding="6dp"
+                                    app:cTextSize="@dimen/text_small_size" />
+
+                                <com.wisesoft.traveltv.ui.view.TVControlView
+                                    android:id="@+id/m_traffic_tvc"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="16dp"
+                                    android:background="@drawable/shape_gary_bg"
+                                    android:focusable="true"
+                                    android:gravity="center"
+                                    android:orientation="vertical"
+                                    android:padding="8dp"
+                                    app:cIcon="@mipmap/ic_traffic"
+                                    app:cText="@string/label_traffic"
+                                    app:cTextColor="@color/white"
+                                    app:cTextPadding="6dp"
+                                    app:cTextSize="@dimen/text_small_size" />
+
+                            </LinearLayout>
+
+                            <com.wisesoft.traveltv.ui.view.CheckOverSizeTextView
+                                android:layout_marginTop="8dp"
+                                android:id="@+id/m_introduce_tv"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:ellipsize="end"
+                                android:lineSpacingExtra="4dp"
+                                android:maxLines="4"
+                                android:text="景点介绍：\n 三峡大坝，位于中国湖北省宜昌市境内，距下游葛洲坝水利枢纽工程38公里；是当今世界最大的水利发电工程——三峡水电站的主体工程、三峡大坝旅游区的核心景观、三峡水库的东端。"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_small_size" />
+
+                           <!-- <TextView
+                                android:id="@+id/m_expend_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:text="@string/label_expend_all"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_smallest_size" />-->
+
+                            <TextView
+                                android:id="@+id/m_price_time_tv"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:text="门票价格：100元/人 开放时间：8：00 - 17：00"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_small_size" />
+
+                            <TextView
+                                android:id="@+id/m_any_info"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="4dp"
+                                android:text="地址：湖北宜昌市夷陵区三峡坝区柳树湾游客中心"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_small_size" />
+
+                            <TextView
+                                android:id="@+id/m_tel_info"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="4dp"
+                                android:text="电话：18772943998"
+                                android:textColor="@color/text_color"
+                                android:textSize="@dimen/text_small_size" />
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <com.owen.tvrecyclerview.widget.TvRecyclerView
+                        android:id="@+id/m_recommend_rlv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/top"
+                        android:orientation="horizontal"
+                        android:paddingBottom="24dp"
+                        android:padding="15dp"
+                        app:tv_layoutManager="V7LinearLayoutManager" />
+                </RelativeLayout>
+                <!--</LinearLayout>-->
+            </com.tv.boost.widget.TvVerticalScrollView>
+        </LinearLayout>
+    </FrameLayout>
+</FrameLayout>

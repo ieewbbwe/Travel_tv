@@ -2,6 +2,7 @@ package com.wisesoft.traveltv.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,7 +33,9 @@ import com.wisesoft.traveltv.ui.view.weight.pop.TVFilterView;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -85,6 +88,9 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
     private int page = 1;
     private int limit = 9;
     private DataBaseDao mDao;
+    private boolean isLoading;
+    private Map<String, String> filterMap = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,7 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
 
     @Override
     protected void initComp() {
+        mBaseDao = new DataBaseDao(this);
         initBorder();
         ButterKnife.bind(this);
         mListRlv.setLayoutManager(new V7GridLayoutManager(this, 3));
@@ -132,7 +139,8 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
                /* items = mBaseDao.getItemInfos(Constans.TYPE_STAY, 10);
                 Collections.shuffle(items);
                 mAdapter.setDataList(items);*/
-
+                filterMap.put(parentFilter.getName(), childFilter.getCode());
+                refresh();
             }
         });
         mFocusBorder.boundGlobalFocusListener(new FocusBorder.OnFocusCallback() {
@@ -153,8 +161,10 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
         mContentSv.setOnScrollChangedListener(new TVScrollView.OnScrollChangedListener() {
             @Override
             public void onScrollChange(int l, int t, int ol, int ot) {
-                Lg.d("picher",""+mListRlv.getLastVisiblePosition());
                 mReturnTop.setVisibility((t >= getScreenHeight() / 2) ? View.VISIBLE : View.GONE);
+                if (!mContentSv.canScrollVertically(1) && !isLoading) {
+                    requestMore();
+                }
             }
         });
 
@@ -176,6 +186,20 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
         mRecommendTiv.setOnClickListener(this);
         mReturnTop.setOnClickListener(this);
         mSearchTiv.setOnClickListener(this);
+    }
+
+    private void refresh() {
+        page = 1;
+        items.clear();
+        mAdapter.setDataList(items);
+        mListRlv.setAdapter(mAdapter);
+        requestData();
+    }
+
+    private void requestMore() {
+        page++;
+        isLoading = true;
+        requestData();
     }
 
     private boolean hasMore() {
@@ -243,6 +267,9 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
                 pushActivity(SearchResultActivity.class);
                 break;
             case R.id.m_recomend_tiv:
+                Intent intent = new Intent(this,RecommendActivity.class);
+                intent.putExtra(Constans.ARG_PAGE_TYPE,mPageType);
+                pushActivity(intent);
                 break;
             case R.id.m_return_top_tiv:
                 mHead1Cont.requestFocus();
@@ -263,17 +290,90 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
     }
 
     public void requestData() {
-        ApiFactory.getTravelApi().getProductList(mPageType, limit, page)
+        String area, star, sight, food_type, price;
+        Float p_h, p_low;
+        p_h = p_low = 0f;
+        area = sight = food_type = star = price = "";
+        for (String item : filterMap.keySet()) {
+            switch (item) {
+                case "景观类型":
+                    if (filterMap.get(item).equals("0")) {
+                        sight = "";
+                    } else {
+                        sight = filterMap.get(item);
+                    }
+                    break;
+                case "酒家类型":
+                    if (filterMap.get(item).equals("0")) {
+                        food_type = "";
+                    } else {
+                        food_type = filterMap.get(item);
+                    }
+                    break;
+                case "区域":
+                    if (filterMap.get(item).equals("0")) {
+                        area = "";
+                    } else {
+                        area = filterMap.get(item);
+                    }
+                    break;
+                case "星级":
+                    if (filterMap.get(item).equals("0")) {
+                        star = "";
+                    } else {
+                        star = filterMap.get(item);
+                    }
+                    break;
+                case "价格":
+                    if (filterMap.get(item).equals("0")) {
+                        price = "";
+                        p_h = p_low = 0f;
+                    } else {
+                        price = filterMap.get(item);
+                        String[] ps;
+                        price = mBaseDao.getPriceStr(price);
+                        if (!TextUtils.isEmpty(price)) {
+                            if (price.contains("~")) {
+                                ps = price.split("~");
+                                p_low = Float.valueOf(ps[0]);
+                                p_h = Float.valueOf(ps[1].split("元")[0]);
+                            } else if (price.contains("元以上")) {
+                                ps = price.split("元以上");
+                                p_low = Float.valueOf(ps[0]);
+                                p_h = 0f;
+                            } else if (price.contains("元以下")) {
+                                ps = price.split("元以下");
+                                p_low = 0f;
+                                p_h = Float.valueOf(ps[0]);
+                            }
+                        }
+                    }
+
+                    break;
+                default:
+            }
+        }
+
+        ApiFactory.getTravelApi().getProductList(mPageType, area, star, sight, food_type, p_h, p_low, limit, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OnSimpleCallBack<Response<BaseResponse<List<ItemInfoBean>>>>() {
                     @Override
                     public void onResponse(Response<BaseResponse<List<ItemInfoBean>>> response) {
-                        updateUI(response.body().getResponse());
+                        isLoading = false;
+                        if (CollectionUtils.isNotEmpty(response.body().getResponse())) {
+                            updateUI(response.body().getResponse());
+                        } else {
+                            toast("没有更多的数据了");
+                        }
                     }
 
                     @Override
                     public void onFailed(int code, String message) {
+                        if (isLoading) {
+                            isLoading = false;
+                            page--;
+                        }
                         toast(message);
                     }
                 });
@@ -321,12 +421,6 @@ public class ProjectListActivity extends NActivity implements View.OnClickListen
 
         NApplication.getRefWatcher(this).watch(this);
 
-    }
-
-    public void jumpToDetail(ItemInfoBean itemObject) {
-        Intent intent = new Intent(this, ProjectDetailActivity.class);
-        intent.putExtra(Constans.ITEM_BEAN, itemObject);
-        pushActivity(intent, false);
     }
 
     @Override

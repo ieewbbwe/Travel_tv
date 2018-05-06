@@ -21,7 +21,7 @@
 
             <include
                 style="@style/head_style"
-                layout="@layout/layout_head"
+                layout="@layout/layout_head_change"
                 android:paddingLeft="@dimen/content_padding"
                 android:paddingRight="@dimen/content_padding" />
 

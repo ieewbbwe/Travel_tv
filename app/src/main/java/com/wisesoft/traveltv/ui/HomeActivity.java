@@ -48,6 +48,7 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
 
     private List<ItemInfoBean> beanList = new ArrayList<>();
     private GalleryAdapter mGalleryAdapter;
+    private long _firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +126,21 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
                         mGalleryCf.requestFocus();
                 }
                 break;
+            case KeyEvent.KEYCODE_BACK:
+                //首页和搜索页 需要拦截Back事件给SearchView
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - _firstTime > 2000) {// 如果两次按键时间间隔大于2000毫秒，则不退出
+                    toast("再按一次退出程序...");
+                    _firstTime = secondTime;// 更新firstTime
+                    return true;
+                } else {
+                    exitAppWithToast();
+                }
+                return false;
             default:
                 break;
+
+
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -182,4 +196,6 @@ public class HomeActivity extends NActivity implements View.OnClickListener {
         }
         pushActivity(intent);
     }
+
+
 }

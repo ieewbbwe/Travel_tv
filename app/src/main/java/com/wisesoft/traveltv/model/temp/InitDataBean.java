@@ -19,7 +19,7 @@ public class InitDataBean implements IFilter {
     //父级别需要设置子级别条件
     private List<InitDataBean> childBean;
 
-    @DatabaseField
+    @DatabaseField(id = true)
     private String id;
     @DatabaseField
     private String id_core;

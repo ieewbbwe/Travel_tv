@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/content_padding"
+    android:layout_marginRight="@dimen/content_padding"
+    android:orientation="horizontal"
+    android:paddingBottom="16dp"
+    android:paddingLeft="72dp"
+    android:paddingRight="72dp"
+    android:paddingTop="16dp">
+
+    <!--输入菜单-->
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/m_input_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_blue_round_bg"
+            android:enabled="false"
+            android:focusable="false"
+            android:maxLength="20"
+            android:padding="4dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/text_color_gray"
+            android:textSize="@dimen/text_normal_size" />
+
+        <!-- <com.wisesoft.traveltv.ui.view.weight.keyboard.SkbContainer
+             android:id="@+id/m_keyboard_kb"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/m_input_et"
+             android:layout_centerHorizontal="true"
+             android:layout_marginTop="12dp"
+             android:focusable="true" />-->
+
+        <com.owen.tvrecyclerview.widget.TvRecyclerView
+            android:id="@+id/m_keyboard_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/m_input_et"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:focusable="true" />
+
+        <!--操作栏-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/m_keyboard_rv">
+
+            <Button
+                android:id="@+id/m_confirm_bt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:background="@drawable/search_button_selector"
+                android:text="@string/button_comfirm"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal_size" />
+
+            <Button
+                android:id="@+id/m_clear_bt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/search_button_selector"
+                android:text="@string/button_clear"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/text_normal_size" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!--条目列表-->
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="24dp"
+        android:layout_weight="2.5">
+
+        <com.owen.tvrecyclerview.widget.TvRecyclerView
+            android:id="@+id/m_result_trv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--空页面-->
+        <include layout="@layout/layout_empty" />
+    </FrameLayout>
+
+</LinearLayout>

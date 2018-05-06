@@ -1,5 +1,7 @@
 package com.wisesoft.traveltv.model.temp;
 
+import android.text.TextUtils;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import com.wisesoft.traveltv.constants.Constans;
@@ -7,6 +9,7 @@ import com.wisesoft.traveltv.internal.IItemInfo;
 import com.wisesoft.traveltv.model.BaseBean;
 import com.wisesoft.traveltv.net.UrlMgr;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,12 +17,16 @@ import java.util.List;
  * Describe：条目信息对象
  */
 @DatabaseTable(tableName = "tb_item_info")
-public class ItemInfoBean extends BaseBean implements IItemInfo {
+public class ItemInfoBean extends BaseBean implements IItemInfo,Serializable {
 
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
     private String img_f;
+    @DatabaseField
+    private String file_f;
+    @DatabaseField
+    private String video_path;
     @DatabaseField
     private String title;
     @DatabaseField
@@ -43,7 +50,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     @DatabaseField
     private String address;
     @DatabaseField
-    private String phone;
+    private String tel_num;
     @DatabaseField
     private double minPrice;
     @DatabaseField
@@ -52,11 +59,13 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     private int like_count;
     private String open_time_end;
     private String open_time_start;
-    private List<ItemInfoBean> child;
+    private List<Integer> child;
     private double price;
 
     private List<ImageBean> images;
     private List<VideoBean> videos;
+    private Integer imgRes;
+    private Integer recommend_index;
 
     public String getHotel_id() {
         return hotel_id;
@@ -66,11 +75,19 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         return open_time_end;
     }
 
-    public List<ItemInfoBean> getChild() {
+    public List<Integer> getChild() {
         return child;
     }
 
-    public void setChild(List<ItemInfoBean> child) {
+    public Integer getImgRes() {
+        return imgRes;
+    }
+
+    public void setImgRes(Integer imgRes) {
+        this.imgRes = imgRes;
+    }
+
+    public void setChild(List<Integer> child) {
         this.child = child;
     }
 
@@ -86,8 +103,28 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.open_time_start = open_time_start;
     }
 
+    public String getVideo_path() {
+        return video_path;
+    }
+
+    public void setVideo_path(String video_path) {
+        this.video_path = video_path;
+    }
+
     public void setHotel_id(String hotel_id) {
         this.hotel_id = hotel_id;
+    }
+
+
+    public String getFile_f() {
+        if (!TextUtils.isEmpty(file_f)) {
+            return (UrlMgr.HOST + UrlMgr.PORT + file_f).trim();
+        }
+        return "";
+    }
+
+    public void setFile_f(String file_f) {
+        this.file_f = file_f;
     }
 
     public int getLike_count() {
@@ -114,16 +151,22 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getTel_num() {
+        return tel_num;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setTel_num(String tel_num) {
+        this.tel_num = tel_num;
     }
+
 
     public ItemInfoBean(String image_url, String type) {
         this.img_f = image_url;
+        this.type_str = type;
+    }
+
+    public ItemInfoBean(int imgRes, String type) {
+        this.imgRes = imgRes;
         this.type_str = type;
     }
 
@@ -136,7 +179,19 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.type_str = type;
         this.view_count = view_count;
         this.address = address;
-        this.phone = phone;
+        this.tel_num = phone;
+    }
+
+    public ItemInfoBean(int image_url, String name, double recommend, long create_time, String introduce, String type, long view_count, String address, String phone) {
+        this.imgRes = image_url;
+        this.title = name;
+        this.recommend = recommend;
+        this.create_time = create_time;
+        this.introduce = introduce;
+        this.type_str = type;
+        this.view_count = view_count;
+        this.address = address;
+        this.tel_num = phone;
     }
 
     public ItemInfoBean(String image_url, String name, double recommend,
@@ -150,7 +205,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.type_str = type;
         this.view_count = view_count;
         this.address = address;
-        this.phone = phone;
+        this.tel_num = phone;
         this.hotel_id = hotel_id;
     }
 
@@ -181,13 +236,29 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
         this.img_f = imagePath;
     }
 
+    public ItemInfoBean(String title, long view_count) {
+        this.title = title;
+        this.view_count = view_count;
+    }
+
+    public ItemInfoBean(String img_f, int id) {
+        this.img_f = img_f;
+        this.id = id;
+    }
+
     public void setImagePath(String imagePath) {
         this.img_f = imagePath;
     }
 
     @Override
     public String getImgUrl() {
-        return img_f;
+        if (!TextUtils.isEmpty(img_f)) {
+            if (img_f.startsWith("/upload") || img_f.startsWith("/wzyc") || img_f.startsWith("news")) {
+                return (UrlMgr.HOST + UrlMgr.PORT + img_f).trim();
+            }
+            return img_f.trim();
+        }
+        return "";
     }
 
     @Override
@@ -228,7 +299,7 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     }
 
     public String getPhoneStr() {
-        return "预约电话：" + phone;
+        return "电话：" + tel_num;
     }
 
     public String getIntroduce() {
@@ -248,8 +319,11 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
             case Constans.TYPE_STAY:
                 str = "酒店介绍：";
                 break;
-            default:
+            case Constans.TYPE_PLAY:
                 str = "景点介绍：";
+                break;
+            default:
+                str = "商品介绍：";
                 break;
         }
         return str + "\n " + introduce;
@@ -285,4 +359,5 @@ public class ItemInfoBean extends BaseBean implements IItemInfo {
     public void setPrice(double price) {
         this.price = price;
     }
+
 }
