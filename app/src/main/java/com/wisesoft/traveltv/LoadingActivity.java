@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.widget.ImageView;
 
 import com.android_mobile.core.manager.SharedPrefManager;
+import com.android_mobile.core.utiles.Lg;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
 import com.wisesoft.traveltv.helper.InitDataCacheManager;
@@ -84,14 +85,14 @@ public class LoadingActivity extends NActivity {
 
             @Override
             public void onError() {
-                if(errorCode <= 3){
-                    toast("网络错误，尝试重新加载...");
-                    errorCode ++;
-                    initDataCacheManager.start(this);
-                }else{
-                    toast("请稍后再试！");
-                    System.exit(0);
-                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        toast("连接出错，请稍后再试...");
+                        onBackPressed();
+                        //System.exit(0);
+                    }
+                });
             }
         });
     }

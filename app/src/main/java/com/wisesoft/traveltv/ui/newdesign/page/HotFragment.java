@@ -1,8 +1,14 @@
 package com.wisesoft.traveltv.ui.newdesign.page;
 
+import android.content.ClipData;
+import android.text.TextUtils;
 import android.view.View;
 
+import com.android_mobile.core.manager.SharedPrefManager;
+import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7LinearLayoutManager;
@@ -15,8 +21,10 @@ import com.wisesoft.traveltv.manager.ConvertManager;
 import com.wisesoft.traveltv.model.HotListItemModel;
 import com.wisesoft.traveltv.model.temp.DataEngine;
 import com.wisesoft.traveltv.model.temp.ItemInfoBean;
+import com.wisesoft.traveltv.net.ApiFactory;
 import com.wisesoft.traveltv.ui.newdesign.BaseNewDesignFragment;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,6 +77,10 @@ public class HotFragment extends BaseNewDesignFragment{
 
     @Override
     protected void initData() {
+        //防止空页面，从缓存加载本周热门和今日推荐的信息
+        loadLocale(Constans.HOT_PAGE_TYPE_WEEK ,0);
+        loadLocale(Constans.HOT_PAGE_TYPE_TODAY ,1);
+
         //获取推荐信息
         requestData(Constans.HOT_PAGE_TYPE_WEEK,9,1);
         requestData(Constans.HOT_PAGE_TYPE_TODAY,8,1);
@@ -77,6 +89,18 @@ public class HotFragment extends BaseNewDesignFragment{
         requestData(Constans.HOT_PAGE_TYPE_EAT,8,1);
         requestData(Constans.HOT_PAGE_TYPE_PAY,8,1);
         requestData(Constans.HOT_PAGE_TYPE_FUN,8,1);
+    }
+
+    private void loadLocale(String key,int index) {
+        String cacheStr = SharedPrefManager.getString(key,"");
+        if(!TextUtils.isEmpty(cacheStr)){
+            Type type = new TypeToken<List<ItemInfoBean>>(){}.getType();
+            List<ItemInfoBean> itemInfoBean = new Gson().fromJson(cacheStr,type);
+            if(!CollectionUtils.isEmpty(itemInfoBean) && mHotListItemDatas != null){
+                mHotListItemDatas.add(index,ConvertManager.getInstance().convertItemToHotItem(itemInfoBean, key));
+                mHotListAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private String getWeekRecommendType() {
@@ -122,12 +146,14 @@ public class HotFragment extends BaseNewDesignFragment{
             @Override
             public void onLoadSucceed(List<ItemInfoBean> itemInfoBeans) {
                 if(Constans.HOT_PAGE_TYPE_WEEK.equals(type)){
-                    mHotListItemDatas.add(0,ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
+                    mHotListItemDatas.set(0,ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
                 }else if(Constans.HOT_PAGE_TYPE_TODAY.equals(type)){
-                    mHotListItemDatas.add(1,ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
+                    mHotListItemDatas.remove(1);
+                    mHotListItemDatas.set(1,ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
                 }else{
                     mHotListItemDatas.add(ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
                 }
+                SharedPrefManager.putString(type, new Gson().toJson(itemInfoBeans));
                 mHotListAdapter.notifyDataSetChanged();
             }
         });

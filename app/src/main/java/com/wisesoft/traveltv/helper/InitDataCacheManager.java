@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.android_mobile.core.manager.SharedPrefManager;
+import com.android_mobile.core.utiles.Lg;
 import com.android_mobile.net.response.BaseResponse;
 import com.wisesoft.traveltv.constants.Constans;
 import com.wisesoft.traveltv.db.DataBaseDao;
@@ -52,6 +53,7 @@ public class InitDataCacheManager {
                             onWorkListener.onError();
                         }
                     }
+
                 });
     }
 

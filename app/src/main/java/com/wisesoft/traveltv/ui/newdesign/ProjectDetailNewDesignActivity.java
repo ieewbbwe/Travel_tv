@@ -165,6 +165,7 @@ public class ProjectDetailNewDesignActivity extends NActivity implements View.On
         });
 
         mPlayTvc.setOnClickListener(this);
+        mCommentTvc.setOnClickListener(this);
     }
 
     @Override
@@ -336,7 +337,7 @@ public class ProjectDetailNewDesignActivity extends NActivity implements View.On
                 pushActivity(intent, false);
                 break;
             case R.id.m_comment_tvc:
-                toast("点个赞");
+                toast("感谢您的赞！");
                 break;
         }
     }

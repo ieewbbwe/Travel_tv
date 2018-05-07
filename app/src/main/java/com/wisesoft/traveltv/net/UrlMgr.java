@@ -7,12 +7,16 @@ package com.wisesoft.traveltv.net;
 
 public interface UrlMgr {
 
-    String HOST = "http://192.168.0.101";
+    /*测试服务器*/
+    String HOST = "http://10.27.0.107";
+    /* 正式服务器 */
     //String HOST = "http://api.965927.com";
     String PORT = ":8000";
     String SITE_NAME = "/wzyc";
     //String API = "/wzyc/api/v1/";
     String API = "/api/v1/";
+
+
     String Service = HOST + PORT + API;
 
     /*获取新闻tab*/
