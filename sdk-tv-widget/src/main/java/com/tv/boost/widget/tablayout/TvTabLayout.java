@@ -41,7 +41,7 @@ public class TvTabLayout extends TabLayout {
                     .start();
             return;
         }
-        animator.scaleX(1.2f).scaleY(1.2f)
+        animator.scaleX(1.3f).scaleY(1.3f)
                 .translationY((getHeight() - tab.getView().getHeight()) / 2)
                 .setInterpolator(new AccelerateDecelerateInterpolator())
                 .setDuration(700)

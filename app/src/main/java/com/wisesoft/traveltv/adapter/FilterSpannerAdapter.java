@@ -110,7 +110,7 @@ public class FilterSpannerAdapter extends BasicAdapter<FilterItemModel,RecyclerV
             //设置背景
             GradientDrawable dw = new GradientDrawable();
             dw.setCornerRadius(10f);
-            dw.setColor(Color.parseColor("#29B590"));
+            dw.setColor(Color.parseColor("#FF29B590"));
             ((NormalViewHolder) holder).mRootFl.setBackground(dw);
             //设置信息
             ((NormalViewHolder) holder).mFilterTv.setText(itemModel.getFilterData() != null ? itemModel.getFilterData().getName():"");

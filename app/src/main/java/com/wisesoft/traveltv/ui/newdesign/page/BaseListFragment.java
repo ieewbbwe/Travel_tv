@@ -73,7 +73,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     private DataBaseDao mDao;
 
     private int page = 1;
-    private int limit = 9;
+    private int limit = 20;
     private boolean isLoading;
     private ItemRequestModel itemRequestModel;
 
@@ -111,13 +111,13 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         mFilterTrv.setAdapter(mFilterAdapter);
         mFilterTrv.setSpacingWithMargins(16, 24);
         //初始化列表布局
-        mListLayoutManager = new V7GridLayoutManager(getActivity(), 6);
+        mListLayoutManager = new V7GridLayoutManager(getActivity(), 5);
         mListTrv.setLayoutManager(mListLayoutManager);
         //mListNewDesignAdapter = new ListNewDesignAdapter(getActivity());
         mListAdapter = new ListGridAdapter(getActivity());
         mListAdapter.setDatas(mListData);
         mListTrv.setAdapter(mListAdapter);
-        mListTrv.setSpacingWithMargins(16, 16);
+        mListTrv.setSpacingWithMargins(22, 22);
 
         //初始化每个类别的header
         initHeader();

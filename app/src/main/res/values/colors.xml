@@ -7,4 +7,7 @@
     <color name="search_button_focused">#518FDC</color>
     <color name="search_button_press">#699fe2</color>
     <color name="search_button_normal">#969696</color>
+    <color name="filter_color_blue">#FF29B590</color>
+    <color name="text_normal_bg">#55000000</color>
+
 </resources>

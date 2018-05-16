@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.tv.boost.R;
 import com.tv.boost.widget.CornersTransform;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 
 /**
  * Created by owen on 15/8/26.
@@ -311,9 +313,11 @@ public class CommonViewHolder {
         Glide.with(mContext)
                 .load(url)
                 .crossFade()
-                .transform(new CornersTransform(mContext))
+                .bitmapTransform(new RoundedCornersTransformation(getConvertView().getContext(),
+                        8,0,RoundedCornersTransformation.CornerType.ALL))
                 .error(R.mipmap.ic_img_item_default)
-                .placeholder(R.mipmap.ic_img_item_default).into(imageView);
+                .placeholder(R.mipmap.ic_img_item_default)
+                .into(imageView);
         return this;
     }
 

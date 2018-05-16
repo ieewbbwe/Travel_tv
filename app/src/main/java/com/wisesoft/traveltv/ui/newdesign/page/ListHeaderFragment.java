@@ -43,7 +43,7 @@ public class ListHeaderFragment extends BaseListFragment {
         mHeaderAdapter = new ListHeaderSpannableAdapter(getActivity(),mPlayHeaderRv);
         mPlayHeaderLayout = new CustomerGridlayoutManager(getActivity());
         mPlayHeaderRv.setLayoutManager(mPlayHeaderLayout);
-        mPlayHeaderRv.setSpacingWithMargins(18,18);
+        mPlayHeaderRv.setSpacingWithMargins(28,28);
         adjustHeaderParamByType();
 
         mHeaderAdapter.setDatas(mHeaderItem);

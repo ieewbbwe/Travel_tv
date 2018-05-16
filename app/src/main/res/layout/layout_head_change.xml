@@ -11,6 +11,7 @@
         android:layout_width="@dimen/head_logo_w"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
+        android:layout_margin="4dp"
         android:layout_marginLeft="@dimen/tv_border_width"
         android:src="@mipmap/ic_logo1"
         android:visibility="visible" />
