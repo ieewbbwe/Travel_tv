@@ -8,9 +8,9 @@ package com.wisesoft.traveltv.net;
 public interface UrlMgr {
 
     /*测试服务器-博彦*/
-    //String HOST = "http://10.10.56.81";
+    //String HOST = "http://10.27.0.107";
     ///*测试服务器-哲诚*/
-    String HOST = "http://192.168.1.103";
+    String HOST = "http://192.168.1.101";
     /*测试服务器-Home*/
     //String HOST = "http://192.168.0.100";
     /* 正式服务器 */

@@ -52,6 +52,14 @@ android {
             keyPassword "traveltv"
         }
     }
+    dexOptions {
+        preDexLibraries true
+        javaMaxHeapSize "8g"
+        //incremental true
+        dexInProcess = true
+        //jumboMode = true
+        maxProcessCount 8
+    }
 }
 
 dependencies {

@@ -30,6 +30,7 @@ public class HomeNewDesignActivity extends NActivity {
     private List<BaseNewDesignFragment> mBaseFragmnets = new ArrayList<>();
     private List<HomeTab> mTabs = new ArrayList<>();
     private BaseNewDesignFragment mCurrentFragment;
+    private double _firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,18 @@ public class HomeNewDesignActivity extends NActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                //首页和搜索页 需要拦截Back事件给SearchView
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - _firstTime > 2000) {// 如果两次按键时间间隔大于2000毫秒，则不退出
+                    toast("再按一次退出程序...");
+                    _firstTime = secondTime;// 更新firstTime
+                    return true;
+                } else {
+                    exitAppWithToast();
+                }
+        }
         return mBaseFragmnets.get(mContainerVp.getCurrentItem()).onKeyDown(keyCode, event);
     }
 
