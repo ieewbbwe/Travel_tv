@@ -510,7 +510,6 @@ public class FeatureCoverFlow extends EndlessLoopAdapterContainer implements Vie
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        Log.d("webber", keyCode + "");
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 scroll((int) (-1 * mCoverWidth * mSpacing) - mCenterItemOffset);

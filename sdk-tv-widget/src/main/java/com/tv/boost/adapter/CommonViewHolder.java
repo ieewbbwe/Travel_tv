@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tv.boost.R;
 import com.tv.boost.widget.CornersTransform;
 
@@ -313,6 +314,9 @@ public class CommonViewHolder {
         Glide.with(mContext)
                 .load(url)
                 .crossFade()
+                //.centerCrop()
+                .override(600,200)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .bitmapTransform(new RoundedCornersTransformation(getConvertView().getContext(),
                         8,0,RoundedCornersTransformation.CornerType.ALL))
                 .error(R.mipmap.ic_img_item_default)

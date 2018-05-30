@@ -92,12 +92,12 @@ public class HotFragment extends BaseNewDesignFragment{
     }
 
     private void loadLocale(String key,int index) {
-        String cacheStr = SharedPrefManager.getString(key,"");
-        if(!TextUtils.isEmpty(cacheStr)){
+        if(mHotListItemDatas != null){
+            String cacheStr = SharedPrefManager.getString(key,getResources().getString(R.string.cache_temp));
             Type type = new TypeToken<List<ItemInfoBean>>(){}.getType();
             List<ItemInfoBean> itemInfoBean = new Gson().fromJson(cacheStr,type);
-            if(!CollectionUtils.isEmpty(itemInfoBean) && mHotListItemDatas != null){
-                mHotListItemDatas.add(index,ConvertManager.getInstance().convertItemToHotItem(itemInfoBean, key));
+            if(!CollectionUtils.isEmpty(itemInfoBean)){
+                mHotListItemDatas.add(ConvertManager.getInstance().convertItemToHotItem(itemInfoBean, key));
                 mHotListAdapter.notifyDataSetChanged();
             }
         }
@@ -146,10 +146,9 @@ public class HotFragment extends BaseNewDesignFragment{
             @Override
             public void onLoadSucceed(List<ItemInfoBean> itemInfoBeans) {
                 if(Constans.HOT_PAGE_TYPE_WEEK.equals(type)){
-                    mHotListItemDatas.set(0,ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
+                    mHotListItemDatas.set(0, ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
                 }else if(Constans.HOT_PAGE_TYPE_TODAY.equals(type)){
-                    mHotListItemDatas.remove(1);
-                    mHotListItemDatas.set(1,ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
+                    mHotListItemDatas.set(1, ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
                 }else{
                     mHotListItemDatas.add(ConvertManager.getInstance().convertItemToHotItem(itemInfoBeans, type));
                 }

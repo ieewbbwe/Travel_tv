@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.android_mobile.core.utiles.Lg;
 import com.tv.boost.widget.tablayout.TvTabLayout;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
@@ -56,7 +57,7 @@ public class HomeNewDesignActivity extends NActivity {
         mContainerVp.setCurrentItem(1);
         mMainTab.setupWithViewPager(mContainerVp);
 
-        mContainerVp.setOffscreenPageLimit(8);
+        //mContainerVp.setOffscreenPageLimit(8);
 
     }
 
@@ -66,14 +67,14 @@ public class HomeNewDesignActivity extends NActivity {
             @Override
             public void onPageSelected(int position) {
                 mCurrentFragment = mBaseFragmnets.get(position);
-                Log.d("picher", "onPageChange:" + position);
+                Lg.d("picher", "onPageChange:" + position);
             }
         });
 
         mMainTab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Log.d("picher", "Tab获取焦点:" + hasFocus);
+                Lg.d("picher", "Tab获取焦点:" + hasFocus);
             }
         });
     }

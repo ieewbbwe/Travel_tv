@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.android_mobile.core.manager.image.ImageLoadFactory;
 import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.net.response.BaseResponse;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.jdsjlzx.interfaces.OnItemClickListener;
 import com.owen.tvrecyclerview.widget.SimpleOnItemListener;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
@@ -236,8 +238,15 @@ public class ProjectDetailNewDesignActivity extends NActivity implements View.On
     }
 
     private void updateDetailUI(@NonNull ItemInfoBean mItemInfoBean) {
-        ImageLoadFactory.getInstance().getImageLoadHandler()
-                .displayImage(mItemInfoBean.getImgUrl(), mMainIv);
+        Glide.with(this)
+                .load(mItemInfoBean.getImgUrl())
+                .crossFade()
+                .centerCrop()
+                .error(R.mipmap.ic_img_item_default)
+                .placeholder(R.mipmap.ic_img_item_default)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(mMainIv);
+
         mTitleTv.setText(mItemInfoBean.getName());
         mGradeRb.setRating((float) mItemInfoBean.getGrade());
         mIntroduceTv.setText(mItemInfoBean.getIntroduceStr());

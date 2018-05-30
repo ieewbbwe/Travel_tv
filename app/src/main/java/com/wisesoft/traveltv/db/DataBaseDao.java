@@ -88,8 +88,12 @@ public class DataBaseDao {
                 public Void call() throws Exception {
                     updateInitData(dataBeen);
                     //缓存最后更新的时间 做版本增量，在这时间之后若有修改则初始化数据库
-                    SharedPrefManager.putString(Constans.CACHE_INIT_UPDATE_TIME, mInitData.queryBuilder()
-                            .orderBy("update_time", false).queryForFirst().getUpdate_time());
+                    InitDataBean dataBean = mInitData.queryBuilder().orderBy("update_time", false).queryForFirst();
+                    if(dataBean != null && dataBean.getUpdate_time() != null){
+                        if(dataBean.getUpdate_time().split("\\.").length > 0){
+                            SharedPrefManager.putString(Constans.CACHE_INIT_UPDATE_TIME, dataBean.getUpdate_time().split("\\.")[0]);
+                        }
+                    }
                     return null;
                 }
             });

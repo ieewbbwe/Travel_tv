@@ -8,7 +8,7 @@
     tools:context="com.wisesoft.traveltv.ui.newdesign.HomeNewDesignActivity">
 
     <!--head-->
-     <!--<include layout="@layout/layout_head_change" />-->
+     <include layout="@layout/layout_head_change" />
 
     <com.tv.boost.widget.tablayout.TvTabLayout
         android:id="@+id/m_main_tab"

@@ -180,7 +180,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
                         Lg.d("picher","oldFocus："+(oldFocus!=null?oldFocus.getClass().getSimpleName():"")+"->>newFocus："+newFocus.getClass().getSimpleName());
                         switch (((ViewGroup) newFocus.getParent()).getId()) {
                             case R.id.m_header_rv:
-                                if (!mAppbarAbl.isExpened()) {
+                                if (mAppbarAbl != null && !mAppbarAbl.isExpened()) {
                                     mAppbarAbl.setExpanded(true);
                                 }
                                 break;
@@ -188,7 +188,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
                                 getFocusBorder().setVisible(true);
                                 break;
                             case R.id.m_list_trv:
-                                if (mAppbarAbl.isExpened()) {
+                                if (mAppbarAbl != null && mAppbarAbl.isExpened()) {
                                     mAppbarAbl.setExpanded(false);
                                 }
                                 break;
@@ -200,7 +200,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         });
     }
 
-    private void refresh() {
+    protected void refresh() {
         page = 1;
         mListData.clear();
         mEmptyV.setVisibility(View.GONE);

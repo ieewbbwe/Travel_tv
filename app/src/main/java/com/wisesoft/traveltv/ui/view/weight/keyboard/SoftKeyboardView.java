@@ -510,7 +510,7 @@ public class SoftKeyboardView extends View {
             default:
                 break;
         }
-        Log.d("picher","是否为空（是否找到?）:"+(selectKey == null));
+        Lg.d("picher","是否为空（是否找到?）:"+(selectKey == null));
         // 刷新移动的位置.
         if (softKey != null) {
             SoftKey oldsoftkey = mSoftKeyboard.getSelectSoftKey();

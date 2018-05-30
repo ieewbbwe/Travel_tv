@@ -52,7 +52,8 @@ public class ListHeaderFragment extends BaseListFragment {
         //获取真实数据
         getRecommendData();
         //获取列表数据
-        getListData();
+        //getListData();
+        refresh();
 
         mHeaderAdapter.setOnItemListener(new CommonRecyclerViewAdapter.OnItemListener() {
             @Override
