@@ -28,7 +28,8 @@ public class PlayVideoActivity extends NActivity {
         mVideoV = (StandardGSYVideoPlayer) findViewById(R.id.m_video_gsy);
         Object obj = getIntent().getExtras().get(Constans.ITEM_BEAN);
         if (obj != null && obj instanceof ItemInfoBean) {
-            String mUrl = ((ItemInfoBean) obj).getFile_f();
+            //String mUrl = ((ItemInfoBean) obj).getFile_f();
+            String mUrl = ((ItemInfoBean) obj).getVideo_path();//视频改为外站链接
             Lg.d("picher", "url+" + mUrl);
             mVideoV.setUp(mUrl, false, "");
             mVideoV.startPlayLogic();
