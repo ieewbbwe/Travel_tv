@@ -136,7 +136,7 @@ public abstract class ProductListFragment extends NFragement {
             @Override
             public boolean onLoadMore() {
                 if (hasMore()) {
-                    Log.d("picher","加载更多！");
+                    Lg.d("picher","加载更多！");
                     requestMore();
                     return true;
                 }

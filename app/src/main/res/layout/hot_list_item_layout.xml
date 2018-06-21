@@ -19,5 +19,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/m_hot_list_item_tv"
         android:orientation="horizontal"
-        android:padding="18dp" />
+        android:padding="22dp" />
 </RelativeLayout>

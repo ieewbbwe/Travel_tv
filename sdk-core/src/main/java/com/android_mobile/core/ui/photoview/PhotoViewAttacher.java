@@ -29,6 +29,8 @@ import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+import com.android_mobile.core.utiles.Lg;
+
 import java.lang.ref.WeakReference;
 
 
@@ -265,7 +267,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 
 	public final void onDrag(float dx, float dy) {
 		if (DEBUG) {
-			Log.d(LOG_TAG, String.format("onDrag: dx: %.2f. dy: %.2f", dx, dy));
+			Lg.d(LOG_TAG, String.format("onDrag: dx: %.2f. dy: %.2f", dx, dy));
 		}
 
 		ImageView imageView = getImageView();
@@ -295,7 +297,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 	@Override
 	public final void onFling(float startX, float startY, float velocityX, float velocityY) {
 		if (DEBUG) {
-			Log.d(LOG_TAG, "onFling. sX: " + startX + " sY: " + startY + " Vx: " + velocityX + " Vy: " + velocityY);
+			Lg.d(LOG_TAG, "onFling. sX: " + startX + " sY: " + startY + " Vx: " + velocityX + " Vy: " + velocityY);
 		}
 
 		ImageView imageView = getImageView();

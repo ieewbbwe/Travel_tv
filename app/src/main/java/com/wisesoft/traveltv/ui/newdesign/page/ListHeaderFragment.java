@@ -43,7 +43,7 @@ public class ListHeaderFragment extends BaseListFragment {
         mHeaderAdapter = new ListHeaderSpannableAdapter(getActivity(),mPlayHeaderRv);
         mPlayHeaderLayout = new CustomerGridlayoutManager(getActivity());
         mPlayHeaderRv.setLayoutManager(mPlayHeaderLayout);
-        mPlayHeaderRv.setSpacingWithMargins(18,18);
+        mPlayHeaderRv.setSpacingWithMargins(28,28);
         adjustHeaderParamByType();
 
         mHeaderAdapter.setDatas(mHeaderItem);
@@ -52,7 +52,8 @@ public class ListHeaderFragment extends BaseListFragment {
         //获取真实数据
         getRecommendData();
         //获取列表数据
-        getListData();
+        //getListData();
+        refresh();
 
         mHeaderAdapter.setOnItemListener(new CommonRecyclerViewAdapter.OnItemListener() {
             @Override

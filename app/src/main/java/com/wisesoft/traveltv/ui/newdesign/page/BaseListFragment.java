@@ -1,8 +1,12 @@
 package com.wisesoft.traveltv.ui.newdesign.page;
 
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +16,7 @@ import android.widget.FrameLayout;
 import com.android_mobile.core.utiles.CollectionUtils;
 import com.android_mobile.core.utiles.Lg;
 import com.android_mobile.net.response.BaseResponse;
+import com.owen.tvrecyclerview.utils.Loger;
 import com.owen.tvrecyclerview.widget.TvRecyclerView;
 import com.owen.tvrecyclerview.widget.V7GridLayoutManager;
 import com.tv.boost.adapter.CommonRecyclerViewAdapter;
@@ -73,7 +78,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     private DataBaseDao mDao;
 
     private int page = 1;
-    private int limit = 9;
+    private int limit = 20;
     private boolean isLoading;
     private ItemRequestModel itemRequestModel;
 
@@ -111,13 +116,13 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         mFilterTrv.setAdapter(mFilterAdapter);
         mFilterTrv.setSpacingWithMargins(16, 24);
         //初始化列表布局
-        mListLayoutManager = new V7GridLayoutManager(getActivity(), 6);
+        mListLayoutManager = new V7GridLayoutManager(getActivity(), 5);
         mListTrv.setLayoutManager(mListLayoutManager);
         //mListNewDesignAdapter = new ListNewDesignAdapter(getActivity());
         mListAdapter = new ListGridAdapter(getActivity());
         mListAdapter.setDatas(mListData);
         mListTrv.setAdapter(mListAdapter);
-        mListTrv.setSpacingWithMargins(16, 16);
+        mListTrv.setSpacingWithMargins(22, 22);
 
         //初始化每个类别的header
         initHeader();
@@ -172,9 +177,10 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
                 if (newFocus != null) {
                     if (newFocus.getParent() instanceof ViewGroup) {
                         getFocusBorder().setVisible(false);
+                        Lg.d("picher","oldFocus："+(oldFocus!=null?oldFocus.getClass().getSimpleName():"")+"->>newFocus："+newFocus.getClass().getSimpleName());
                         switch (((ViewGroup) newFocus.getParent()).getId()) {
                             case R.id.m_header_rv:
-                                if (!mAppbarAbl.isExpened()) {
+                                if (mAppbarAbl != null && !mAppbarAbl.isExpened()) {
                                     mAppbarAbl.setExpanded(true);
                                 }
                                 break;
@@ -182,7 +188,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
                                 getFocusBorder().setVisible(true);
                                 break;
                             case R.id.m_list_trv:
-                                if (mAppbarAbl.isExpened()) {
+                                if (mAppbarAbl != null && mAppbarAbl.isExpened()) {
                                     mAppbarAbl.setExpanded(false);
                                 }
                                 break;
@@ -194,7 +200,7 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
         });
     }
 
-    private void refresh() {
+    protected void refresh() {
         page = 1;
         mListData.clear();
         mEmptyV.setVisibility(View.GONE);
@@ -217,6 +223,9 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
             if (!CollectionUtils.isEmpty(dataBeans) && dataBeans.get(0) != null && !CollectionUtils.isEmpty(dataBeans.get(0).getChildBean())) {
                 mFilterData.addAll(ConvertManager.getInstance()
                         .convertItemToFilterModel(dataBeans.get(0).getChildBean(), mHomeTab));
+            }
+            if(mFilterData.size() <= 8){
+                mFilterManager.setSpanCount(1);
             }
             mFilterAdapter.setDataList(mFilterData);
         }
@@ -381,6 +390,35 @@ public abstract class BaseListFragment extends BaseNewDesignFragment implements 
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Lg.d("picher",String.format("keyCode：%s->>header：%s->>filter：%s->>list：%s"
+                ,keyCode,mHeaderView.hasFocus(),mFilterTrv.hasFocus(),mListTrv.hasFocus()));
+        switch (keyCode){
+            case KeyEvent.KEYCODE_DPAD_UP:
+                //焦点再list第一行 按上则filter获取焦点  防止tab抢焦点
+                if(mListTrv != null && mListLayoutManager != null &&
+                        mListTrv.hasFocus() && mListLayoutManager.getPosition(mListTrv.getFocusedChild()) <= 4 && !mFilterTrv.hasFocus()){
+                    mFilterTrv.requestFocus();
+                    return true;
+                }
+               /* if(mFilterTrv.hasFocus() && !mHeaderView.hasFocus()){
+                    mHeaderView.requestFocus();
+                    break;
+                }
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                if(mHeaderView.hasFocus() && !mFilterTrv.hasFocus()){
+                    mFilterTrv.requestFocus();
+                    break;
+                }
+                if(mFilterTrv.hasFocus() && !mListTrv.hasFocus()){
+                    mListTrv.requestFocus();
+                    break;
+                }*/
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override

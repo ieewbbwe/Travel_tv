@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.android_mobile.core.utiles.Lg;
 import com.tv.boost.widget.tablayout.TvTabLayout;
 import com.wisesoft.traveltv.NActivity;
 import com.wisesoft.traveltv.R;
@@ -30,6 +31,7 @@ public class HomeNewDesignActivity extends NActivity {
     private List<BaseNewDesignFragment> mBaseFragmnets = new ArrayList<>();
     private List<HomeTab> mTabs = new ArrayList<>();
     private BaseNewDesignFragment mCurrentFragment;
+    private double _firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class HomeNewDesignActivity extends NActivity {
         mContainerVp.setCurrentItem(1);
         mMainTab.setupWithViewPager(mContainerVp);
 
-        mContainerVp.setOffscreenPageLimit(8);
+        //mContainerVp.setOffscreenPageLimit(8);
 
     }
 
@@ -65,14 +67,14 @@ public class HomeNewDesignActivity extends NActivity {
             @Override
             public void onPageSelected(int position) {
                 mCurrentFragment = mBaseFragmnets.get(position);
-                Log.d("picher", "onPageChange:" + position);
+                Lg.d("picher", "onPageChange:" + position);
             }
         });
 
         mMainTab.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Log.d("picher", "Tab获取焦点:" + hasFocus);
+                Lg.d("picher", "Tab获取焦点:" + hasFocus);
             }
         });
     }
@@ -107,6 +109,18 @@ public class HomeNewDesignActivity extends NActivity {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                //首页和搜索页 需要拦截Back事件给SearchView
+                long secondTime = System.currentTimeMillis();
+                if (secondTime - _firstTime > 2000) {// 如果两次按键时间间隔大于2000毫秒，则不退出
+                    toast("再按一次退出程序...");
+                    _firstTime = secondTime;// 更新firstTime
+                    return true;
+                } else {
+                    exitAppWithToast();
+                }
+        }
         return mBaseFragmnets.get(mContainerVp.getCurrentItem()).onKeyDown(keyCode, event);
     }
 

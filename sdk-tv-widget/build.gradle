@@ -15,6 +15,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        javaMaxHeapSize "8g"
+    }
 }
 
 dependencies {
@@ -22,4 +25,6 @@ dependencies {
     compile "com.github.bumptech.glide:glide:$rootProject.ext.glideVersion"
     compile 'com.android.support:support-v4:' + rootProject.ext.supportLibraryVersion
     compile 'com.android.support:recyclerview-v7:' + rootProject.ext.appcompatV7Version
+    compile 'com.github.open-android:Glide-transformations:0.1.0'
+
 }

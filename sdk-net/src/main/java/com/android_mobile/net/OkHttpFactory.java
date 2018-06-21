@@ -1,6 +1,8 @@
 package com.android_mobile.net;
 
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +40,7 @@ public class OkHttpFactory {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
                 .addInterceptor(new UserAgentInterceptor())//自定义拦截器
                 .addInterceptor(interceptor)//Log日志
+                //.addInterceptor(CachingControlInterceptor.REWRITE_RESPONSE_INTERCEPTOR)
                 //.addNetworkInterceptor(CachingControlInterceptor.REWRITE_RESPONSE_INTERCEPTOR)
                 .retryOnConnectionFailure(true) //失败重连
                 .readTimeout(TIMEOUT_READ, TimeUnit.SECONDS)

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.wisesoft.traveltv.ui.view.RoundFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wisesoft.traveltv.ui.view.RoundFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:rfl_radius="10dp"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:background="@drawable/bg_white_round"
+    app:rfl_radius="8dp">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/m_item_iv"
             android:layout_centerHorizontal="true"
-            android:background="#55000000"
+            android:background="@drawable/selector_blue_bg"
             android:ellipsize="end"
             android:gravity="center_horizontal"
             android:maxLines="1"

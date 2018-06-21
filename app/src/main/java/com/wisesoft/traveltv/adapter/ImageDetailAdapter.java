@@ -2,6 +2,7 @@ package com.wisesoft.traveltv.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,7 @@ public class ImageDetailAdapter extends PagerAdapter {
     private ImageView createImageView(String imgUrl) {
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        ImageLoadFactory.getInstance().getImageLoadHandler().displayImage(imgUrl,imageView);
+        ImageLoadFactory.getInstance().getImageLoadHandler().displayImage(imgUrl, imageView);
         return imageView;
     }
 

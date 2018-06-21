@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.android_mobile.core.R;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 
@@ -34,6 +35,7 @@ public class GlideImageLoadHandler implements ImageLoadHandler {
                 .crossFade()
                 .error(DEFAULT_ERROR)
                 .placeholder(DEFAULT_PLACEHOLDER)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(iv);
     }
 

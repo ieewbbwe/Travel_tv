@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tv.boost.R;
+
 import java.lang.reflect.UndeclaredThrowableException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.List;
  * Created by owen on 15/7/28.
  */
 public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<CommonRecyclerViewHolder>{
+    private OnChildFocusChangeListener childFocusChangeListener;
+
     public interface OnItemListener{
         void onItemSelected(View itemView, int position);
         void onItemClick(View itemView, int position);
@@ -76,6 +80,9 @@ public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 v.setSelected(hasFocus);
+                if(childFocusChangeListener != null){
+                    childFocusChangeListener.onFocus(holder.itemView,hasFocus);
+                }
                 if (hasFocus) {
                     if (isShowAnim) {
                         v.animate().scaleX(1.10f).scaleY(1.10f).setDuration(130).start();
@@ -122,6 +129,14 @@ public abstract class CommonRecyclerViewAdapter<T> extends RecyclerView.Adapter<
 
     public void setOnItemListener(OnItemListener listener) {
             this.mOnItemListener = listener;
+    }
+
+    public void setOnChildFocusChangeListener(OnChildFocusChangeListener childFocusChangeListener){
+        this.childFocusChangeListener = childFocusChangeListener;
+    }
+
+    public interface OnChildFocusChangeListener{
+        void onFocus(View itemView,boolean haseFocus);
     }
 
     public boolean isShowAnim() {
